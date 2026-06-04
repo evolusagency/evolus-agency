@@ -1,10 +1,13 @@
 ---
 title: "Refonte de site B2B : les 8 questions à poser avant de dépenser un euro"
-excerpt: "Une refonte web B2B peut coûter entre 5 000 et 80 000€. Dans 70% des cas, elle n'améliore pas les résultats business — parce qu'elle a été mal cadrée dès le départ."
-date: "8 Avril 2025"
-tag: "Refonte web"
-read: "8 min"
-lang: "fr"
+excerpt: Une refonte web B2B peut coûter entre 5 000 et 80 000€. Dans 70% des
+  cas, elle n'améliore pas les résultats business — parce qu'elle a été mal
+  cadrée dès le départ.
+date: 8 Avril 2025
+tag: Refonte web
+read: 8 min
+lang: fr
+image: /images/logo-evolus.png
 ---
 
 Une refonte sans stratégie est un beau site qui ne génère toujours pas de leads. Avant de parler design ou CMS, cadrez votre projet avec ces 8 questions fondamentales.
