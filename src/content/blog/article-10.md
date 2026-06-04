@@ -7,7 +7,7 @@ date: 8 Avril 2025
 tag: Refonte web
 read: 8 min
 lang: fr
-image: /images/logo-evolus.png
+image: https://www.magneticway.com/wp-content/uploads/2024/09/webinar-refonte-site-092024.svg
 ---
 
 Une refonte sans stratégie est un beau site qui ne génère toujours pas de leads. Avant de parler design ou CMS, cadrez votre projet avec ces 8 questions fondamentales.
