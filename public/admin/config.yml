@@ -2,6 +2,8 @@ backend:
   name: github
   repo: evolusagency/evolus-agency
   branch: main
+  base_url: https://decap-proxy.evolusagency.workers.dev
+  auth_endpoint: /auth
 
 media_folder: public/images
 public_folder: /images
@@ -18,7 +20,7 @@ collections:
       - { label: Titre, name: title, widget: string }
       - { label: Extrait, name: excerpt, widget: text }
       - { label: Date, name: date, widget: string, hint: "Format: 12 Juin 2025" }
-      - { label: Tag, name: tag, widget: string, hint: "Ex: Stratégie B2B, SEO B2B, Copywriting" }
+      - { label: Tag, name: tag, widget: string, hint: "Ex: Stratégie B2B, SEO B2B" }
       - { label: "Temps de lecture", name: read, widget: string, hint: "Ex: 8 min" }
       - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
       - { label: Contenu, name: body, widget: markdown }
