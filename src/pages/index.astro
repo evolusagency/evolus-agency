@@ -1,17 +1,364 @@
 ---
-
 ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evolus Agency</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a;--white:#f5f2ec;--accent:#c8f03e;--accent-dark:#a8cc2e;
+  --muted:#6b6860;--border:rgba(245,242,236,0.12);--card:#111110;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;cursor:none}
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+.cur{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;mix-blend-mode:difference}
+.cur.h{width:44px;height:44px}
+
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4}
+
+/* LANG */
+.lang-sw{position:fixed;top:50%;right:1.2rem;transform:translateY(-50%);z-index:600;display:flex;flex-direction:column;gap:.4rem}
+.lb{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:rgba(10,10,10,.85);color:var(--muted);font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb.on{background:var(--accent);color:var(--black);border-color:var(--accent)}
+.lb:hover:not(.on){border-color:var(--accent);color:var(--white)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.4rem 3rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(10,10,10,.85);backdrop-filter:blur(20px)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.02em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:.55rem;cursor:pointer}
+.logo svg{width:30px;height:30px}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-size:.87rem;color:var(--muted);text-decoration:none;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{font-family:'Syne',sans-serif;font-size:.87rem;font-weight:600;padding:.58rem 1.35rem;background:var(--accent);color:var(--black);text-decoration:none;border-radius:100px;transition:transform .2s,background .2s;cursor:pointer;border:none}
+.nav-cta:hover{background:var(--accent-dark);transform:scale(1.04)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,#1a2f0a 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 70%,#0f1f1f 0%,transparent 60%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,242,236,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,242,236,.03) 1px,transparent 1px);background-size:80px 80px}
+.hero-cnt{position:absolute;right:3rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2rem;z-index:2}
+.cnt-i{text-align:right}
+.cnt-n{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;line-height:1}
+.cnt-l{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.hero-c{position:relative;z-index:2;max-width:900px}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem}
+.hero-tag::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.04em;margin-bottom:2rem}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-title .out{-webkit-text-stroke:2px var(--white);color:transparent}
+.hero-bot{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:400px;line-height:1.7;font-weight:300}
+.hero-acts{display:flex;gap:1rem;align-items:center}
+.btn-p{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;padding:1rem 2.2rem;background:var(--accent);color:var(--black);text-decoration:none;border-radius:100px;transition:transform .25s,box-shadow .25s;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;border:none}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,240,62,.3)}
+.btn-g{font-size:.9rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .2s;cursor:pointer;background:none;border:none}
+.btn-g:hover{color:var(--white)}
+
+/* MARQUEE */
+.mq-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.2rem 0;background:var(--card)}
+.mq-track{display:flex;gap:3rem;animation:mq 22s linear infinite;width:max-content}
+.mq-item{font-family:'Syne',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:1.5rem}
+.mq-item::after{content:'✦';color:var(--accent);font-size:.6rem}
+
+/* SECTIONS */
+.sec{padding:6rem 3rem}
+.sec-label{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}
+.sec-label::before{content:'';display:block;width:20px;height:1px;background:var(--accent)}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,4vw,3.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+
+/* SERVICES */
+.svc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;gap:2rem}
+.svc-intro{font-size:1rem;color:var(--muted);max-width:300px;line-height:1.7;font-weight:300}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.svc-card{background:var(--card);padding:2.3rem;position:relative;overflow:hidden;transition:background .3s}
+.svc-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 120%,rgba(200,240,62,.08) 0%,transparent 70%);opacity:0;transition:opacity .4s}
+.svc-card:hover::before{opacity:1}
+.svc-card:hover{background:#161615}
+.svc-n{font-family:'Syne',sans-serif;font-size:.65rem;letter-spacing:.15em;color:var(--accent);margin-bottom:2rem}
+.svc-ico{width:44px;height:44px;margin-bottom:1.4rem;color:var(--accent)}
+.svc-name{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:.7rem}
+.svc-desc{font-size:.87rem;color:var(--muted);line-height:1.7;font-weight:300}
+.svc-arr{position:absolute;bottom:1.8rem;right:1.8rem;width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .3s}
+.svc-card:hover .svc-arr{border-color:var(--accent);color:var(--accent);transform:translate(2px,-2px)}
+
+/* PROCESS */
+.proc-steps{display:flex;flex-direction:column;margin-top:3.5rem;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.step{display:grid;grid-template-columns:72px 1fr auto;gap:1.8rem;align-items:center;padding:1.8rem 2.3rem;border-bottom:1px solid var(--border);transition:background .3s;position:relative}
+.step:last-child{border-bottom:none}
+.step::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transition:transform .3s;transform-origin:top}
+.step:hover{background:var(--card)}
+.step:hover::after{transform:scaleY(1)}
+.step-n{font-family:'Syne',sans-serif;font-size:2.3rem;font-weight:800;color:#222;transition:color .3s}
+.step:hover .step-n{color:var(--accent)}
+.step-c h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.3rem}
+.step-c p{font-size:.87rem;color:var(--muted);line-height:1.6;font-weight:300}
+.step-tag{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.35rem .75rem;border:1px solid var(--border);border-radius:100px;white-space:nowrap}
+
+/* RESULTS */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3.5rem}
+.res-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.3rem;transition:border-color .3s}
+.res-card:hover{border-color:rgba(200,240,62,.25)}
+.res-card.feat{background:var(--accent);border-color:transparent;grid-row:span 2;display:flex;flex-direction:column;justify-content:space-between}
+.res-big{font-family:'Syne',sans-serif;font-size:clamp(3rem,5.5vw,5rem);font-weight:800;line-height:1;letter-spacing:-.04em;color:var(--white);margin-bottom:.4rem}
+.res-card.feat .res-big{color:var(--black)}
+.res-lbl{font-size:.8rem;color:var(--muted)}
+.res-card.feat .res-lbl{color:rgba(0,0,0,.6)}
+.res-desc{font-size:.87rem;color:var(--muted);margin-top:1.2rem;line-height:1.6;font-weight:300}
+.res-card.feat .res-desc{color:rgba(0,0,0,.5);margin-top:.8rem;font-size:.8rem}
+.res-ico{width:38px;height:38px;background:rgba(200,240,62,.1);border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:1.8rem}
+.res-card.feat .res-ico{background:rgba(0,0,0,.15);color:var(--black)}
+
+/* TESTI */
+.tsti-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.tsti-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:border-color .3s,transform .3s}
+.tsti-card:hover{border-color:rgba(200,240,62,.2);transform:translateY(-4px)}
+.stars{display:flex;gap:3px;margin-bottom:1.1rem}
+.star{width:11px;height:11px;background:var(--accent);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.tsti-txt{font-size:.93rem;line-height:1.7;color:var(--white);font-weight:300;margin-bottom:1.3rem}
+.tsti-txt::before{content:'"';color:var(--accent);font-size:1.4rem;line-height:0}
+.tsti-auth{display:flex;align-items:center;gap:.7rem}
+.ava{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;color:var(--black)}
+.a-name{font-size:.83rem;font-weight:500}
+.a-co{font-size:.73rem;color:var(--muted)}
+
+/* CTA */
+.cta-sec{background:var(--black);text-align:center;padding:7rem 3rem;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(200,240,62,.06) 0%,transparent 70%);pointer-events:none}
+.cta-sec .sec-label{justify-content:center}
+.cta-sec .sec-title{max-width:680px;margin:0 auto 1.3rem}
+.cta-desc{font-size:1rem;color:var(--muted);max-width:460px;margin:0 auto 2.8rem;line-height:1.7;font-weight:300}
+.cta-mail{font-size:.85rem;color:var(--muted);margin-top:1.5rem}
+.cta-mail a{color:var(--accent);text-decoration:none}
+
+footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align-items:center;justify-content:space-between;background:var(--black)}
+.f-copy{font-size:.73rem;color:var(--muted)}
+.f-links{display:flex;gap:1.5rem;list-style:none}
+.f-links a{font-size:.73rem;color:var(--muted);text-decoration:none;transition:color .2s;cursor:pointer}
+.f-links a:hover{color:var(--white)}
+
+.rv{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links{display:none}
+  .sec{padding:4rem 1.5rem}
+  .hero{padding:0 1.5rem 3.5rem}
+  .svc-grid{grid-template-columns:1fr}
+  .res-grid,.tsti-grid{grid-template-columns:1fr}
+  .hero-cnt{display:none}
+  .svc-head{flex-direction:column}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem}
+  .lang-sw{right:.5rem}
+  .step{grid-template-columns:60px 1fr}
+  .step-tag{display:none}
+}
+</style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+
+<div class="lang-sw">
+  <button class="lb" id="lb-fr" onclick="setLang('fr')">FR</button>
+  <button class="lb" id="lb-en" onclick="setLang('en')">EN</button>
+</div>
+
+<nav>
+  <a class="logo" href="/">
+    <svg viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#c8f03e" stroke-width="60" stroke-linejoin="round"><polyline points="200,210 540,100 880,210"/><polyline points="200,300 540,190 880,300"/><polyline points="200,390 540,280 880,390"/><polyline points="200,480 540,370 880,480"/></g>
+      <g stroke="#c8f03e" stroke-width="50" stroke-linejoin="round" fill="none"><line x1="230" y1="480" x2="230" y2="820"/><line x1="850" y1="480" x2="850" y2="820"/><line x1="230" y1="820" x2="540" y2="980"/><line x1="850" y1="820" x2="540" y2="980"/><line x1="540" y1="600" x2="540" y2="980"/><line x1="230" y1="820" x2="540" y2="700"/><line x1="850" y1="820" x2="540" y2="700"/></g>
+    </svg>
+    evolus<span>.</span>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="navTo('services')" data-i18n="nav.services">Services</a></li>
+    <li><a onclick="navTo('process')" data-i18n="nav.process">Process</a></li>
+    <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
+    <li><a onclick="navTo('contact')" data-i18n="nav.contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="navTo('contact')" data-i18n="nav.cta">Démarrer →</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div><div class="hero-grid"></div>
+  <div class="hero-cnt">
+    <div class="cnt-i"><div class="cnt-n"><span class="count-up" data-target="120">0</span>+</div><div class="cnt-l" data-i18n="h.c1">Sites livrés</div></div>
+    <div class="cnt-i"><div class="cnt-n"><span class="count-up" data-target="3">0</span>x</div><div class="cnt-l" data-i18n="h.c2">ROI moyen</div></div>
+    <div class="cnt-i"><div class="cnt-n"><span class="count-up" data-target="98">0</span>%</div><div class="cnt-l" data-i18n="h.c3">Satisfaction</div></div>
+  </div>
+  <div class="hero-c">
+    <div class="hero-tag" data-i18n="h.tag">Evolus Agency</div>
+    <h1 class="hero-title">
+      <span id="hl1">On crée</span><br>
+      votre <em data-i18n="h.em">présence</em><br>
+      <span class="out" data-i18n="h.out">digitale.</span>
+    </h1>
+    <div class="hero-bot">
+      <p class="hero-desc" data-i18n="h.desc">Sites web sur-mesure, contenu qui convertit, et stratégies de croissance pour des résultats concrets.</p>
+      <div class="hero-acts">
+        <button class="btn-p" onclick="navTo('contact')"><span data-i18n="h.cta">Lancer mon projet</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></button>
+        <a href="/blog" class="btn-g"><span data-i18n="h.blog">Voir le blog</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq-wrap"><div class="mq-track" id="mq"></div></div>
+
+<!-- SERVICES -->
+<section class="sec" id="services" style="background:var(--black)">
+  <div class="svc-head rv">
+    <div><div class="sec-label" data-i18n="sv.lbl">Ce qu'on fait</div><h2 class="sec-title" data-i18n="sv.ttl">Trois leviers.<br>Un seul objectif.</h2></div>
+    <p class="svc-intro" data-i18n="sv.intro">On construit des machines à croissance, pas juste des sites web.</p>
+  </div>
+  <div class="svc-grid rv d1">
+    <div class="svc-card"><div class="svc-n">01</div><svg class="svc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="10" width="36" height="28" rx="3"/><path d="M6 18h36M14 26l5 4 10-8"/></svg><h3 class="svc-name" data-i18n="s1n">Création web</h3><p class="svc-desc" data-i18n="s1d">Sites vitrines, e-commerce et landing pages pensés pour convertir.</p><div class="svc-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div></div>
+    <div class="svc-card"><div class="svc-n">02</div><svg class="svc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 36V24l-6 6M24 36V12l-6 18M36 36V20l-6 8"/><path d="M6 40h36"/></svg><h3 class="svc-name" data-i18n="s2n">Refonte & scaling</h3><p class="svc-desc" data-i18n="s2d">Votre site sous-performe ? On diagnostique, restructure et optimise.</p><div class="svc-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div></div>
+    <div class="svc-card"><div class="svc-n">03</div><svg class="svc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 20c0-8.8 7.2-16 16-16s16 7.2 16 16c0 6-3.3 11.2-8.2 14"/><path d="M24 44V32"/><circle cx="24" cy="28" r="4"/></svg><h3 class="svc-name" data-i18n="s3n">Content & leads</h3><p class="svc-desc" data-i18n="s3d">Articles SEO, copywriting et tunnels de vente qui convertissent.</p><div class="svc-arr"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec" style="background:#0d0d0c" id="process">
+  <div class="rv"><div class="sec-label" data-i18n="pr.lbl">Comment ça marche</div><h2 class="sec-title" data-i18n="pr.ttl">Un process clair,<br>des résultats mesurables.</h2></div>
+  <div class="proc-steps rv d1">
+    <div class="step"><div class="step-n">01</div><div class="step-c"><h3 data-i18n="p1n">Audit & stratégie</h3><p data-i18n="p1d">Analyse de votre marché et feuille de route sur-mesure.</p></div><span class="step-tag" data-i18n="p1w">Semaine 1</span></div>
+    <div class="step"><div class="step-n">02</div><div class="step-c"><h3 data-i18n="p2n">Design & UX</h3><p data-i18n="p2d">Maquettes haute-fidélité, UX pensée pour la conversion.</p></div><span class="step-tag" data-i18n="p2w">Sem. 2–3</span></div>
+    <div class="step"><div class="step-n">03</div><div class="step-c"><h3 data-i18n="p3n">Développement</h3><p data-i18n="p3d">Code propre, performances max, CMS simple.</p></div><span class="step-tag" data-i18n="p3w">Sem. 3–5</span></div>
+    <div class="step"><div class="step-n">04</div><div class="step-c"><h3 data-i18n="p4n">Contenu & SEO</h3><p data-i18n="p4d">Textes optimisés, structure qui plaît à Google.</p></div><span class="step-tag" data-i18n="p4w">Continu</span></div>
+    <div class="step"><div class="step-n">05</div><div class="step-c"><h3 data-i18n="p5n">Lancement & croissance</h3><p data-i18n="p5d">Go-live, KPIs, itérations. On scale ensemble.</p></div><span class="step-tag" data-i18n="p5w">Ongoing</span></div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="sec" style="background:var(--black)">
+  <div class="rv"><div class="sec-label" data-i18n="rs.lbl">Nos chiffres</div><h2 class="sec-title" data-i18n="rs.ttl">Des résultats<br>qui parlent.</h2></div>
+  <div class="res-grid rv d1">
+    <div class="res-card feat">
+      <div><div class="res-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="res-big">+340%</div><div class="res-lbl" data-i18n="r1l">de trafic organique moyen</div></div>
+      <p class="res-desc" data-i18n="r1d">Le trafic triple en 6 mois en moyenne.</p>
+    </div>
+    <div class="res-card"><div class="res-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="res-big">21j</div><div class="res-lbl" data-i18n="r2l">Délai moyen</div><p class="res-desc" data-i18n="r2d">Rapidité sans compromis.</p></div>
+    <div class="res-card"><div class="res-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="res-big">120+</div><div class="res-lbl" data-i18n="r3l">Clients</div><p class="res-desc" data-i18n="r3d">De la startup à la PME.</p></div>
+    <div class="res-card"><div class="res-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="res-big">3x</div><div class="res-lbl" data-i18n="r4l">ROI moyen</div><p class="res-desc" data-i18n="r4d">Chaque euro en génère 3.</p></div>
+  </div>
+</section>
+
+<!-- TESTI -->
+<section class="sec" style="background:#0d0d0c">
+  <div class="rv"><div class="sec-label" data-i18n="ts.lbl">Ils nous font confiance</div><h2 class="sec-title" data-i18n="ts.ttl">Ce que disent<br>nos clients.</h2></div>
+  <div class="tsti-grid rv d1">
+    <div class="tsti-card"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div><p class="tsti-txt" data-i18n="t1">Evolus a transformé notre site en outil de vente. En 3 mois, nos devis ont doublé.</p><div class="tsti-auth"><div class="ava">KM</div><div><div class="a-name">Karim M.</div><div class="a-co">CEO, ArchiDesign Studio</div></div></div></div>
+    <div class="tsti-card"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div><p class="tsti-txt" data-i18n="t2">Le contenu génère des leads depuis 6 mois sans qu'on lève le petit doigt.</p><div class="tsti-auth"><div class="ava">SB</div><div><div class="a-name">Sara B.</div><div class="a-co">Directrice, FinConsult</div></div></div></div>
+    <div class="tsti-card"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div><p class="tsti-txt" data-i18n="t3">+280% de trafic en 4 mois. Ils ont compris notre secteur mieux que personne.</p><div class="tsti-auth"><div class="ava">YA</div><div><div class="a-name">Youssef A.</div><div class="a-co">Fondateur, Medic360</div></div></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="contact">
+  <div class="sec-label rv" data-i18n="ct.lbl">Passons à l'action</div>
+  <h2 class="sec-title rv d1" data-i18n="ct.ttl">Votre site mérite<br>mieux qu'hier.</h2>
+  <p class="cta-desc rv d2" data-i18n="ct.desc">Discutons de votre projet. Audit gratuit, stratégie claire, résultats mesurables.</p>
+  <div class="rv d3"><a href="mailto:contact@evolus.agency" class="btn-p" style="display:inline-flex"><span data-i18n="ct.btn">Prendre contact</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a></div>
+  <p class="cta-mail rv d3"><span data-i18n="ct.mail">Ou écrivez-nous :</span> <a href="mailto:contact@evolus.agency">contact@evolus.agency</a></p>
+</section>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:1.8rem">
+    <a class="logo" href="/" style="font-size:1.1rem">evolus<span>.</span></a>
+    <span class="f-copy">© 2025 Evolus Agency</span>
+  </div>
+  <ul class="f-links">
+    <li><a onclick="navTo('services')" data-i18n="nav.services">Services</a></li>
+    <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
+    <li><a href="mailto:contact@evolus.agency" data-i18n="nav.contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+const T={
+  fr:{'nav.services':'Services','nav.process':'Process','nav.blog':'Blog','nav.contact':'Contact','nav.cta':'Démarrer →','h.tag':'Evolus Agency','h.c1':'Sites livrés','h.c2':'ROI moyen','h.c3':'Satisfaction','h.em':'présence','h.out':'digitale.','h.desc':'Sites web sur-mesure, contenu qui convertit, et stratégies de croissance.','h.cta':'Lancer mon projet','h.blog':'Voir le blog','sv.lbl':'Ce qu\'on fait','sv.ttl':'Trois leviers.<br>Un seul objectif.','sv.intro':'On construit des machines à croissance.','s1n':'Création web','s1d':'Sites vitrines, e-commerce et landing pages pensés pour convertir.','s2n':'Refonte & scaling','s2d':'On diagnostique, restructure et optimise.','s3n':'Content & leads','s3d':'Articles SEO et tunnels de vente qui convertissent.','pr.lbl':'Comment ça marche','pr.ttl':'Un process clair,<br>des résultats mesurables.','p1n':'Audit & stratégie','p1d':'Analyse de votre marché.','p1w':'Semaine 1','p2n':'Design & UX','p2d':'Maquettes haute-fidélité.','p2w':'Sem. 2–3','p3n':'Développement','p3d':'Code propre, CMS simple.','p3w':'Sem. 3–5','p4n':'Contenu & SEO','p4d':'Textes optimisés.','p4w':'Continu','p5n':'Lancement & croissance','p5d':'On scale ensemble.','p5w':'Ongoing','rs.lbl':'Nos chiffres','rs.ttl':'Des résultats<br>qui parlent.','r1l':'de trafic organique','r1d':'Le trafic triple en 6 mois.','r2l':'Délai moyen','r2d':'Rapidité sans compromis.','r3l':'Clients','r3d':'De la startup à la PME.','r4l':'ROI moyen','r4d':'Chaque euro en génère 3.','ts.lbl':'Ils nous font confiance','ts.ttl':'Ce que disent<br>nos clients.','t1':'Evolus a transformé notre site. En 3 mois, nos devis ont doublé.','t2':'Le contenu génère des leads depuis 6 mois sans effort.','t3':'+280% de trafic en 4 mois.','ct.lbl':'Passons à l\'action','ct.ttl':'Votre site mérite<br>mieux qu\'hier.','ct.desc':'Audit gratuit, stratégie claire, résultats mesurables.','ct.btn':'Prendre contact','ct.mail':'Ou écrivez-nous :','mq':['Création de sites web','Refonte & optimisation','Content marketing','Génération de leads','SEO & Visibilité','Landing pages','Copywriting','Stratégie digitale']},
+  en:{'nav.services':'Services','nav.process':'Process','nav.blog':'Blog','nav.contact':'Contact','nav.cta':'Get started →','h.tag':'Evolus Agency','h.c1':'Sites delivered','h.c2':'Avg. ROI','h.c3':'Satisfaction','h.em':'your digital','h.out':'presence.','h.desc':'Custom websites, converting content, and growth strategies.','h.cta':'Start my project','h.blog':'See the blog','sv.lbl':'What we do','sv.ttl':'Three levers.<br>One goal.','sv.intro':'We engineer growth machines.','s1n':'Website creation','s1d':'Landing pages and e-commerce built to convert.','s2n':'Redesign & scaling','s2d':'We diagnose, restructure and optimize.','s3n':'Content & leads','s3d':'SEO articles and sales funnels that convert.','pr.lbl':'How it works','pr.ttl':'A clear process,<br>measurable results.','p1n':'Audit & strategy','p1d':'Market analysis.','p1w':'Week 1','p2n':'Design & UX','p2d':'High-fidelity mockups.','p2w':'Weeks 2–3','p3n':'Development','p3d':'Clean code, easy CMS.','p3w':'Weeks 3–5','p4n':'Content & SEO','p4d':'Optimized copy.','p4w':'Ongoing','p5n':'Launch & growth','p5d':'We scale together.','p5w':'Ongoing','rs.lbl':'Our numbers','rs.ttl':'Results<br>that speak.','r1l':'avg. organic traffic','r1d':'Traffic triples in 6 months.','r2l':'Avg. delivery','r2d':'Speed without compromise.','r3l':'Clients','r3d':'From startup to SME.','r4l':'Avg. ROI','r4d':'Every dollar returns three.','ts.lbl':'Trusted by','ts.ttl':'What our clients<br>say.','t1':'Evolus turned our site into a sales tool. Quotes doubled in 3 months.','t2':'Content has been generating leads for 6 months without effort.','t3':'+280% traffic in 4 months.','ct.lbl':'Let\'s take action','ct.ttl':'Your site deserves<br>better.','ct.desc':'Free audit, clear strategy, measurable results.','ct.btn':'Get in touch','ct.mail':'Or email us:','mq':['Website creation','Redesign & optimization','Content marketing','Lead generation','SEO & Visibility','Landing pages','Copywriting','Digital strategy']}
+};
+
+let lang='fr';
+
+function applyLang(){
+  const t=T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(t[k]!==undefined) el.innerHTML=t[k];
+  });
+  const hl1=document.getElementById('hl1');
+  if(hl1) hl1.textContent=lang==='fr'?'On crée':'We build';
+  const mq=document.getElementById('mq');
+  if(mq){
+    const items=[...t['mq'],...t['mq']];
+    mq.innerHTML=items.map(i=>`<span class="mq-item">${i}</span>`).join('');
+  }
+  document.getElementById('lb-fr').classList.toggle('on',lang==='fr');
+  document.getElementById('lb-en').classList.toggle('on',lang==='en');
+  document.documentElement.lang=lang;
+}
+
+function setLang(l){
+  lang=l;
+  localStorage.setItem('evolus_lang',l);
+  applyLang();
+}
+
+function navTo(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Auto-detect
+(function(){
+  const saved=localStorage.getItem('evolus_lang');
+  if(saved){lang=saved;}
+  else{
+    const bl=(navigator.language||'en').toLowerCase();
+    const fr=['fr','be','ch','ca','lu','mc','sn','ci','cm','mg'];
+    lang=fr.some(c=>bl.startsWith(c)||bl.includes('-'+c))?'fr':'en';
+  }
+  applyLang();
+})();
+
+// Cursor
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+document.querySelectorAll('a,button,.svc-card,.step,.tsti-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('h'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('h'));
+});
+
+// Scroll reveal
+const rvObs=new IntersectionObserver(ev=>{ev.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+// Count up
+function countUp(el){
+  const t=parseInt(el.dataset.target);
+  const s=performance.now();
+  const go=n=>{const p=Math.min((n-s)/1800,1);el.textContent=Math.floor((1-Math.pow(1-p,3))*t);if(p<1)requestAnimationFrame(go);};
+  requestAnimationFrame(go);
+}
+const coObs=new IntersectionObserver(ev=>{ev.forEach(e=>{if(e.isIntersecting){countUp(e.target);coObs.unobserve(e.target);}});},{threshold:.5});
+document.querySelectorAll('.count-up').forEach(el=>coObs.observe(el));
+</script>
+</body>
 </html>
