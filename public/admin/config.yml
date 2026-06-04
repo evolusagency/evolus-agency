@@ -1,0 +1,24 @@
+backend:
+  name: github
+  repo: evolusagency/evolus-agency
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: blog
+    label: Articles Blog
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string, hint: "Format: 12 Juin 2025" }
+      - { label: Tag, name: tag, widget: string, hint: "Ex: Stratégie B2B, SEO B2B, Copywriting" }
+      - { label: "Temps de lecture", name: read, widget: string, hint: "Ex: 8 min" }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: Contenu, name: body, widget: markdown }
