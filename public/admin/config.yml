@@ -24,3 +24,4 @@ collections:
       - { label: "Temps de lecture", name: read, widget: string, hint: "Ex: 8 min" }
       - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
       - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
