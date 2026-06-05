@@ -1,7 +1,7 @@
 ---
 title: "Comment multiplier par 3 votre taux de conversion B2B en 90 jours"
 excerpt: "La plupart des sites B2B perdent 80% de leurs visiteurs qualifiés faute d'une stratégie de conversion claire. Voici le framework exact que nous appliquons chez nos clients pour tripler leurs leads en un trimestre."
-date: "12 Juin 2025"
+date: 2026-06-01
 tag: "Stratégie B2B"
 read: "9 min"
 lang: "fr"

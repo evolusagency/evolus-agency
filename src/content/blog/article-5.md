@@ -1,7 +1,7 @@
 ---
 title: "Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés"
 excerpt: "Un visiteur qui part sans convertir est une opportunité perdue. Dans le B2B, où chaque prospect vaut des milliers d'euros, cette fuite est inacceptable. Voici les 3 causes principales et les correctifs à appliquer cette semaine."
-date: "14 Mai 2025"
+date: 2026-03-30
 tag: "Stratégie digitale"
 read: "10 min"
 lang: "fr"

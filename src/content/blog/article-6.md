@@ -1,7 +1,7 @@
 ---
 title: "LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité"
 excerpt: "LinkedIn reste la plateforme B2B la plus rentable pour générer des inbounds organiques — à condition de ne pas faire comme tout le monde. Voici notre playbook pour les entreprises qui veulent des résultats sans dépenser en ads."
-date: "7 Mai 2025"
+date: 2026-06-03
 tag: "LinkedIn B2B"
 read: "7 min"
 lang: "fr"

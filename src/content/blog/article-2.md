@@ -1,7 +1,7 @@
 ---
 title: "SEO B2B : pourquoi votre blog ne génère aucun lead (et comment corriger ça)"
 excerpt: "Publier des articles sans stratégie, c'est écrire pour Google mais pas pour vos acheteurs. Voici l'approche content-to-revenue qui transforme votre blog en machine à prospects qualifiés."
-date: "5 Juin 2025"
+date: 2026-05-03
 tag: "SEO B2B"
 read: "7 min"
 lang: "fr"

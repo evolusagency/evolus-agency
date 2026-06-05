@@ -1,7 +1,7 @@
 ---
 title: "5 tunnels de prospection B2B qui fonctionnent encore en 2025"
 excerpt: "Cold email, LinkedIn, content marketing, SEA, ABM — tous ces canaux fonctionnent. Mais pas de la même façon selon votre secteur, votre cible et votre cycle de vente. Voici lesquels prioriser."
-date: "28 Mai 2025"
+date: 2026-04-25
 tag: "Lead Generation"
 read: "8 min"
 lang: "fr"

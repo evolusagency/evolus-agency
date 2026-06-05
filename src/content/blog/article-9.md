@@ -1,7 +1,7 @@
 ---
 title: "Marketing automation B2B : les 5 séquences qui nurturent vraiment vos leads"
 excerpt: "80% des leads B2B ne sont pas prêts à acheter au moment du premier contact. Sans séquence de nurturing automatisée, vous perdez ces prospects au profit de concurrents plus persistants."
-date: "15 Avril 2025"
+date: 2026-06-01
 tag: "Automation"
 read: "9 min"
 lang: "fr"

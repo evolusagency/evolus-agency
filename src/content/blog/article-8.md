@@ -1,7 +1,7 @@
 ---
 title: "Onboarding client B2B : transformer la première semaine en avantage concurrentiel"
 excerpt: "La majorité des churns B2B se décident dans les 30 premiers jours. Un onboarding structuré est votre meilleur outil de rétention — et souvent la meilleure source d'upsell."
-date: "22 Avril 2025"
+date: 2026-06-02
 tag: "Expérience client"
 read: "7 min"
 lang: "fr"

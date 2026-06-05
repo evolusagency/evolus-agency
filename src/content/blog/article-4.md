@@ -1,7 +1,7 @@
 ---
 title: "Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs"
 excerpt: "Vos textes parlent de vous. Les textes qui convertissent parlent de votre prospect. Voici les 7 techniques de copywriting que nous utilisons pour des pages qui signent des contrats."
-date: "20 Mai 2025"
+date: 2026-04-15
 tag: "Copywriting"
 read: "6 min"
 lang: "fr"

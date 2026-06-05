@@ -1,7 +1,7 @@
 ---
 title: "Comment présenter vos tarifs B2B pour ne plus perdre sur le prix"
 excerpt: "Le prix n'est presque jamais la vraie raison pour laquelle vous perdez des deals. C'est la perception de la valeur. Voici comment restructurer votre présentation tarifaire pour vendre sans brader."
-date: "29 Avril 2025"
+date: 2026-05-12
 tag: "Pricing B2B"
 read: "8 min"
 lang: "fr"
