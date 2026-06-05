@@ -1,10 +1,14 @@
 ---
-title: "Social Selling B2B en 2026 : Le playbook pour générer des leads avec l'IA sans détruire votre marque"
-excerpt: "Les outils d'automatisation de masse détruisent votre délivrabilité et votre réputation. Découvrez la stratégie hybride (IA + Humain) et les derniers outils pour dominer LinkedIn et générer des opportunités chaudes cette année."
-date: "2026-06-05"
-tag: "LinkedIn B2B"
-read: "8 min"
-lang: "fr"
+title: "Social Selling B2B en 2026 : Le playbook pour générer des leads avec
+  l'IA sans détruire votre marque"
+excerpt: Les outils d'automatisation de masse détruisent votre délivrabilité et
+  votre réputation. Découvrez la stratégie hybride (IA + Humain) et les derniers
+  outils pour dominer LinkedIn et générer des opportunités chaudes cette année.
+date: 2026-06-05
+tag: LinkedIn B2B
+read: 8 min
+lang: fr
+image: /images/social-selling-b2b-strategie-linkedin-ia.png
 ---
 
 Le constat est sans appel : en 2026, la boîte de réception de votre prospect est un champ de bataille saturé. Entre les vagues de *cold emails* générés par paquets de mille et les invitations LinkedIn automatisées par des scripts basiques, les décideurs ont développé des mécanismes de défense ultra-efficaces. Les messages génériques du type *"Bonjour [First_Name], j'ai vu que vous étiez dans le secteur..."* terminent instantanément dans la corbeille.
