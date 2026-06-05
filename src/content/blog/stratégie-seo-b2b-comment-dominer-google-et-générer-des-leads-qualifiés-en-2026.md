@@ -4,7 +4,7 @@ title: "Stratégie SEO B2B : Comment dominer Google et générer des leads
 excerpt: Découvrez les piliers d'une stratégie SEO B2B efficace. Apprenez à
   cibler des mots-clés transactionnels à forte valeur et à structurer votre
   contenu pour transformer vos visiteurs en clients.
-date: 12 Juin 2026
+date: 2026-06-05
 tag: Stratégie B2B, SEO B2B, Inbound Marketing, Génération de Leads
 read: 6 min
 lang: fr
