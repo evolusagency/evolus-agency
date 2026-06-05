@@ -1,8 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
-
 const posts = await getCollection('blog');
-const sorted = posts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
+const sorted = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const formatDate = (dateString) => {
+  return new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(new Date(dateString));
+};
 ---
 <!DOCTYPE html>
 <html lang="fr">
@@ -127,7 +133,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align
         <div class="art-entry">
           <div class="art-meta">
             <div class="art-num">{String(i+1).padStart(2,'0')}</div>
-            <div class="art-date">{post.data.date}</div>
+            <div class="art-date">{formatDate(post.data.date)}</div>
             <div class="art-tag-pill">{post.data.tag}</div>
           </div>
           <a class="art-body" href={`/blog/${post.id}`}>
