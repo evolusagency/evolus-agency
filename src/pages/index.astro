@@ -1,29 +1,19 @@
 ---
-
----
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
----
+const title = "Evolus Agency — Sites web sur-mesure, Content & SEO";
+const description = "Evolus Agency crée des sites web sur-mesure, du contenu qui convertit et des stratégies de croissance pour tripler vos leads en 90 jours.";
 ---
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evolus Agency</title>
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -32,7 +22,7 @@
   --black:#0a0a0a;--white:#f5f2ec;--accent:#c8f03e;--accent-dark:#a8cc2e;
   --muted:#6b6860;--border:rgba(245,242,236,0.12);--card:#111110;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;cursor:none}
 
 .cur{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;mix-blend-mode:difference}
@@ -187,8 +177,8 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align
 <div class="cur" id="cur"></div>
 
 <div class="lang-sw">
-  <button class="lb" id="lb-fr" onclick="setLang('fr')">FR</button>
-  <button class="lb" id="lb-en" onclick="setLang('en')">EN</button>
+  <button class="lb" id="lb-fr" onclick="setLang('fr')" aria-label="Français">FR</button>
+  <button class="lb" id="lb-en" onclick="setLang('en')" aria-label="English">EN</button>
 </div>
 
 <nav>
@@ -200,12 +190,12 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align
     evolus<span>.</span>
   </a>
   <ul class="nav-links">
-    <li><a onclick="navTo('services')" data-i18n="nav.services">Services</a></li>
-    <li><a onclick="navTo('process')" data-i18n="nav.process">Process</a></li>
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#process" data-i18n="nav.process">Process</a></li>
     <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
-    <li><a onclick="navTo('contact')" data-i18n="nav.contact">Contact</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
-  <button class="nav-cta" onclick="navTo('contact')" data-i18n="nav.cta">Démarrer →</button>
+  <a class="nav-cta" href="#contact" data-i18n="nav.cta">Démarrer →</a>
 </nav>
 
 <!-- HERO -->
@@ -226,7 +216,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align
     <div class="hero-bot">
       <p class="hero-desc" data-i18n="h.desc">Sites web sur-mesure, contenu qui convertit, et stratégies de croissance pour des résultats concrets.</p>
       <div class="hero-acts">
-        <button class="btn-p" onclick="navTo('contact')"><span data-i18n="h.cta">Lancer mon projet</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></button>
+        <a class="btn-p" href="#contact"><span data-i18n="h.cta">Lancer mon projet</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
         <a href="/blog" class="btn-g"><span data-i18n="h.blog">Voir le blog</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
@@ -300,7 +290,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align
     <span class="f-copy">© 2025 Evolus Agency</span>
   </div>
   <ul class="f-links">
-    <li><a onclick="navTo('services')" data-i18n="nav.services">Services</a></li>
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
     <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
     <li><a href="mailto:contact@evolus.agency" data-i18n="nav.contact">Contact</a></li>
   </ul>
@@ -330,6 +320,12 @@ function applyLang(){
   document.getElementById('lb-fr').classList.toggle('on',lang==='fr');
   document.getElementById('lb-en').classList.toggle('on',lang==='en');
   document.documentElement.lang=lang;
+  // Update meta title & description dynamically
+  const titles={fr:'Evolus Agency — Sites web sur-mesure, Content & SEO',en:'Evolus Agency — Custom Websites, Content & SEO'};
+  const descs={fr:'Evolus Agency crée des sites web sur-mesure, du contenu qui convertit et des stratégies de croissance pour tripler vos leads en 90 jours.',en:'Evolus Agency builds custom websites, converting content and growth strategies to triple your leads in 90 days.'};
+  document.title=titles[lang];
+  const metaDesc=document.querySelector('meta[name="description"]');
+  if(metaDesc) metaDesc.setAttribute('content',descs[lang]);
 }
 
 function setLang(l){
@@ -338,20 +334,30 @@ function setLang(l){
   applyLang();
 }
 
-function navTo(id){
-  const el=document.getElementById(id);
-  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-// Auto-detect
+// Auto-detect: saved preference first, then browser language
 (function(){
   const saved=localStorage.getItem('evolus_lang');
-  if(saved){lang=saved;}
-  else{
-    const bl=(navigator.language||'en').toLowerCase();
-    const fr=['fr','be','ch','ca','lu','mc','sn','ci','cm','mg'];
-    lang=fr.some(c=>bl.startsWith(c)||bl.includes('-'+c))?'fr':'en';
+  if(saved && (saved==='fr'||saved==='en')){
+    lang=saved;
+    applyLang();
+    return;
   }
+  // Use browser language
+  const bl=(navigator.language||navigator.languages?.[0]||'en').toLowerCase();
+  const frLocales=['fr','be','ch','ca','lu','mc','sn','ci','cm','mg','dz','ma','tn'];
+  lang=frLocales.some(c=>bl.startsWith(c)||bl.includes('-'+c))?'fr':'en';
+  // Try IP geolocation as a fallback (non-blocking)
+  fetch('https://ipapi.co/json/')
+    .then(r=>r.json())
+    .then(d=>{
+      if(!localStorage.getItem('evolus_lang')){
+        const country=(d.country_code||'').toLowerCase();
+        const frCountries=['fr','be','ch','ca','lu','mc','sn','ci','cm','mg','dz','ma','tn','bf','bj','cd','cg','ga','gn','ml','ne','rw','td','tg'];
+        lang=frCountries.includes(country)?'fr':'en';
+        applyLang();
+      }
+    })
+    .catch(()=>{}); // Fail silently, browser language already applied
   applyLang();
 })();
 
