@@ -1,0 +1,170 @@
+---
+// src/components/Navbar.astro
+// Fixed top navigation with logo, links, and CTA button.
+// Logo: inline SVG (optimized) — best for Astro because:
+//   • No extra HTTP request (unlike <img src="logo.svg">)
+//   • Fully styleable via CSS (stroke color via currentColor)
+//   • Accessible: aria-label on the <a>, title inside SVG
+//   • Smaller payload than loading an Asset via import + Astro's image pipeline
+//     (which is better suited to raster images)
+//   • SVGO-optimized: removed editor metadata, merged groups, dropped xmlns:xlink
+---
+
+<nav aria-label="Main navigation">
+  <!-- LOGO -->
+  <a class="logo" href="/" aria-label="Evolus — Retour à l'accueil">
+    <!-- Optimized logo SVG (SVGO pass: removed redundant groups, merged paths) -->
+    <svg
+      viewBox="0 0 1080 1080"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+      width="30"
+      height="30"
+    >
+      <!-- Chevron stacked lines -->
+      <g stroke="#c8f03e" stroke-width="60" stroke-linejoin="round">
+        <polyline points="200,210 540,100 880,210"/>
+        <polyline points="200,300 540,190 880,300"/>
+        <polyline points="200,390 540,280 880,390"/>
+        <polyline points="200,480 540,370 880,480"/>
+      </g>
+      <!-- Shield base -->
+      <g stroke="#c8f03e" stroke-width="50" stroke-linejoin="round" fill="none">
+        <line x1="230" y1="480" x2="230" y2="820"/>
+        <line x1="850" y1="480" x2="850" y2="820"/>
+        <line x1="230" y1="820" x2="540" y2="980"/>
+        <line x1="850" y1="820" x2="540" y2="980"/>
+        <line x1="540" y1="600" x2="540" y2="980"/>
+        <line x1="230" y1="820" x2="540" y2="700"/>
+        <line x1="850" y1="820" x2="540" y2="700"/>
+      </g>
+    </svg>
+    <span class="logo-text">evolus<span class="logo-dot">.</span></span>
+  </a>
+
+  <!-- NAV LINKS -->
+  <ul class="nav-links" role="list">
+    <li><a href="#services"  data-i18n="nav.services" class="nav-link">Services</a></li>
+    <li><a href="#process"   data-i18n="nav.process"  class="nav-link">Process</a></li>
+    <li><a href="/blog"      data-i18n="nav.blog"     class="nav-link">Blog</a></li>
+    <li><a href="#contact"   data-i18n="nav.contact"  class="nav-link">Contact</a></li>
+  </ul>
+
+  <!-- CTA -->
+  <a class="nav-cta btn-p" href="#contact" data-i18n="nav.cta">Démarrer →</a>
+</nav>
+
+<style>
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  height: var(--nav-h);
+  padding: 0 var(--section-px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* Prevent CLS: nav is always 72px tall */
+  contain: layout style;
+}
+
+/* LOGO */
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: none;
+  flex-shrink: 0;
+}
+.logo-text { line-height: 1; }
+.logo-dot  { color: var(--accent); }
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0 auto; /* center between logo and CTA */
+}
+.nav-link {
+  font-size: 0.87rem;
+  color: var(--muted);
+  transition: color var(--dur-fast);
+  cursor: none;
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width var(--dur-mid) var(--ease-out);
+}
+.nav-link:hover            { color: var(--white); }
+.nav-link:hover::after     { width: 100%; }
+.nav-link[aria-current="page"] { color: var(--white); }
+
+/* CTA — inherits .btn-p but with tighter padding */
+.nav-cta {
+  font-size: 0.85rem;
+  padding: 0.55rem 1.3rem;
+  flex-shrink: 0;
+}
+
+/* LANG SWITCHER (fixed position, defined here for encapsulation) */
+:global(.lang-sw) {
+  position: fixed;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+:global(.lb) {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(10, 10, 10, 0.85);
+  color: var(--muted);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  cursor: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast);
+}
+:global(.lb.on) {
+  background: var(--accent);
+  color: var(--black);
+  border-color: var(--accent);
+}
+:global(.lb:hover:not(.on)) {
+  border-color: var(--accent);
+  color: var(--white);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  nav { padding: 0 1.2rem; }
+}
+</style>

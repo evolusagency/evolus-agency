@@ -1,0 +1,49 @@
+---
+// src/components/Marquee.astro
+// Infinite scrolling marquee strip
+---
+
+<div class="mq-wrap" aria-hidden="true">
+  <div class="mq-track" id="mq">
+    <!-- Populated by JS i18n system — duplicated for seamless loop -->
+  </div>
+</div>
+
+<style>
+.mq-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.1rem 0;
+  background: var(--card);
+}
+
+.mq-track {
+  display: flex;
+  gap: 3rem;
+  animation: mq 24s linear infinite;
+  width: max-content;
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+:global(.mq-item) {
+  font-family: 'Syne', sans-serif;
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  user-select: none;
+}
+:global(.mq-item::after) {
+  content: '✦';
+  color: var(--accent);
+  font-size: 0.55rem;
+}
+</style>

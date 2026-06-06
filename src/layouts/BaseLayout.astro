@@ -1,0 +1,52 @@
+---
+// src/layouts/BaseLayout.astro
+// Base layout: <head>, fonts, global CSS, noise overlay, custom cursor
+import '../styles/global.css';
+
+interface Props {
+  title:       string;
+  description: string;
+  lang?:       string;
+}
+
+const { title, description, lang = 'fr' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang={lang} id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description"        content={description} />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type"        content="website" />
+  <meta name="theme-color"        content="#0a0a0a" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/x-icon"  href="/favicon.ico" />
+
+  <!-- Fonts — preconnect first, then load. display=swap prevents FOIT. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap"
+  />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cur" id="cur" aria-hidden="true"></div>
+
+  <!-- Lang switcher — teleported to fixed position via CSS -->
+  <div class="lang-sw" role="group" aria-label="Language selector">
+    <button class="lb" id="lb-fr" aria-label="Français" aria-pressed="true">FR</button>
+    <button class="lb" id="lb-en" aria-label="English"  aria-pressed="false">EN</button>
+  </div>
+
+  <slot />
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+---
+// src/components/Footer.astro
+---
+
+<footer>
+  <div class="f-brand">
+    <a class="f-logo" href="/" aria-label="Evolus — Accueil">
+      evolus<span class="logo-dot">.</span>
+    </a>
+    <span class="f-copy" data-i18n="footer.copy">© 2025 Evolus Agency</span>
+  </div>
+
+  <nav aria-label="Footer navigation">
+    <ul class="f-links" role="list">
+      <li><a href="#services" data-i18n="footer.links.0.label">Services</a></li>
+      <li><a href="/blog"     data-i18n="footer.links.1.label">Blog</a></li>
+      <li>
+        <a href="mailto:contact@evolus.agency" data-i18n="footer.links.2.label">Contact</a>
+      </li>
+    </ul>
+  </nav>
+</footer>
+
+<style>
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem var(--section-px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--black);
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.f-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.f-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  cursor: none;
+}
+.logo-dot { color: var(--accent); }
+
+.f-copy {
+  font-size: var(--text-label);
+  color: var(--muted);
+}
+
+.f-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.f-links a {
+  font-size: var(--text-label);
+  color: var(--muted);
+  transition: color var(--dur-fast);
+  cursor: none;
+}
+.f-links a:hover { color: var(--white); }
+
+@media (max-width: 640px) {
+  footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+  .f-brand { flex-direction: column; gap: 0.5rem; }
+}
+</style>

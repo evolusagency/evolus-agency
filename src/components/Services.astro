@@ -1,0 +1,160 @@
+---
+// src/components/Services.astro
+---
+
+<section class="sec" id="services" style="background:var(--black)">
+  <div class="svc-head rv">
+    <div>
+      <div class="sec-label" data-i18n="services.label">Ce qu'on fait</div>
+      <h2 class="sec-title" data-i18n-html="services.title">Trois leviers.<br>Un seul objectif.</h2>
+    </div>
+    <p class="svc-intro" data-i18n="services.intro">On construit des machines à croissance.</p>
+  </div>
+
+  <div class="svc-grid rv d1" role="list">
+
+    <!-- Card 01 -->
+    <article class="svc-card" role="listitem">
+      <div class="svc-n" aria-hidden="true">01</div>
+      <svg class="svc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <rect x="6" y="10" width="36" height="28" rx="3"/>
+        <path d="M6 18h36M14 26l5 4 10-8"/>
+      </svg>
+      <h3 class="svc-name" data-i18n="services.items.0.name">Création web</h3>
+      <p class="svc-desc" data-i18n="services.items.0.desc">Sites vitrines, e-commerce et landing pages pensés pour convertir.</p>
+      <div class="svc-arr" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 17L17 7M17 7H7M17 7v10"/>
+        </svg>
+      </div>
+    </article>
+
+    <!-- Card 02 -->
+    <article class="svc-card" role="listitem">
+      <div class="svc-n" aria-hidden="true">02</div>
+      <svg class="svc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M12 36V24l-6 6M24 36V12l-6 18M36 36V20l-6 8"/>
+        <path d="M6 40h36"/>
+      </svg>
+      <h3 class="svc-name" data-i18n="services.items.1.name">Refonte & scaling</h3>
+      <p class="svc-desc" data-i18n="services.items.1.desc">Votre site sous-performe ? On diagnostique, restructure et optimise.</p>
+      <div class="svc-arr" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 17L17 7M17 7H7M17 7v10"/>
+        </svg>
+      </div>
+    </article>
+
+    <!-- Card 03 -->
+    <article class="svc-card" role="listitem">
+      <div class="svc-n" aria-hidden="true">03</div>
+      <svg class="svc-ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M8 20c0-8.8 7.2-16 16-16s16 7.2 16 16c0 6-3.3 11.2-8.2 14"/>
+        <path d="M24 44V32"/>
+        <circle cx="24" cy="28" r="4"/>
+      </svg>
+      <h3 class="svc-name" data-i18n="services.items.2.name">Content & leads</h3>
+      <p class="svc-desc" data-i18n="services.items.2.desc">Articles SEO, copywriting et tunnels de vente qui convertissent.</p>
+      <div class="svc-arr" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 17L17 7M17 7H7M17 7v10"/>
+        </svg>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<style>
+.svc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.svc-intro {
+  font-size: var(--text-body);
+  color: var(--muted);
+  max-width: 280px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.svc-card {
+  background: var(--card);
+  padding: clamp(1.8rem, 2.5vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+  transition: background var(--dur-mid);
+}
+
+.svc-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 50% 120%, rgba(200,240,62,.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+
+.svc-card:hover::before { opacity: 1; }
+.svc-card:hover         { background: #161615; }
+.svc-card:hover .svc-arr { border-color: var(--accent); color: var(--accent); transform: translate(2px,-2px); }
+
+.svc-n {
+  font-family: 'Syne', sans-serif;
+  font-size: var(--text-label);
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 1.8rem;
+}
+
+.svc-ico {
+  width: 42px; height: 42px;
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+}
+
+.svc-name {
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.svc-desc {
+  font-size: var(--text-body);
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.svc-arr {
+  position: absolute;
+  bottom: 1.6rem; right: 1.6rem;
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: all var(--dur-mid) var(--ease-out);
+}
+
+@media (max-width: 900px) {
+  .svc-grid { grid-template-columns: 1fr; }
+  .svc-head { flex-direction: column; }
+}
+</style>

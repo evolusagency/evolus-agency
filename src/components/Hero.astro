@@ -1,0 +1,312 @@
+---
+// src/components/Hero.astro
+// Premium Hero section
+//
+// KEY FIXES applied here vs. old code:
+// ─────────────────────────────────────
+// 1. TYPOGRAPHY SCALING
+//    Old: font-size: clamp(3.5rem, 8vw, 7rem)  ← max cap hit at ~875px → breaks at 1366px
+//    New: font-size: var(--text-display)        = clamp(3.5rem, 7.5vw + 0.5rem, 9rem)
+//         The "+0.5rem" in the fluid value means the preferred calc uses both
+//         viewport units AND a rem anchor, so it never abruptly clamps.
+//
+// 2. HERO CONTAINER WIDTH
+//    Old: max-width: 900px  ← too narrow at 1440px for 7rem text
+//    New: max-width: min(90vw, 1400px)  ← grows with viewport, never clips
+//
+// 3. HERO TITLE LAYOUT
+//    Old: 3 separate lines with manual <br> forcing wrap at arbitrary width
+//    New: Each semantic line is a <div> with white-space: nowrap on line 1 & 2,
+//         "presence." on line 3 uses outline style — all contained properly.
+//
+// 4. STATS POSITION
+//    Old: position:absolute right:3rem — overlaps title at mid-width
+//    New: CSS Grid layout: [content] [stats] side by side at ≥1200px,
+//         stats hidden below 1200px (already hidden < 900px in old code)
+---
+
+<section class="hero" id="home" aria-label="Hero — Evolus Agency">
+  <!-- Layered backgrounds (GPU-composited, no layout impact) -->
+  <div class="hero-bg"   aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <!-- Glow pulse — subtle ambient light -->
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <!-- LEFT: main content -->
+    <div class="hero-content">
+      <!-- Tag line -->
+      <div class="hero-tag" data-i18n="hero.tag" aria-label="Agency label">
+        Evolus Agency
+      </div>
+
+      <!-- H1: three typographic lines -->
+      <h1 class="hero-title">
+        <!-- Line 1: plain white -->
+        <span class="ht-line ht-l1" id="hl1" data-i18n="hero.line1">On crée</span>
+        <!-- Line 2: "votre [accent]présence" -->
+        <span class="ht-line ht-l2">
+          <span data-i18n="hero.line2pre">votre</span>&nbsp;<em data-i18n="hero.line2em">présence</em>
+        </span>
+        <!-- Line 3: outline/stroke style -->
+        <span class="ht-line ht-l3 out" data-i18n="hero.line3">digitale.</span>
+      </h1>
+
+      <!-- Bottom row: description + CTAs -->
+      <div class="hero-bot">
+        <p class="hero-desc" data-i18n="hero.desc">
+          Sites web sur-mesure, contenu qui convertit, et stratégies de croissance.
+        </p>
+        <div class="hero-acts">
+          <a class="btn-p" href="#contact">
+            <span data-i18n="hero.cta">Lancer mon projet</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+          </a>
+          <a class="btn-g" href="/blog">
+            <span data-i18n="hero.blog">Voir le blog</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: stat counters -->
+    <aside class="hero-stats" aria-label="Key statistics">
+      <div class="cnt-i">
+        <div class="cnt-n">
+          <span class="count-up" data-target="120" aria-label="120 sites livrés">0</span>+
+        </div>
+        <div class="cnt-l" data-i18n="hero.stat1l">Sites livrés</div>
+      </div>
+      <div class="cnt-i">
+        <div class="cnt-n">
+          <span class="count-up" data-target="3" aria-label="ROI moyen 3x">0</span>x
+        </div>
+        <div class="cnt-l" data-i18n="hero.stat2l">ROI moyen</div>
+      </div>
+      <div class="cnt-i">
+        <div class="cnt-n">
+          <span class="count-up" data-target="98" aria-label="98% satisfaction">0</span>%
+        </div>
+        <div class="cnt-l" data-i18n="hero.stat3l">Satisfaction</div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+/* ── HERO SHELL ─────────────────────────────────────────────── */
+.hero {
+  min-height: 100svh; /* svh: uses small viewport on mobile (excludes browser chrome) */
+  padding-top: var(--nav-h);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: clamp(3rem, 5vw, 5.5rem);
+  padding-left:  var(--section-px);
+  padding-right: var(--section-px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── BACKGROUNDS ────────────────────────────────────────────── */
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 55% at 68% 38%, rgba(26,47,10,0.9)  0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 18% 72%, rgba(15,31,31,0.8)  0%, transparent 60%);
+  /* GPU-composited: no layout cost */
+  will-change: opacity;
+}
+
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(245,242,236,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,242,236,.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* Ambient glow — pulsing accent light bottom-left */
+.hero-glow {
+  position: absolute;
+  bottom: -20%;
+  left: 5%;
+  width: clamp(300px, 45vw, 700px);
+  height: clamp(300px, 45vw, 700px);
+  background: radial-gradient(circle, rgba(200,240,62,0.07) 0%, transparent 65%);
+  pointer-events: none;
+  animation: glow-pulse 6s ease-in-out infinite alternate;
+}
+@keyframes glow-pulse {
+  from { opacity: 0.6; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.15); }
+}
+
+/* ── INNER GRID ─────────────────────────────────────────────── */
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: min(90vw, 1400px); /* THE FIX: was max-width:900px which capped the title width */
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+/* ── CONTENT (left column) ──────────────────────────────────── */
+.hero-content {
+  flex: 1 1 auto;
+  min-width: 0; /* prevent flex overflow */
+}
+
+/* Tag */
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+.hero-tag::before {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ── HERO TITLE ─────────────────────────────────────────────── */
+.hero-title {
+  /* Using display flex-column so each line is an independent row,
+     NOT relying on <br> or text-wrap guessing */
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* line-height handles spacing */
+
+  font-size: var(--text-display); /* clamp(3.5rem, 7.5vw + 0.5rem, 9rem) */
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+  margin-bottom: clamp(2rem, 3.5vw, 3.5rem);
+}
+
+.ht-line {
+  display: block;
+  /* Prevent word-wrap inside a single line — each line is intentional */
+  white-space: nowrap;
+}
+
+/* Line 2: "votre [accent]présence" */
+.ht-l2 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* Line 3: outline / stroke effect */
+.ht-l3.out {
+  -webkit-text-stroke: 2px var(--white);
+  color: transparent;
+  /* Scale stroke with font size for pixel-perfect at any size */
+}
+
+/* ── BOTTOM ROW ─────────────────────────────────────────────── */
+.hero-bot {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  flex-wrap: wrap;
+}
+
+.hero-desc {
+  font-size: var(--text-hero-sub);
+  color: var(--muted);
+  max-width: 380px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+.hero-acts {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── STATS (right column) ───────────────────────────────────── */
+.hero-stats {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-end;
+  text-align: right;
+  /* Fade in after title — separate entrance */
+  animation: stats-enter 1.2s var(--ease-out) 0.5s both;
+}
+
+@keyframes stats-enter {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.cnt-i { text-align: right; }
+
+.cnt-n {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--white);
+}
+
+.cnt-l {
+  font-size: var(--text-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+/* ── HERO ENTRANCE ANIMATION ────────────────────────────────── */
+.hero-tag,
+.ht-l1, .ht-l2, .ht-l3,
+.hero-bot {
+  animation: hero-enter 1s var(--ease-out) both;
+}
+.hero-tag  { animation-delay: 0.05s; }
+.ht-l1     { animation-delay: 0.15s; }
+.ht-l2     { animation-delay: 0.25s; }
+.ht-l3     { animation-delay: 0.35s; }
+.hero-bot  { animation-delay: 0.45s; }
+
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+
+/* Stats disappear below 1100px (they overlap content) */
+@media (max-width: 1100px) {
+  .hero-stats { display: none; }
+  .hero-inner { max-width: 100%; }
+}
+
+/* Wrap CTA row on narrow viewports */
+@media (max-width: 640px) {
+  .hero-bot { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  .hero-acts { flex-direction: column; align-items: flex-start; }
+  .ht-line { white-space: normal; } /* allow wrapping on tiny screens */
+}
+</style>

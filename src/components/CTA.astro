@@ -1,0 +1,93 @@
+---
+// src/components/CTA.astro
+---
+
+<section class="cta-sec" id="contact" aria-labelledby="cta-title">
+  <!-- Ambient glow -->
+  <div class="cta-glow" aria-hidden="true"></div>
+
+  <div class="sec-label rv" data-i18n="cta.label">Passons à l'action</div>
+  <h2 class="sec-title rv d1" id="cta-title" data-i18n-html="cta.title">
+    Votre site mérite<br>mieux qu'hier.
+  </h2>
+  <p class="cta-desc rv d2" data-i18n="cta.desc">
+    Discutons de votre projet. Audit gratuit, stratégie claire, résultats mesurables.
+  </p>
+
+  <div class="rv d3">
+    <a href="mailto:contact@evolus.agency" class="btn-p cta-btn">
+      <span data-i18n="cta.btn">Prendre contact</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+      </svg>
+    </a>
+  </div>
+
+  <p class="cta-mail rv d3">
+    <span data-i18n="cta.mailLabel">Ou écrivez-nous :</span>
+    &nbsp;<a href="mailto:contact@evolus.agency" class="cta-email">contact@evolus.agency</a>
+  </p>
+</section>
+
+<style>
+.cta-sec {
+  background: var(--black);
+  text-align: center;
+  padding: clamp(5rem, 8vw, 8rem) var(--section-px);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(300px, 50vw, 700px);
+  height: clamp(300px, 50vw, 700px);
+  background: radial-gradient(circle, rgba(200,240,62,.06) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.cta-sec .sec-label {
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.cta-sec .sec-title {
+  max-width: 640px;
+  margin: 0 auto 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-desc {
+  font-size: var(--text-hero-sub);
+  color: var(--muted);
+  max-width: 440px;
+  margin: 0 auto clamp(2rem, 3vw, 3rem);
+  line-height: 1.75;
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-btn {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-mail {
+  font-size: var(--text-small);
+  color: var(--muted);
+  margin-top: 1.3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-email {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity var(--dur-fast);
+}
+.cta-email:hover { opacity: 0.8; }
+</style>

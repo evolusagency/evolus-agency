@@ -1,0 +1,139 @@
+---
+// src/components/Results.astro
+---
+
+<section class="sec" style="background:var(--black)">
+  <div class="rv">
+    <div class="sec-label" data-i18n="results.label">Nos chiffres</div>
+    <h2 class="sec-title" data-i18n-html="results.title">Des résultats<br>qui parlent.</h2>
+  </div>
+
+  <div class="res-grid rv d1">
+
+    <!-- Featured card -->
+    <div class="res-card feat">
+      <div>
+        <div class="res-ico" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="res-big">+340%</div>
+        <div class="res-lbl" data-i18n="results.items.0.label">de trafic organique moyen</div>
+      </div>
+      <p class="res-desc" data-i18n="results.items.0.desc">Le trafic triple en 6 mois en moyenne.</p>
+    </div>
+
+    <div class="res-card">
+      <div class="res-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+      <div class="res-big">21j</div>
+      <div class="res-lbl" data-i18n="results.items.1.label">Délai moyen</div>
+      <p class="res-desc" data-i18n="results.items.1.desc">Rapidité sans compromis.</p>
+    </div>
+
+    <div class="res-card">
+      <div class="res-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="res-big">120+</div>
+      <div class="res-lbl" data-i18n="results.items.2.label">Clients</div>
+      <p class="res-desc" data-i18n="results.items.2.desc">De la startup à la PME.</p>
+    </div>
+
+    <div class="res-card">
+      <div class="res-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+          <polyline points="17 6 23 6 23 12"/>
+        </svg>
+      </div>
+      <div class="res-big">3x</div>
+      <div class="res-lbl" data-i18n="results.items.3.label">ROI moyen</div>
+      <p class="res-desc" data-i18n="results.items.3.desc">Chaque euro en génère 3.</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.res-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: clamp(2.5rem, 4vw, 4rem);
+}
+
+.res-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.8rem, 2.5vw, 2.5rem);
+  transition: border-color var(--dur-mid);
+}
+.res-card:hover { border-color: var(--border-hover); }
+
+/* Featured: accent background, spans 2 rows */
+.res-card.feat {
+  background: var(--accent);
+  border-color: transparent;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.res-card.feat:hover { border-color: transparent; }
+
+.res-ico {
+  width: 36px; height: 36px;
+  background: rgba(200,240,62,.1);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.res-card.feat .res-ico {
+  background: rgba(0,0,0,.15);
+  color: var(--black);
+}
+
+.res-big {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.res-card.feat .res-big { color: var(--black); }
+
+.res-lbl {
+  font-size: var(--text-small);
+  color: var(--muted);
+}
+.res-card.feat .res-lbl { color: rgba(0,0,0,0.6); }
+
+.res-desc {
+  font-size: var(--text-small);
+  color: var(--muted);
+  margin-top: 1rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.res-card.feat .res-desc { color: rgba(0,0,0,0.5); margin-top: 0.6rem; }
+
+@media (max-width: 768px) {
+  .res-grid { grid-template-columns: 1fr; }
+  .res-card.feat { grid-row: span 1; }
+}
+</style>

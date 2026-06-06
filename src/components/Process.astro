@@ -1,0 +1,135 @@
+---
+// src/components/Process.astro
+---
+
+<section class="sec" style="background:var(--black-soft)" id="process">
+  <div class="rv">
+    <div class="sec-label" data-i18n="process.label">Comment ça marche</div>
+    <h2 class="sec-title" data-i18n-html="process.title">Un process clair,<br>des résultats mesurables.</h2>
+  </div>
+
+  <div class="proc-steps rv d1" role="list">
+
+    <div class="step" role="listitem">
+      <div class="step-n" aria-hidden="true">01</div>
+      <div class="step-c">
+        <h3 data-i18n="process.steps.0.name">Audit & stratégie</h3>
+        <p data-i18n="process.steps.0.desc">Analyse de votre marché et feuille de route sur-mesure.</p>
+      </div>
+      <span class="step-tag" data-i18n="process.steps.0.week">Semaine 1</span>
+    </div>
+
+    <div class="step" role="listitem">
+      <div class="step-n" aria-hidden="true">02</div>
+      <div class="step-c">
+        <h3 data-i18n="process.steps.1.name">Design & UX</h3>
+        <p data-i18n="process.steps.1.desc">Maquettes haute-fidélité, UX pensée pour la conversion.</p>
+      </div>
+      <span class="step-tag" data-i18n="process.steps.1.week">Sem. 2–3</span>
+    </div>
+
+    <div class="step" role="listitem">
+      <div class="step-n" aria-hidden="true">03</div>
+      <div class="step-c">
+        <h3 data-i18n="process.steps.2.name">Développement</h3>
+        <p data-i18n="process.steps.2.desc">Code propre, performances max, CMS simple.</p>
+      </div>
+      <span class="step-tag" data-i18n="process.steps.2.week">Sem. 3–5</span>
+    </div>
+
+    <div class="step" role="listitem">
+      <div class="step-n" aria-hidden="true">04</div>
+      <div class="step-c">
+        <h3 data-i18n="process.steps.3.name">Contenu & SEO</h3>
+        <p data-i18n="process.steps.3.desc">Textes optimisés, structure qui plaît à Google.</p>
+      </div>
+      <span class="step-tag" data-i18n="process.steps.3.week">Continu</span>
+    </div>
+
+    <div class="step" role="listitem">
+      <div class="step-n" aria-hidden="true">05</div>
+      <div class="step-c">
+        <h3 data-i18n="process.steps.4.name">Lancement & croissance</h3>
+        <p data-i18n="process.steps.4.desc">Go-live, KPIs, itérations. On scale ensemble.</p>
+      </div>
+      <span class="step-tag" data-i18n="process.steps.4.week">Ongoing</span>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.proc-steps {
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(2.5rem, 4vw, 4rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 68px 1fr auto;
+  gap: 1.6rem;
+  align-items: center;
+  padding: 1.6rem 2rem;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--dur-mid);
+  position: relative;
+}
+.step:last-child { border-bottom: none; }
+
+/* Accent left bar */
+.step::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform var(--dur-mid) var(--ease-out);
+  transform-origin: top;
+}
+.step:hover { background: var(--card); }
+.step:hover::after { transform: scaleY(1); }
+.step:hover .step-n { color: var(--accent); }
+
+.step-n {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  font-weight: 800;
+  color: rgba(245, 242, 236, 0.12);
+  transition: color var(--dur-mid);
+  line-height: 1;
+}
+
+.step-c h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.step-c p {
+  font-size: var(--text-small);
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.step-tag {
+  font-size: var(--text-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .step { grid-template-columns: 56px 1fr; }
+  .step-tag { display: none; }
+}
+</style>

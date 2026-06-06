@@ -1,0 +1,153 @@
+---
+// src/components/Testimonials.astro
+---
+
+<section class="sec" style="background:var(--black-soft)">
+  <div class="rv">
+    <div class="sec-label" data-i18n="testimonials.label">Ils nous font confiance</div>
+    <h2 class="sec-title" data-i18n-html="testimonials.title">Ce que disent<br>nos clients.</h2>
+  </div>
+
+  <div class="tsti-grid rv d1">
+
+    <article class="tsti-card" aria-label="Témoignage de Karim M.">
+      <div class="stars" aria-label="5 étoiles sur 5" role="img">
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+      </div>
+      <blockquote class="tsti-txt" data-i18n="testimonials.items.0.text">
+        Evolus a transformé notre site en outil de vente. En 3 mois, nos devis ont doublé.
+      </blockquote>
+      <div class="tsti-auth">
+        <div class="ava" aria-hidden="true">KM</div>
+        <div>
+          <div class="a-name" data-i18n="testimonials.items.0.name">Karim M.</div>
+          <div class="a-co"   data-i18n="testimonials.items.0.company">CEO, ArchiDesign Studio</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="tsti-card" aria-label="Témoignage de Sara B.">
+      <div class="stars" aria-label="5 étoiles sur 5" role="img">
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+      </div>
+      <blockquote class="tsti-txt" data-i18n="testimonials.items.1.text">
+        Le contenu génère des leads depuis 6 mois sans qu'on lève le petit doigt.
+      </blockquote>
+      <div class="tsti-auth">
+        <div class="ava" aria-hidden="true">SB</div>
+        <div>
+          <div class="a-name" data-i18n="testimonials.items.1.name">Sara B.</div>
+          <div class="a-co"   data-i18n="testimonials.items.1.company">Directrice, FinConsult</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="tsti-card" aria-label="Témoignage de Youssef A.">
+      <div class="stars" aria-label="5 étoiles sur 5" role="img">
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+      </div>
+      <blockquote class="tsti-txt" data-i18n="testimonials.items.2.text">
+        +280% de trafic en 4 mois. Ils ont compris notre secteur mieux que personne.
+      </blockquote>
+      <div class="tsti-auth">
+        <div class="ava" aria-hidden="true">YA</div>
+        <div>
+          <div class="a-name" data-i18n="testimonials.items.2.name">Youssef A.</div>
+          <div class="a-co"   data-i18n="testimonials.items.2.company">Fondateur, Medic360</div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<style>
+.tsti-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-top: clamp(2.5rem, 4vw, 4rem);
+}
+
+.tsti-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 2vw, 2rem);
+  transition:
+    border-color var(--dur-mid),
+    transform    var(--dur-mid) var(--ease-out);
+}
+.tsti-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 1rem;
+}
+.star {
+  width: 11px; height: 11px;
+  background: var(--accent);
+  display: block;
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+
+.tsti-txt {
+  font-size: 0.91rem;
+  line-height: 1.75;
+  color: var(--white);
+  font-weight: 300;
+  margin-bottom: 1.3rem;
+  quotes: none;
+}
+.tsti-txt::before {
+  content: '"';
+  color: var(--accent);
+  font-size: 1.4rem;
+  line-height: 0;
+  vertical-align: -0.25em;
+  margin-right: 0.15em;
+}
+
+.tsti-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.ava {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--black);
+  flex-shrink: 0;
+}
+
+.a-name { font-size: 0.82rem; font-weight: 500; }
+.a-co   { font-size: 0.72rem; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .tsti-grid { grid-template-columns: 1fr; }
+}
+</style>
