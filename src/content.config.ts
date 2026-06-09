@@ -11,6 +11,8 @@ const blog = defineCollection({
     read: z.string(),
     image: z.string().optional(),
     lang: z.enum(['fr', 'en']).default('fr'),
+    // NOTE: no slug field — Astro's glob loader sets post.id = filename without extension.
+    // Use post.id as the slug everywhere: /blog/${post.id}
   }),
 });
 
