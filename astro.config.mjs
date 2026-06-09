@@ -4,9 +4,6 @@ import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://evolus.agency',
-  output: 'static',
-  adapter: cloudflare(),
-  trailingSlash: 'ignore',
   compressHTML: true,
   build: {
     minifyCSS: true,
