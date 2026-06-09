@@ -7,10 +7,10 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://evolus.agency',
 
-  output: 'static',
+  output: 'server',
 
   adapter: cloudflare({
-    mode: 'directory'
+    mode: 'advanced'
   }),
 
   integrations: [
