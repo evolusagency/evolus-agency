@@ -5,6 +5,7 @@ date: 2026-03-30
 tag: "Stratégie digitale"
 read: "10 min"
 lang: "fr"
+category: marketing
 ---
 
 En B2B, le trafic est cher — en temps ou en argent. Quand 80% de vos visiteurs quittent votre site sans laisser de trace, c'est un problème structurel, pas un problème de trafic.
@@ -29,3 +30,14 @@ Si votre headline peut s'appliquer à n'importe quelle entreprise de votre secte
 
 > "Ces 3 correctifs ont réduit notre taux de rebond de 67% à 41% en 3 semaines, et doublé notre nombre de prospects entrants." — COO, Cabinet de conseil B2B
 
+
+
+---
+
+## 📎 Articles liés
+
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
+- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](../tunnels-prospection-b2b-efficaces.md)
+- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](../copywriting-b2b-techniques-conversion.md)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)

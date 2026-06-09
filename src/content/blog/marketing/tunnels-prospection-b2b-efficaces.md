@@ -5,6 +5,7 @@ date: 2026-04-25
 tag: "Lead Generation"
 read: "8 min"
 lang: "fr"
+category: marketing
 ---
 
 En 2025, la prospection B2B est à la fois plus accessible et plus compétitive que jamais. Les outils automatisés ont permis à tout le monde de scaler ses séquences — ce qui signifie que vos prospects sont plus sollicités que jamais.
@@ -37,3 +38,14 @@ Un webinaire mensuel de 45 minutes sur un problème précis de votre secteur. Le
 
 > "Notre webinaire mensuel génère en moyenne 40 leads qualifiés par session, dont 30% convertissent en opportunité dans les 60 jours." — Head of Growth, Fintech B2B
 
+
+
+---
+
+## 📎 Articles liés
+
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
+- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](../copywriting-b2b-techniques-conversion.md)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
+- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](../seo-b2b-blog-generation-leads.md)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)

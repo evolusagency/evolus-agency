@@ -5,6 +5,7 @@ date: 2026-06-01
 tag: "Automation"
 read: "9 min"
 lang: "fr"
+category: automation
 ---
 
 Le nurturing B2B n'est pas du spam. C'est l'art d'apporter de la valeur au bon moment à la bonne personne, de façon automatisée et scalable. Bien fait, c'est votre commercial le plus productif.

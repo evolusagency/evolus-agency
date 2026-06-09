@@ -5,6 +5,7 @@ date: 2026-06-03
 tag: "LinkedIn B2B"
 read: "7 min"
 lang: "fr"
+category: marketing
 ---
 
 LinkedIn a 1 milliard de membres, mais seulement 3% de ses utilisateurs publient régulièrement du contenu. Cette asymétrie crée une opportunité massive pour les entreprises B2B qui décident de vraiment s'y investir.
@@ -33,3 +34,14 @@ Fréquence : 3 posts/semaine pendant 90 jours minimum. En dessous, l'algorithme 
 
 > "En 6 mois de stratégie LinkedIn structurée, nous avons généré 47 inbounds qualifiés sans dépenser un euro en publicité." — CEO, Agence conseil B2B
 
+
+
+---
+
+## 📎 Articles liés
+
+- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](../tunnels-prospection-b2b-efficaces.md)
+- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](../copywriting-b2b-techniques-conversion.md)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
+- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](../seo-b2b-blog-generation-leads.md)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)

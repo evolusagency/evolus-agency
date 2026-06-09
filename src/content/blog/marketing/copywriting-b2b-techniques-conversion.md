@@ -5,6 +5,7 @@ date: 2026-04-15
 tag: "Copywriting"
 read: "6 min"
 lang: "fr"
+category: marketing
 ---
 
 Il y a une règle d'or en copywriting B2B : vos prospects ne s'intéressent pas à votre entreprise. Ils s'intéressent à leurs problèmes. Votre job est de montrer que vous comprenez ces problèmes mieux que quiconque.
@@ -39,3 +40,14 @@ Pas de faux compte à rebours. Mais : "Nous travaillons avec 8 clients maximum p
 
 "Contactez-nous" → 0 désir. "Obtenir mon analyse de potentiel gratuite" → désir clair. Le CTA doit promettre une valeur immédiate, pas une conversation commerciale.
 
+
+
+---
+
+## 📎 Articles liés
+
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
+- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](../tunnels-prospection-b2b-efficaces.md)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
+- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](../seo-b2b-blog-generation-leads.md)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)

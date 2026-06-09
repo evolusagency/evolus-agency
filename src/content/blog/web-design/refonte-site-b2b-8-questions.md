@@ -8,6 +8,7 @@ tag: Refonte web
 read: 8 min
 lang: fr
 image: https://www.magneticway.com/wp-content/uploads/2024/09/webinar-refonte-site-092024.svg
+category: web-design
 ---
 
 Une refonte sans stratégie est un beau site qui ne génère toujours pas de leads. Avant de parler design ou CMS, cadrez votre projet avec ces 8 questions fondamentales.
@@ -47,3 +48,11 @@ Les projets web B2B qui dérapent ont souvent trop de décideurs ou un décideur
 Un site sans plan de contenu stagne dans les 3 mois. Prévoyez budget et ressources pour produire 2-4 articles de qualité par mois minimum.
 
 > "En cadrant notre refonte avec ces questions, on a réduit notre budget de 40% tout en obtenant de meilleurs résultats business." — CMO, Groupe industriel B2B
+
+
+---
+
+## 📎 Articles liés
+
+- [Comment multiplier par 3 votre taux de conversion B2B en 90 jours](../multiplier-taux-conversion-b2b-90-jours.md)
+- [Comment présenter vos tarifs B2B pour ne plus perdre sur le prix](../presentation-tarifs-b2b-valeur.md)

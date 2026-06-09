@@ -5,6 +5,7 @@ date: 2026-05-12
 tag: "Pricing B2B"
 read: "8 min"
 lang: "fr"
+category: web-design
 ---
 
 Quand un prospect dit "c'est trop cher", il dit en réalité "je ne perçois pas assez de valeur par rapport à ce que vous demandez". La solution n'est pas de baisser les prix — c'est de retravailler la communication de valeur.
@@ -32,3 +33,11 @@ Un coût est une dépense. Un investissement a un ROI. Si votre prestation à 15
 
 > "En restructurant notre présentation commerciale, notre taux de closing est passé de 18% à 41% en 2 mois." — Sales Director, Éditeur SaaS B2B
 
+
+
+---
+
+## 📎 Articles liés
+
+- [Comment multiplier par 3 votre taux de conversion B2B en 90 jours](../multiplier-taux-conversion-b2b-90-jours.md)
+- [Refonte de site B2B : les 8 questions à poser avant de dépenser un euro](../refonte-site-b2b-8-questions.md)

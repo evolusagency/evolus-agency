@@ -5,6 +5,7 @@ date: 2026-06-02
 tag: "Expérience client"
 read: "7 min"
 lang: "fr"
+category: marketing
 ---
 
 Vous avez signé. Félicitations. Maintenant commence la partie la plus critique : les 30 premiers jours de collaboration. C'est là que se joue la fidélisation, le bouche-à-oreille, et l'upsell.
@@ -33,3 +34,14 @@ Un point hebdomadaire de 30 minutes les 4 premières semaines. Pas optionnel. Ce
 
 > "Depuis qu'on a structuré notre onboarding avec ce framework, notre NPS est passé de 34 à 72 et notre taux de renouvellement de 71% à 89%." — Customer Success Director, HR Tech
 
+
+
+---
+
+## 📎 Articles liés
+
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
+- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](../tunnels-prospection-b2b-efficaces.md)
+- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](../copywriting-b2b-techniques-conversion.md)
+- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](../seo-b2b-blog-generation-leads.md)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)

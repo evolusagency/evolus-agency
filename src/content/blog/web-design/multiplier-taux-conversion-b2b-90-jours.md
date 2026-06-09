@@ -5,6 +5,7 @@ date: 2026-06-01
 tag: "Stratégie B2B"
 read: "9 min"
 lang: "fr"
+category: web-design
 ---
 
 Le taux de conversion moyen d'un site B2B tourne autour de 2,5%. Pourtant, nos clients atteignent régulièrement 7 à 11% après intervention. La différence ne tient pas à la magie — elle tient à une méthode.
@@ -43,3 +44,10 @@ Nous déployons des A/B tests sur les headlines, CTAs et formulaires dès la sem
 - Mise en place d'un tunnel e-mail pour nourrir les leads non-convertis
 
 Ce n'est pas un projet de 6 mois. Avec la bonne méthode et la bonne exécution, les premiers résultats sont visibles en 30 jours.
+
+---
+
+## 📎 Articles liés
+
+- [Comment présenter vos tarifs B2B pour ne plus perdre sur le prix](../presentation-tarifs-b2b-valeur.md)
+- [Refonte de site B2B : les 8 questions à poser avant de dépenser un euro](../refonte-site-b2b-8-questions.md)
