@@ -1,0 +1,23 @@
+# Headers personnalisés pour Astro + Cloudflare
+# À placer dans astro.config.mjs ou netlify.toml pour production
+
+# Security Headers
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# Performance & Caching
+Cache-Control: public, max-age=3600, s-maxage=86400
+ETag: true
+Vary: Accept-Encoding, Accept-Language
+
+# SEO & Meta
+Link: <https://evolus.agency>; rel="canonical"
+Link: </fonts/syne.woff2>; rel="preload"; as="font"; crossorigin
+Link: </fonts/dm-sans.woff2>; rel="preload"; as="font"; crossorigin
+
+# Content Security
+Content-Type: text/html; charset=utf-8
+Content-Language: fr, en

@@ -1,0 +1,4 @@
+Contact: security@evolus.agency
+Expires: 2027-06-09T00:00:00.000Z
+Preferred-Languages: en, fr
+Canonical: https://evolus.agency/.well-known/security.txt

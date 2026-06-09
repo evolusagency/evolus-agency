@@ -1,0 +1,33 @@
+{
+  "name": "Evolus Agency — Custom Websites, Content & SEO",
+  "short_name": "Evolus",
+  "description": "Evolus Agency crée des sites web sur-mesure, du contenu qui convertit et des stratégies de croissance pour tripler vos leads en 90 jours.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#c8f03e",
+  "background_color": "#0a0a0a",
+  "categories": ["business", "marketing"],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ]
+}

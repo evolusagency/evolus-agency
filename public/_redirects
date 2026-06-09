@@ -1,0 +1,18 @@
+# Redirects pour Cloudflare Pages
+# Syntaxe: source destination [status]
+
+# Redirects 301 (permanent) pour SEO
+/ancien-blog/* /blog/:splat 301
+/services/* /#services 301
+/process/* /#process 301
+
+# Redirects 302 (temporaire) pour maintenance
+# /api/* /api/:splat 200
+
+# SPA fallback - Important pour Astro
+/* /404 404
+
+# Cache headers
+/assets/* 31536000 cache
+/fonts/* 31536000 cache
+/images/* 86400 cache

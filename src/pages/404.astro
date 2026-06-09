@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page non trouvée — Evolus Agency" description="La page que vous recherchez n'existe pas.">
+  <style>
+    .error-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      background: var(--black);
+    }
+    .error-code {
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+    }
+    .error-title {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--white);
+      margin: 1rem 0;
+    }
+    .error-desc {
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .error-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .error-link {
+      padding: 0.75rem 1.5rem;
+      border-radius: 100px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .error-link:hover {
+      background: var(--accent);
+      color: var(--black);
+    }
+    .error-link.primary {
+      background: var(--accent);
+      color: var(--black);
+      border-color: var(--accent);
+    }
+    .error-link.primary:hover {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+    }
+  </style>
+
+  <div class="error-container">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page non trouvée</h1>
+    <p class="error-desc">
+      Oups, cette page n'existe pas. Mais ne vous inquiétez pas, notre équipe est là pour vous aider !
+    </p>
+    <div class="error-links">
+      <a href="/" class="error-link primary">Retour à l'accueil</a>
+      <a href="/blog" class="error-link">Voir le blog</a>
+      <a href="#contact" class="error-link">Nous contacter</a>
+    </div>
+  </div>
+</BaseLayout>

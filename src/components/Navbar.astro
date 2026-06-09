@@ -1,46 +1,46 @@
 ---
 // src/components/Navbar.astro
 // Fixed top navigation with logo, links, and CTA button.
-// Logo: inline SVG (optimized) — best for Astro because:
-//   • No extra HTTP request (unlike <img src="logo.svg">)
-//   • Fully styleable via CSS (stroke color via currentColor)
-//   • Accessible: aria-label on the <a>, title inside SVG
-//   • Smaller payload than loading an Asset via import + Astro's image pipeline
-//     (which is better suited to raster images)
-//   • SVGO-optimized: removed editor metadata, merged groups, dropped xmlns:xlink
+// Mobile: hamburger menu with centered logo
 ---
 
 <nav aria-label="Main navigation">
-  <!-- LOGO -->
-  <a class="logo" href="/" aria-label="Evolus — Retour à l'accueil">
-  <svg
-  viewBox="0 0 680 700"
-  xmlns="http://www.w3.org/2000/svg"
-  aria-hidden="true"
-  focusable="false"
-  width="30"
-  height="30"
->
-  <g transform="translate(340,300)" fill="#c8f03e">
-    <!-- Chevron 1 -->
-    <polygon points="-195,-230 0,-310 195,-230 195,-195 0,-275 -195,-195" />
-    <polygon points="-155,-215 0,-285 155,-215 155,-190 0,-260 -155,-190" fill="#ffff" />
-    <!-- Chevron 2 -->
-    <polygon points="-195,-140 0,-220 195,-140 195,-105 0,-185 -195,-105" />
-    <polygon points="-155,-125 0,-200 155,-125 155,-100 0,-175 -155,-100" fill="#ffff" />
-    <!-- Chevron 3 -->
-    <polygon points="-195,-50 0,-130 195,-50 195,-15 0,-95 -195,-15" />
-    <polygon points="-155,-35 0,-110 155,-35 155,-10 0,-85 -155,-10" fill="#ffff" />
-    <!-- A triangulaire -->
-    <polygon points="10,35 10,35 -155,270 -205,270" />
-    <polygon points="10,35 10,35 205,270 155,270" />
-    <rect x="-95" y="143" width="190" height="38" rx="5"/>
-  </g>
-</svg>
-  <span class="logo-text">evolus<span class="logo-dot">.</span></span>
-</a>
+  <!-- MOBILE LOGO (centered) -->
+  <a class="logo logo-mobile" href="/" aria-label="Evolus — Retour à l'accueil">
+    <svg viewBox="0 0 680 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="30" height="30">
+      <g transform="translate(340,300)" fill="#c8f03e">
+        <polygon points="-195,-230 0,-310 195,-230 195,-195 0,-275 -195,-195" />
+        <polygon points="-155,-215 0,-285 155,-215 155,-190 0,-260 -155,-190" fill="#ffff" />
+        <polygon points="-195,-140 0,-220 195,-140 195,-105 0,-185 -195,-105" />
+        <polygon points="-155,-125 0,-200 155,-125 155,-100 0,-175 -155,-100" fill="#ffff" />
+        <polygon points="-195,-50 0,-130 195,-50 195,-15 0,-95 -195,-15" />
+        <polygon points="-155,-35 0,-110 155,-35 155,-10 0,-85 -155,-10" fill="#ffff" />
+        <polygon points="10,35 10,35 -155,270 -205,270" />
+        <polygon points="10,35 10,35 205,270 155,270" />
+        <rect x="-95" y="143" width="190" height="38" rx="5"/>
+      </g>
+    </svg>
+  </a>
 
-  <!-- NAV LINKS -->
+  <!-- DESKTOP LOGO -->
+  <a class="logo logo-desktop" href="/" aria-label="Evolus — Retour à l'accueil">
+    <svg viewBox="0 0 680 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="30" height="30">
+      <g transform="translate(340,300)" fill="#c8f03e">
+        <polygon points="-195,-230 0,-310 195,-230 195,-195 0,-275 -195,-195" />
+        <polygon points="-155,-215 0,-285 155,-215 155,-190 0,-260 -155,-190" fill="#ffff" />
+        <polygon points="-195,-140 0,-220 195,-140 195,-105 0,-185 -195,-105" />
+        <polygon points="-155,-125 0,-200 155,-125 155,-100 0,-175 -155,-100" fill="#ffff" />
+        <polygon points="-195,-50 0,-130 195,-50 195,-15 0,-95 -195,-15" />
+        <polygon points="-155,-35 0,-110 155,-35 155,-10 0,-85 -155,-10" fill="#ffff" />
+        <polygon points="10,35 10,35 -155,270 -205,270" />
+        <polygon points="10,35 10,35 205,270 155,270" />
+        <rect x="-95" y="143" width="190" height="38" rx="5"/>
+      </g>
+    </svg>
+    <span class="logo-text">evolus<span class="logo-dot">.</span></span>
+  </a>
+
+  <!-- NAV LINKS (desktop) -->
   <ul class="nav-links" role="list">
     <li><a href="#services"  data-i18n="nav.services" class="nav-link">Services</a></li>
     <li><a href="#process"   data-i18n="nav.process"  class="nav-link">Process</a></li>
@@ -48,9 +48,27 @@
     <li><a href="#contact"   data-i18n="nav.contact"  class="nav-link">Contact</a></li>
   </ul>
 
-  <!-- CTA -->
+  <!-- CTA (desktop) -->
   <a class="nav-cta btn-p" href="#contact" data-i18n="nav.cta">Démarrer →</a>
+
+  <!-- HAMBURGER BUTTON (mobile) -->
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <ul class="mobile-links" role="list">
+    <li><a href="#services" data-i18n="nav.services" class="mobile-link">Services</a></li>
+    <li><a href="#process" data-i18n="nav.process" class="mobile-link">Process</a></li>
+    <li><a href="/blog" data-i18n="nav.blog" class="mobile-link">Blog</a></li>
+    <li><a href="#contact" data-i18n="nav.contact" class="mobile-link">Contact</a></li>
+  </ul>
+  <a href="#contact" class="mobile-cta btn-p" data-i18n="nav.cta">Démarrer →</a>
+</div>
 
 <style>
 nav {
@@ -67,7 +85,6 @@ nav {
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  /* Prevent CLS: nav is always 72px tall */
   contain: layout style;
 }
 
@@ -86,13 +103,14 @@ nav {
 }
 .logo-text { line-height: 1; }
 .logo-dot  { color: var(--accent); }
+.logo-mobile { display: none; }
 
 /* NAV LINKS */
 .nav-links {
   display: flex;
   gap: 2rem;
   list-style: none;
-  margin: 0 auto; /* center between logo and CTA */
+  margin: 0 auto;
 }
 .nav-link {
   font-size: 0.87rem;
@@ -114,16 +132,151 @@ nav {
 .nav-link:hover::after     { width: 100%; }
 .nav-link[aria-current="page"] { color: var(--white); }
 
-/* CTA — inherits .btn-p but with tighter padding */
+/* CTA */
 .nav-cta {
   font-size: 0.85rem;
   padding: 0.55rem 1.3rem;
   flex-shrink: 0;
 }
 
+/* HAMBURGER (hidden by default) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.hamburger span {
+  width: 24px;
+  height: 2.5px;
+  background: var(--white);
+  transition: all var(--dur-mid) var(--ease-out);
+  border-radius: 2px;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
+/* MOBILE MENU (hidden by default) */
+.mobile-menu {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0;
+  right: 0;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  max-height: calc(100vh - var(--nav-h));
+  overflow-y: auto;
+  padding: 1.5rem var(--section-px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 499;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity var(--dur-mid) var(--ease-out), 
+              visibility var(--dur-mid) var(--ease-out),
+              transform var(--dur-mid) var(--ease-out);
+}
+.mobile-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.mobile-link {
+  font-size: 1rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--dur-fast);
+  cursor: pointer;
+}
+.mobile-link:hover,
+.mobile-link:focus {
+  color: var(--white);
+}
+
+.mobile-cta {
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
+  display: inline-block;
+  text-align: center;
+}
+
 /* MOBILE */
 @media (max-width: 768px) {
+  nav {
+    padding: 0 1rem;
+  }
+  
+  .logo-desktop { display: none; }
+  .logo-mobile {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
   .nav-links { display: none; }
-  nav { padding: 0 1.2rem; }
+  .nav-cta { display: none; }
+  
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+  }
 }
 </style>
+
+<script>
+  // Mobile hamburger menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (hamburger && mobileMenu) {
+    // Toggle menu
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active'));
+      mobileMenu.setAttribute('aria-hidden', !mobileMenu.classList.contains('active'));
+    });
+    
+    // Close menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+</script>

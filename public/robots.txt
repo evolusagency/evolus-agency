@@ -1,0 +1,21 @@
+# Evolus Agency - robots.txt
+# Allow all bots for SEO crawling
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.well-known/
+Crawl-delay: 2
+
+# Specific bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://evolus.agency/sitemap-index.xml
+Sitemap: https://evolus.agency/sitemap-0.xml

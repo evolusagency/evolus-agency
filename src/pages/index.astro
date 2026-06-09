@@ -7,7 +7,6 @@ import Services     from '../components/Services.astro';
 import Process      from '../components/Process.astro';
 import Results      from '../components/Results.astro';
 import Testimonials from '../components/Testimonials.astro';
-import CTA          from '../components/CTA.astro';
 import Footer       from '../components/Footer.astro';
 
 // Default SSR lang — JS will override client-side based on preference
@@ -17,6 +16,35 @@ const description = 'Evolus Agency crée des sites web sur-mesure, du contenu qu
 
 <BaseLayout title={title} description={description}>
 
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Evolus Agency",
+    "url": "https://evolus.agency",
+    "logo": "https://evolus.agency/logo.svg",
+    "description": description,
+    "sameAs": [
+      "https://linkedin.com/company/evolus-agency",
+      "https://twitter.com/evolusagency"
+    ],
+    "contact": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Support",
+      "email": "contact@evolus.agency"
+    }
+  })} />
+  
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Evolus Agency",
+    "url": "https://evolus.agency",
+    "email": "contact@evolus.agency",
+    "areaServed": ["FR", "BE", "CH", "LU", "CA", "US"],
+    "serviceType": "Web Design, Content Marketing, SEO"
+  })} />
+
   <Navbar />
   <main id="main-content">
     <Hero />
@@ -25,7 +53,6 @@ const description = 'Evolus Agency crée des sites web sur-mesure, du contenu qu
     <Process />
     <Results />
     <Testimonials />
-    <CTA />
   </main>
   <Footer />
 
@@ -116,6 +143,17 @@ const T: Record<Lang, Record<string, string>> = {
     'cta.desc':      'Discutons de votre projet. Audit gratuit, stratégie claire, résultats mesurables.',
     'cta.btn':       'Prendre contact',
     'cta.mailLabel': 'Ou écrivez-nous :',
+    // Form
+    'form.nameLabel': 'Nom',
+    'form.emailLabel': 'Email',
+    'form.msgLabel': 'Message',
+    'form.namePlaceholder': 'Jean Dupont',
+    'form.emailPlaceholder': 'vous@domaine.com',
+    'form.messagePlaceholder': 'Décrivez votre projet en quelques lignes…',
+    'form.submit': 'Envoyer le message',
+    'form.mention': 'Réponse sous 24h · Zéro spam',
+    'form.success': 'Message envoyé ! On revient vers vous sous 24h.',
+    'form.error': 'Une erreur est survenue. Réessayez ou écrivez-nous directement.',
     // Footer
     'footer.copy':          '© 2025 Evolus Agency',
     'footer.links.0.label': 'Services',
@@ -195,6 +233,18 @@ const T: Record<Lang, Record<string, string>> = {
     'cta.desc':      'Free audit, clear strategy, measurable results.',
     'cta.btn':       'Get in touch',
     'cta.mailLabel': 'Or email us:',
+    // Form
+    'form.nameLabel': 'Name',
+    'form.emailLabel': 'Email',
+    'form.msgLabel': 'Message',
+    'form.namePlaceholder': 'John Doe',
+    'form.emailPlaceholder': 'you@domain.com',
+    'form.messagePlaceholder': 'Describe your project in a few lines…',
+    'form.submit': 'Send message',
+    'form.mention': 'Reply within 24h · No spam',
+    'form.success': 'Message sent! We\'ll get back to you within 24h.',
+    'form.error': 'An error occurred. Try again or email us directly.',
+    // Footer
     'footer.copy':          '© 2025 Evolus Agency',
     'footer.links.0.label': 'Services',
     'footer.links.1.label': 'Blog',
@@ -240,6 +290,22 @@ function applyLang(): void {
       .map(i => `<span class="mq-item">${i}</span>`)
       .join('');
   }
+
+  // Update form placeholders
+  const nameInput = document.getElementById('cf-name') as HTMLInputElement;
+  const emailInput = document.getElementById('cf-email') as HTMLInputElement;
+  const msgTextarea = document.getElementById('cf-msg') as HTMLTextAreaElement;
+  if (nameInput) nameInput.placeholder = t['form.namePlaceholder'] ?? '';
+  if (emailInput) emailInput.placeholder = t['form.emailPlaceholder'] ?? '';
+  if (msgTextarea) msgTextarea.placeholder = t['form.messagePlaceholder'] ?? '';
+
+  // Update all data-i18n-placeholder attributes
+  document.querySelectorAll<HTMLElement>('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder')!;
+    if (t[key] !== undefined) {
+      (el as any).placeholder = t[key];
+    }
+  });
 
   // Lang buttons aria-pressed
   const btnFr = document.getElementById('lb-fr');
