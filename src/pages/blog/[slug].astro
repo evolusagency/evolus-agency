@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content';
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({
-    params: { slug: post.id },
+    params: { slug: post.data.slug },
     props: { post },
   }));
 }
@@ -15,6 +15,14 @@ const { Content } = await render(post);
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<link rel="canonical" href={`https://evolus.agency/blog/${post.data.slug}`} />
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content={post.data.title} />
+<meta property="og:description" content={post.data.excerpt} />
+<meta property="og:image" content={post.data.image} />
+
+<meta name="twitter:card" content="summary_large_image" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{post.data.title} — Evolus Agency</title>
@@ -133,6 +141,8 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align
     <img 
       src={post.data.image} 
       alt={post.data.title}
+      loading="lazy"
+      decoding="async"
       style="width:100%;border-radius:12px;margin-top:2rem;border:1px solid rgba(245,242,236,0.12);"
     />
   </div>
@@ -161,7 +171,28 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;align
     <li><a href="mailto:contact@evolus.agency">Contact</a></li>
   </ul>
 </footer>
-
+<script type="application/ld+json">
+{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.excerpt,
+  "image": post.data.image,
+  "datePublished": post.data.date,
+  "author": {
+    "@type": "Organization",
+    "name": "Evolus Agency"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Evolus Agency",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://evolus.agency/favicon.svg"
+    }
+  }
+})}
+</script>
 <script>
 const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
