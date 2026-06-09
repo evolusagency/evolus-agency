@@ -1,7 +1,6 @@
 // src/pages/api/contact.ts
 import type { APIRoute } from 'astro';
 
-// ── Types ──────────────────────────────────────────────────────
 interface ContactPayload {
   name:    string;
   email:   string;
@@ -9,10 +8,9 @@ interface ContactPayload {
   _hp?:    string;
 }
 
-// ── Rate limiting (en-mémoire, reset au redémarrage) ──────────
 const rateMap = new Map<string, { count: number; ts: number }>();
-const RATE_LIMIT   = 3;   // max 3 envois
-const RATE_WINDOW  = 60 * 60 * 1000; // par heure
+const RATE_LIMIT  = 3;
+const RATE_WINDOW = 60 * 60 * 1000;
 
 function isRateLimited(ip: string): boolean {
   const now   = Date.now();
@@ -26,9 +24,15 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-// ── Handler ────────────────────────────────────────────────────
 export const POST: APIRoute = async ({ request }) => {
-  // 1. Parse body
+  const RESEND_KEY = import.meta.env.RESEND_API_KEY;
+  console.log('[debug] clé lue:', RESEND_KEY ? 'OK' : 'undefined');
+
+  if (!RESEND_KEY) {
+    console.error('[contact] RESEND_API_KEY manquante');
+    return json({ error: 'Configuration serveur manquante' }, 500);
+  }
+
   let body: ContactPayload;
   try {
     body = await request.json();
@@ -38,10 +42,8 @@ export const POST: APIRoute = async ({ request }) => {
 
   const { name, email, message, _hp } = body;
 
-  // 2. Honeypot
-  if (_hp) return json({ ok: true }, 200); // silencieux
+  if (_hp) return json({ ok: true }, 200);
 
-  // 3. Validation serveur
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return json({ error: 'Champs manquants' }, 422);
   }
@@ -53,19 +55,11 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ error: 'Message trop court' }, 422);
   }
 
-  // 4. Rate limiting par IP
   const ip = request.headers.get('cf-connecting-ip')
           || request.headers.get('x-forwarded-for')?.split(',')[0]
           || 'unknown';
   if (isRateLimited(ip)) {
     return json({ error: 'Trop de tentatives, réessayez dans 1h' }, 429);
-  }
-
-  // 5. Envoi via Resend
-  const RESEND_KEY = import.meta.env.RESEND_API_KEY;
-  if (!RESEND_KEY) {
-    console.error('[contact] RESEND_API_KEY manquante');
-    return json({ error: 'Configuration serveur manquante' }, 500);
   }
 
   try {
@@ -93,7 +87,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       console.error('[contact] Resend error', res.status, err);
-      return json({ error: 'Erreur d\'envoi' }, 502);
+      return json({ error: "Erreur d'envoi" }, 502);
     }
 
     return json({ ok: true }, 200);
@@ -104,7 +98,6 @@ export const POST: APIRoute = async ({ request }) => {
   }
 };
 
-// ── Helpers ────────────────────────────────────────────────────
 function json(data: object, status: number) {
   return new Response(JSON.stringify(data), {
     status,
