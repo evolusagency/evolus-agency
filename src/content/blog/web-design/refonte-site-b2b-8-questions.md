@@ -54,5 +54,5 @@ Un site sans plan de contenu stagne dans les 3 mois. Prévoyez budget et ressour
 
 ## 📎 Articles liés
 
-- [Comment multiplier par 3 votre taux de conversion B2B en 90 jours](../multiplier-taux-conversion-b2b-90-jours.md)
-- [Comment présenter vos tarifs B2B pour ne plus perdre sur le prix](../presentation-tarifs-b2b-valeur.md)
+- [Comment multiplier par 3 votre taux de conversion B2B en 90 jours](/blog/web-design/multiplier-taux-conversion-b2b-90-jours)
+- [Comment présenter vos tarifs B2B pour ne plus perdre sur le prix](/blog/web-design/presentation-tarifs-b2b-valeur)

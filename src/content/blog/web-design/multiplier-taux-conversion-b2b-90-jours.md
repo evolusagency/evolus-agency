@@ -49,5 +49,5 @@ Ce n'est pas un projet de 6 mois. Avec la bonne méthode et la bonne exécution,
 
 ## 📎 Articles liés
 
-- [Comment présenter vos tarifs B2B pour ne plus perdre sur le prix](../presentation-tarifs-b2b-valeur.md)
-- [Refonte de site B2B : les 8 questions à poser avant de dépenser un euro](../refonte-site-b2b-8-questions.md)
+- [Comment présenter vos tarifs B2B pour ne plus perdre sur le prix](/blog/web-design/presentation-tarifs-b2b-valeur)
+- [Refonte de site B2B : les 8 questions à poser avant de dépenser un euro](/blog/web-design/refonte-site-b2b-8-questions)

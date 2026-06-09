@@ -44,8 +44,8 @@ Un webinaire mensuel de 45 minutes sur un problème précis de votre secteur. Le
 
 ## 📎 Articles liés
 
-- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
-- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](../copywriting-b2b-techniques-conversion.md)
-- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
-- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](../seo-b2b-blog-generation-leads.md)
-- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)
+- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](/blog/marketing/copywriting-b2b-techniques-conversion)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](/blog/marketing/onboarding-client-b2b-retention)
+- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](/blog/marketing/seo-b2b-blog-generation-leads)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](/blog/marketing/social-selling-b2b-strategie-linkedin-ia)
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](/blog/marketing/strategie-contenu-linkedin-b2b-organic)

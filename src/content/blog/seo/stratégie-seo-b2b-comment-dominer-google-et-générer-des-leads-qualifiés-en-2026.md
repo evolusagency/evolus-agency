@@ -64,4 +64,4 @@ Dominer les résultats de recherche en B2B demande de la constance et une approc
 
 ## 📎 Articles liés
 
-- [SEO B2B : pourquoi votre blog ne génère aucun lead (et comment corriger ça)](../perte-trafic-site-b2b-visiteurs-qualifies.md)
+- [SEO B2B : pourquoi votre blog ne génère aucun lead (et comment corriger ça)](/blog/seo/perte-trafic-site-b2b-visiteurs-qualifies)

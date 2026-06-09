@@ -193,9 +193,9 @@ function injectInternalLinks(classified) {
 
     for (const article of articles) {
       const links = articles
-        .filter((a) => a.file !== article.file)
-        .map((s) => `- [${s.title}](../${s.slug})`)
-        .join("\n");
+       .filter((a) => a.file !== article.file)
+       .map((s) => `- [${s.title}](/blog/${cluster}/${s.slug.replace(/\.md$/, '')})`)
+       .join("\n");
 
       let { frontmatter, body } = parseMd(fs.readFileSync(article.filePath, "utf-8"));
       body = body.replace(/\n\n---\n\n## 📎 Articles liés[\s\S]*$/, "");

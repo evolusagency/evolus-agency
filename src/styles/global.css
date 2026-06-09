@@ -268,3 +268,13 @@ body::before {
 
 /* ── 11. MARQUEE ───────────────────────────────────────────── */
 @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* ── 12. BLOG ARTICLE LINKS ────────────────────────────────── */
+.art-reader-body a {
+  color: var(--accent) !important;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(200, 240, 62, 0.35);
+  transition: border-color var(--dur-mid);
+}
+.art-reader-body a:hover {
+  border-bottom-color: var(--accent);
+}

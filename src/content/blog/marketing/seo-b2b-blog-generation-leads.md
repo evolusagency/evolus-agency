@@ -36,8 +36,8 @@ Si votre headline peut s'appliquer à n'importe quelle entreprise de votre secte
 
 ## 📎 Articles liés
 
-- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
-- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](../tunnels-prospection-b2b-efficaces.md)
-- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](../copywriting-b2b-techniques-conversion.md)
-- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
-- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)
+- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](/blog/marketing/copywriting-b2b-techniques-conversion)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](/blog/marketing/onboarding-client-b2b-retention)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](/blog/marketing/social-selling-b2b-strategie-linkedin-ia)
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](/blog/marketing/strategie-contenu-linkedin-b2b-organic)
+- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](/blog/marketing/tunnels-prospection-b2b-efficaces)

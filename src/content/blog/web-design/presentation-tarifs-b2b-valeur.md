@@ -39,5 +39,5 @@ Un coût est une dépense. Un investissement a un ROI. Si votre prestation à 15
 
 ## 📎 Articles liés
 
-- [Comment multiplier par 3 votre taux de conversion B2B en 90 jours](../multiplier-taux-conversion-b2b-90-jours.md)
-- [Refonte de site B2B : les 8 questions à poser avant de dépenser un euro](../refonte-site-b2b-8-questions.md)
+- [Comment multiplier par 3 votre taux de conversion B2B en 90 jours](/blog/web-design/multiplier-taux-conversion-b2b-90-jours)
+- [Refonte de site B2B : les 8 questions à poser avant de dépenser un euro](/blog/web-design/refonte-site-b2b-8-questions)

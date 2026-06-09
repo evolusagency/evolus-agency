@@ -48,4 +48,4 @@ L'acheteur compare des prestataires. Ciblez : "agence SEO B2B Maroc", "alternati
 
 ## 📎 Articles liés
 
-- [Stratégie SEO B2B : Comment dominer Google et générer des leads](../stratégie-seo-b2b-comment-dominer-google-et-générer-des-leads-qualifiés-en-2026.md)
+- [Stratégie SEO B2B : Comment dominer Google et générer des leads](/blog/seo/stratégie-seo-b2b-comment-dominer-google-et-générer-des-leads-qualifiés-en-2026)

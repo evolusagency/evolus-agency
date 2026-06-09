@@ -46,8 +46,8 @@ Pas de faux compte à rebours. Mais : "Nous travaillons avec 8 clients maximum p
 
 ## 📎 Articles liés
 
-- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
-- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](../tunnels-prospection-b2b-efficaces.md)
-- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
-- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](../seo-b2b-blog-generation-leads.md)
-- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](../social-selling-b2b-strategie-linkedin-ia.md)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](/blog/marketing/onboarding-client-b2b-retention)
+- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](/blog/marketing/seo-b2b-blog-generation-leads)
+- [Social Selling B2B en 2026 : Le playbook pour générer des leads avec](/blog/marketing/social-selling-b2b-strategie-linkedin-ia)
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](/blog/marketing/strategie-contenu-linkedin-b2b-organic)
+- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](/blog/marketing/tunnels-prospection-b2b-efficaces)

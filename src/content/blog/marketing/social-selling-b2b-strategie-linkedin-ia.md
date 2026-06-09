@@ -78,8 +78,8 @@ L'IA ne doit pas écrire vos posts à votre place ; elle doit structurer vos don
 
 ## 📎 Articles liés
 
-- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](../strategie-contenu-linkedin-b2b-organic.md)
-- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](../tunnels-prospection-b2b-efficaces.md)
-- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](../copywriting-b2b-techniques-conversion.md)
-- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](../onboarding-client-b2b-retention.md)
-- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](../seo-b2b-blog-generation-leads.md)
+- [Le copywriting B2B qui fait signer : 7 techniques des meilleurs convertisseurs](/blog/marketing/copywriting-b2b-techniques-conversion)
+- [Onboarding client B2B : transformer la première semaine en avantage concurrentiel](/blog/marketing/onboarding-client-b2b-retention)
+- [Pourquoi votre site B2B perd 80% de ses visiteurs qualifiés](/blog/marketing/seo-b2b-blog-generation-leads)
+- [LinkedIn en 2025 : la stratégie de contenu B2B qui génère des inbounds sans publicité](/blog/marketing/strategie-contenu-linkedin-b2b-organic)
+- [5 tunnels de prospection B2B qui fonctionnent encore en 2025](/blog/marketing/tunnels-prospection-b2b-efficaces)
