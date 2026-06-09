@@ -155,5 +155,324 @@ const { title, description, lang = 'fr' } = Astro.props;
     }
   </script>
 
+  <!-- Neon Line Canvas Background -->
+  <script>
+(function() {
+  'use strict';
+
+  // ==================== CONFIG ====================
+  const CONFIG = {
+    maxParticles: 60,
+    particleSpawnRadius: 80,
+    particlesPerMove: 2,
+    mousethrottleMs: 16,
+    lerpFactor: 0.06,
+    turns: 2,
+    amplitude: 0.15, // 15% of canvas width
+    glowLayers: [
+      { width: 12, alpha: 0.08 },
+      { width: 6, alpha: 0.15 },
+      { width: 3, alpha: 0.4 },
+      { width: 1.5, alpha: 0.9 },
+    ],
+    colors: [
+      { pos: 0, hex: '#c8f03e' },    // green-yellow
+      { pos: 0.33, hex: '#a0e0ff' }, // cyan
+      { pos: 0.66, hex: '#c8f03e' }, // green-yellow
+      { pos: 1, hex: '#c8f03e' },
+    ],
+    particleLifetime: [60, 120],
+    particleRadius: [1, 3],
+    pulseRadius: 15,
+    mouseAttractionRange: 100,
+    mouseAttractionStrength: 0.15,
+  };
+
+  // ==================== STATE ====================
+  let canvas, ctx;
+  let scrollProgress = 0;
+  let targetScrollProgress = 0;
+  let particles = [];
+  let lastMouseTime = 0;
+  let mouseX = 0, mouseY = 0;
+  let isDirty = false;
+  let rafId = null;
+
+  // ==================== UTILS ====================
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : { r: 200, g: 240, b: 62 };
+  }
+
+  function lerpColor(colors, t) {
+    t = Math.max(0, Math.min(1, t));
+    for (let i = 0; i < colors.length - 1; i++) {
+      if (t >= colors[i].pos && t <= colors[i + 1].pos) {
+        const range = colors[i + 1].pos - colors[i].pos;
+        const localT = (t - colors[i].pos) / range;
+        const c1 = hexToRgb(colors[i].hex);
+        const c2 = hexToRgb(colors[i + 1].hex);
+        return `rgb(${Math.round(c1.r + (c2.r - c1.r) * localT)}, ${Math.round(c1.g + (c2.g - c1.g) * localT)}, ${Math.round(c1.b + (c2.b - c1.b) * localT)})`;
+      }
+    }
+    return hexToRgb(colors[colors.length - 1].hex);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  // ==================== PARTICLES ====================
+  function spawnParticle(x, y, color) {
+    if (particles.length >= CONFIG.maxParticles) return;
+    
+    const radius = CONFIG.particleRadius[0] + Math.random() * (CONFIG.particleRadius[1] - CONFIG.particleRadius[0]);
+    const lifetime = CONFIG.particleLifetime[0] + Math.random() * (CONFIG.particleLifetime[1] - CONFIG.particleLifetime[0]);
+    
+    particles.push({
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: -0.3 - Math.random() * 0.5,
+      radius,
+      lifetime,
+      age: 0,
+      color,
+    });
+    isDirty = true;
+  }
+
+  function updateParticles() {
+    particles = particles.filter(p => {
+      p.age++;
+      p.x += p.vx;
+      p.y += p.vy;
+      return p.age < p.lifetime;
+    });
+    
+    if (particles.length === 0) isDirty = false;
+  }
+
+  function drawParticles() {
+    particles.forEach(p => {
+      const opacity = 0.8 * (1 - p.age / p.lifetime);
+      ctx.fillStyle = p.color.replace('rgb', 'rgba').replace(')', `, ${opacity})`);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  // ==================== NEON LINE ====================
+  function getLineColor(progress) {
+    return lerpColor(CONFIG.colors, progress);
+  }
+
+  function getLinePoint(progress) {
+    const x = canvas.width / 2;
+    const amplitude = canvas.width * CONFIG.amplitude;
+    const offset = amplitude * Math.sin(progress * Math.PI * CONFIG.turns);
+    
+    // Mouse attraction
+    if (Math.abs(mouseX - x) < CONFIG.mouseAttractionRange && mouseY > canvas.height * 0.2) {
+      const dist = Math.abs(mouseX - x);
+      const pull = CONFIG.mouseAttractionStrength * (1 - dist / CONFIG.mouseAttractionRange);
+      return {
+        x: x + offset + (mouseX - x) * pull,
+        y: progress * canvas.height,
+      };
+    }
+    
+    return { x: x + offset, y: progress * canvas.height };
+  }
+
+  function drawNeonLine() {
+    const startY = 0;
+    const endY = canvas.height;
+    const steps = Math.max(100, canvas.height / 4);
+
+    for (let layerIdx = 0; layerIdx < CONFIG.glowLayers.length; layerIdx++) {
+      const layer = CONFIG.glowLayers[layerIdx];
+      ctx.lineWidth = layer.width;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let i = 0; i < steps; i++) {
+        const progress = i / steps;
+        const point = getLinePoint(progress);
+        const color = getLineColor(progress);
+
+        ctx.strokeStyle = color.replace('rgb', 'rgba').replace(')', `, ${layer.alpha})`);
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = color;
+
+        if (i === 0) {
+          ctx.beginPath();
+          ctx.moveTo(point.x, point.y);
+        } else {
+          ctx.lineTo(point.x, point.y);
+        }
+      }
+      ctx.stroke();
+    }
+  }
+
+  function drawPulseTip() {
+    const tipPoint = getLinePoint(scrollProgress);
+    const baseRadius = CONFIG.pulseRadius;
+    const pulse = Math.sin(Date.now() * 0.006) * 0.3 + 0.7;
+    const pulseRadius = baseRadius * pulse;
+    const color = getLineColor(scrollProgress);
+
+    ctx.fillStyle = color.replace('rgb', 'rgba').replace(')', ', 0.4)');
+    ctx.shadowBlur = 30;
+    ctx.shadowColor = color;
+    ctx.beginPath();
+    ctx.arc(tipPoint.x, tipPoint.y, pulseRadius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Outer ring
+    ctx.strokeStyle = color.replace('rgb', 'rgba').replace(')', ', 0.2)');
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(tipPoint.x, tipPoint.y, baseRadius * 1.5, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // ==================== RENDER ====================
+  function render() {
+    if (!isDirty && particles.length === 0) {
+      rafId = null;
+      return;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    drawNeonLine();
+    drawPulseTip();
+    updateParticles();
+    drawParticles();
+
+    rafId = requestAnimationFrame(render);
+  }
+
+  function scheduleRender() {
+    isDirty = true;
+    if (!rafId) rafId = requestAnimationFrame(render);
+  }
+
+  // ==================== SCROLL ====================
+  function updateScroll() {
+    const scrollHeight = document.body.scrollHeight - window.innerHeight;
+    targetScrollProgress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
+
+    if (Math.abs(scrollProgress - targetScrollProgress) > 0.001) {
+      scrollProgress = lerp(scrollProgress, targetScrollProgress, CONFIG.lerpFactor);
+      scheduleRender();
+    }
+  }
+
+  // ==================== MOUSE ====================
+  function onMouseMove(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    isDirty = true;
+
+    const now = Date.now();
+    if (now - lastMouseTime >= CONFIG.mousethrottleMs) {
+      lastMouseTime = now;
+
+      // Spawn particles only in lower 80% of viewport
+      if (mouseY > window.innerHeight * 0.2) {
+        for (let i = 0; i < CONFIG.particlesPerMove; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = Math.random() * CONFIG.particleSpawnRadius;
+          const x = mouseX + Math.cos(angle) * dist;
+          const y = mouseY + Math.sin(angle) * dist;
+          
+          // Get nearest line point color
+          const lineProgress = y / canvas.height;
+          const color = getLineColor(Math.max(0, Math.min(1, lineProgress)));
+          spawnParticle(x, y, color);
+        }
+      }
+    }
+
+    scheduleRender();
+  }
+
+  // ==================== INIT ====================
+  function init() {
+    if (document.querySelector('canvas.neon-line')) {
+      console.warn('[neon] Canvas already exists');
+      return;
+    }
+
+    canvas = document.createElement('canvas');
+    canvas.className = 'neon-line';
+    canvas.style.cssText = `
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    `;
+
+    ctx = canvas.getContext('2d', { alpha: true });
+    document.body.insertBefore(canvas, document.body.firstChild);
+
+    // Resize handler
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      scheduleRender();
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Event listeners
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+
+    // Safety checks
+    setTimeout(() => {
+      const firstSec = document.querySelector('.sec, [role="main"], main');
+      const navZIndex = parseInt(window.getComputedStyle(document.querySelector('nav')).zIndex) || 500;
+      
+      if (firstSec) {
+        const secZIndex = parseInt(window.getComputedStyle(firstSec).zIndex) || 10;
+        if (secZIndex <= 1) {
+          console.warn('[neon] Detected z-index conflict, correcting to -1');
+          canvas.style.zIndex = -1;
+        }
+      }
+
+      // Verify pointer-events
+      if (window.getComputedStyle(canvas).pointerEvents !== 'none') {
+        canvas.style.pointerEvents = 'none';
+        console.warn('[neon] Corrected pointer-events: none');
+      }
+
+      console.log('[neon] canvas injected, z-index: ' + window.getComputedStyle(canvas).zIndex + ', pointer-events: none');
+    }, 100);
+
+    // Start animation loop
+    scheduleRender();
+  }
+
+  // ==================== DOMContentLoaded ====================
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+
 </body>
 </html>
