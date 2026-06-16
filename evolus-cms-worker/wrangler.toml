@@ -1,0 +1,32 @@
+name = "evolus-cms-worker"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[triggers]
+crons = ["0 8 * * *", "0 18 * * *"]
+
+[ai]
+binding = "AI"
+
+[vars]
+BATCH_SIZE        = "3"
+GITHUB_OWNER      = "evolusagency"
+GITHUB_REPO       = "evolus-agency"
+GITHUB_BRANCH     = "main"
+CONTENT_BASE_PATH = "src/content/blog"
+SITE_LANG         = "fr"
+AUTHOR            = "Evolus Agency"
+DRY_RUN           = "false"
+
+[env.production]
+vars = { DRY_RUN = "false", BATCH_SIZE = "3", GITHUB_OWNER = "evolusagency", GITHUB_REPO = "evolus-agency", GITHUB_BRANCH = "main", CONTENT_BASE_PATH = "src/content/blog", SITE_LANG = "fr", AUTHOR = "Evolus Agency" }
+
+[env.production.ai]
+binding = "AI"
+
+[env.staging]
+vars = { DRY_RUN = "true", BATCH_SIZE = "1", GITHUB_OWNER = "evolusagency", GITHUB_REPO = "evolus-agency", GITHUB_BRANCH = "main", CONTENT_BASE_PATH = "src/content/blog", SITE_LANG = "fr", AUTHOR = "Evolus Agency" }
+
+[env.staging.ai]
+binding = "AI"

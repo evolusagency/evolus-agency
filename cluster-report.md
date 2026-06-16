@@ -1,6 +1,6 @@
 # Rapport des clusters blog
 
-> Généré le 09/06/2026
+> Généré le 17/06/2026
 
 ## Automation (1 article)
 
