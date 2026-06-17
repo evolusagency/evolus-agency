@@ -159,7 +159,7 @@ export async function generateArticle(
   const prompt = buildPrompt(row);
 
   // Call Cloudflare AI Workers binding
-  const aiResponse = await ai.run('@cf/meta/llama-3.1-8b-instruct', {
+  const aiResponse = await ai.run('@cf/meta/llama-3.1-8b-instruct-fast', {
     messages: [
       {
         role:    'system',
