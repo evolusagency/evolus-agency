@@ -1,20 +1,23 @@
 ---
-// src/components/Footer.astro
+import EvolusTextAnimation from '../components/EvolusTextAnimation.astro';
 ---
 
 <!-- ── CONTACT FORM SECTION ─────────────────────────────────── -->
 <section class="contact-sec" id="contact" aria-labelledby="contact-title">
   <div class="contact-inner">
 
-    <div class="contact-head rv">
-      <div class="sec-label" data-i18n="cta.label">Passons à l'action</div>
+    <div class="contact-head rv" >
+      <div class="sec-label" data-i18n="cta.label">Passons à l'action </div>
+
       <h2 class="sec-title" id="contact-title" data-i18n-html="cta.title">
         Votre site mérite<br>mieux qu'hier.
       </h2>
       <p class="contact-sub" data-i18n="cta.desc">
         Audit gratuit, stratégie claire, résultats mesurables.
       </p>
+      
     </div>
+      <EvolusTextAnimation height="20vh" bgColor="#0a0a0a" textColor="#f5f2ec" />
 
     <!-- Form -->
     <form
@@ -113,7 +116,7 @@
       <li><a href="#services" data-i18n="footer.links.0.label">Services</a></li>
       <li><a href="/blog"     data-i18n="footer.links.1.label">Blog</a></li>
       <li>
-        <a href="mailto:contact@evolus.agency" data-i18n="footer.links.2.label">Contact</a>
+        <a href="#contact" data-i18n="footer.links.2.label">Contact</a>
       </li>
     </ul>
   </nav>
