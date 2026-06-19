@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo</title>
+<style>
+  :root {
+  --bg: #faf5ec;
+  --bg-2: #f7eedb;
+  --cream: #fff8e8;
+  --dark: #0a0a0c;
+  --dark-2: #1a1a1c;
+  --text: #0a0a0c;
+  --text-2: #4a4a52;
+  --mute: #8a8a93;
+  --mute-2: #b8b8be;
+  --mint: #b8e6cf;
+  --mint-2: #9bd6b8;
+  --mint-3: #d4eedf;
+  --green: #22c55e;
+  --green-2: #16a34a;
+  --red: #e23744;
+  --red-2: #c41e2e;
+  --line: rgba(0, 0, 0, 0.08);
+  --line-2: rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: radial-gradient(
+      ellipse 60% 50% at 90% 10%,
+      #fde6c4 0%,
+      transparent 55%
+    ),
+    radial-gradient(ellipse 50% 40% at 5% 90%, #fff0d8 0%, transparent 50%),
+    linear-gradient(180deg, #faf5ec 0%, #f7eedb 100%);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+/* Decorative giant circle in top center */
+.page::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -40%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 80vw;
+  max-width: 1100px;
+  max-height: 1100px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ════════════════════════════════════════════════
+     HEADER
+     ════════════════════════════════════════════════ */
+.header {
+  position: relative;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  padding: 28px clamp(20px, 4vw, 56px);
+}
+
+.nav-left {
+  display: inline-flex;
+  gap: clamp(20px, 3vw, 36px);
+}
+
+.nav-left a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 6px 2px;
+  position: relative;
+  transition: opacity 0.2s;
+}
+
+.nav-left a:hover {
+  opacity: 0.55;
+}
+
+/* Brand toggle pill (centre logo) */
+.brand-toggle {
+  width: 60px;
+  height: 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #cfc5b2, #b8ad97);
+  position: relative;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.12),
+    inset 0 2px 3px rgba(255, 255, 255, 0.4), 0 2px 6px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.brand-toggle .thumb {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  left: 3px;
+  top: 3px;
+  background: radial-gradient(circle at 30% 25%, #2e2e30 0%, #08080a 70%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.4), 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.brand-toggle.on .thumb {
+  left: 35px;
+}
+
+.nav-right {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  position: relative;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.icon-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.icon-btn svg {
+  width: 22px;
+  height: 22px;
+  color: var(--text);
+}
+
+.icon-btn .badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-2) 100%);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--bg);
+  box-shadow: 0 2px 4px rgba(226, 55, 68, 0.4);
+}
+
+.avatar-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 25%,
+    #8a9eff 0%,
+    #5a6eff 50%,
+    #4a52d4 100%
+  );
+  margin-left: 4px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(90, 110, 255, 0.35);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.avatar-btn:hover {
+  transform: scale(1.08);
+}
+
+/* ════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: clamp(24px, 3vw, 48px);
+  align-items: start;
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 56px) clamp(60px, 8vw, 100px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ─── INFO COLUMN ─── */
+.info {
+  padding-top: clamp(20px, 4vw, 60px);
+}
+
+.title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(44px, 6.4vw, 88px);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  margin: 0 0 28px;
+  color: var(--dark);
+}
+
+.title .line {
+  display: block;
+  position: relative;
+  white-space: nowrap;
+}
+
+.title .line + .line {
+  margin-top: 4px;
+}
+
+.title .word {
+  display: inline-block;
+  position: relative;
+}
+
+/* Hand-drawn green circle around "Organic" */
+.word-wrap {
+  display: inline-block;
+  position: relative;
+  padding: 4px 14px 6px;
+}
+
+.organic-circle {
+  position: absolute;
+  left: -5px;
+  top: -3%;
+  width: calc(100% + 10px);
+  height: 110%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.organic-circle path {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Arrow after "kohaku" */
+.title-arrow {
+  display: inline-block;
+  vertical-align: 0.12em;
+  margin-left: clamp(8px, 1.5vw, 18px);
+  line-height: 0;
+}
+
+.title-arrow svg {
+  height: clamp(18px, 1.8vw, 28px);
+  width: auto;
+  display: block;
+}
+
+.title-arrow path {
+  fill: none;
+  stroke: var(--dark);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Red Japanese stamp after "water" */
+.stamp {
+  display: inline-block;
+  width: clamp(28px, 3.6vw, 42px);
+  height: clamp(28px, 3.6vw, 42px);
+  margin-left: clamp(8px, 1.5vw, 16px);
+  background: linear-gradient(140deg, #f04453 0%, #d8243a 60%, #b51e30 100%);
+  border-radius: 7px;
+  vertical-align: 0.05em;
+  position: relative;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.25), 0 6px 14px rgba(226, 55, 68, 0.35),
+    0 12px 24px rgba(226, 55, 68, 0.18);
+}
+
+.stamp .mark {
+  position: absolute;
+  inset: 18%;
+  display: grid;
+  place-items: center;
+}
+
+.stamp .mark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.stamp .mark svg path {
+  fill: none;
+  stroke: white;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.price {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  margin: 0 0 24px;
+  color: var(--dark);
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 260px;
+  margin: 0 0 40px;
+}
+
+.cta-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.btn-cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 22px 8px 8px;
+  border-radius: 999px;
+  background: var(--dark);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.3), 0 10px 24px rgba(0, 0, 0, 0.22),
+    0 22px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.3), 0 14px 30px rgba(0, 0, 0, 0.28),
+    0 30px 50px rgba(0, 0, 0, 0.14);
+}
+
+.btn-cart .check {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: white;
+  color: var(--dark);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn-cart .check svg {
+  width: 12px;
+  height: 12px;
+}
+
+.btn-heart {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--line-2);
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.25s;
+}
+
+.btn-heart:hover {
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.btn-heart.liked {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+.btn-heart svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ════════════════════════════════════════════════
+     STAGE (the bottle showcase)
+     ════════════════════════════════════════════════ */
+.stage {
+  position: relative;
+  min-height: clamp(440px, 56vw, 660px);
+  z-index: 5;
+}
+
+/* Mint green arch (the portal shape behind the bottle) */
+.arch {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  height: 78%;
+  background: linear-gradient(180deg, #c4ead7 0%, #a8dcc1 100%);
+  border-radius: 50% 50% 12px 12px / 38% 38% 4% 4%;
+  box-shadow: inset 0 -12px 24px rgba(0, 0, 0, 0.05),
+    inset 0 10px 20px rgba(255, 255, 255, 0.35);
+  z-index: 1;
+}
+
+/* Subtle outline arches behind for depth */
+.arch-ring {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86%;
+  height: 86%;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 50% 50% 12px 12px / 38% 38% 4% 4%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.arch-ring.b {
+  width: 94%;
+  height: 94%;
+  bottom: 2%;
+  opacity: 0.6;
+}
+
+/* Hand-drawn ribbon loop */
+.ribbon {
+  position: absolute;
+  inset: 8% 4% 4% 4%;
+  width: 92%;
+  height: 92%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.ribbon path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Floating clay spheres */
+.sphere {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 25%,
+    #ffffff 0%,
+    #f0f0f3 40%,
+    #c0c0c8 100%
+  );
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.1),
+    inset 0 3px 5px rgba(255, 255, 255, 0.6), 0 6px 14px rgba(0, 0, 0, 0.1),
+    0 18px 32px rgba(0, 0, 0, 0.06);
+  z-index: 4;
+}
+
+.sphere.s1 {
+  left: 12%;
+  top: 30%;
+  width: 26px;
+  height: 26px;
+}
+
+.sphere.s2 {
+  left: 18%;
+  top: 60%;
+  width: 18px;
+  height: 18px;
+}
+
+.sphere.s3 {
+  right: 14%;
+  top: 38%;
+  width: 34px;
+  height: 34px;
+}
+
+.sphere.s4 {
+  right: 28%;
+  bottom: 32%;
+  width: 22px;
+  height: 22px;
+}
+
+.sphere.s5 {
+  left: 28%;
+  top: 16%;
+  width: 14px;
+  height: 14px;
+}
+
+/* The bottle (PNG with drop-shadow for depth) */
+.bottle-wrap {
+  position: absolute;
+  inset: 4% 0 0;
+  display: grid;
+  place-items: center;
+  z-index: 5;
+}
+
+.bottle {
+  width: 150%;
+  max-width: 1000px;
+  height: auto;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.2))
+    drop-shadow(0 36px 50px rgba(0, 0, 0, 0.12));
+  transform-origin: center bottom;
+}
+
+.bottle-fallback {
+  /* shown if PNG fails */
+  width: 38%;
+  max-width: 200px;
+  aspect-ratio: 1 / 2.2;
+  background: linear-gradient(180deg, #2a2a2c 0%, #0c0c0e 100%);
+  border-radius: 12% 12% 8% 8% / 6% 6% 3% 3%;
+  box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.4),
+    inset 0 5px 10px rgba(255, 255, 255, 0.08), 0 30px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.bottle-fallback::before {
+  content: "";
+  position: absolute;
+  left: 35%;
+  top: -8%;
+  width: 30%;
+  height: 14%;
+  background: linear-gradient(180deg, #1c1c1e, #0a0a0c);
+  border-radius: 8% 8% 4% 4%;
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Scroll-down indicator (over bottle bottom) */
+.scroll-down {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  display: grid;
+  place-items: center;
+  color: white;
+  z-index: 8;
+  backdrop-filter: blur(4px);
+  transition: background 0.25s, transform 0.25s;
+  animation: scrollBounce 2.2s infinite ease-in-out;
+}
+
+@keyframes scrollBounce {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    transform: translate(-50%, 6px);
+  }
+}
+
+.scroll-down:hover {
+  background: rgba(255, 255, 255, 0.15);
+  animation-play-state: paused;
+}
+
+.scroll-down svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Floating notification cards */
+.notif {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 8px;
+  background: white;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 20px rgba(0, 0, 0, 0.08),
+    0 22px 40px rgba(0, 0, 0, 0.06);
+  z-index: 7;
+  font-size: 12.5px;
+}
+
+.notif .av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notif .av svg {
+  width: 100%;
+  height: 100%;
+}
+
+.notif .text {
+  line-height: 1.3;
+}
+
+.notif .text strong {
+  font-weight: 600;
+}
+
+.notif .text-2 {
+  color: var(--mute);
+  font-size: 11.5px;
+}
+
+.notif .ind {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: white;
+  box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.notif .ind.heart {
+  background: linear-gradient(135deg, #f04453, #d8243a);
+}
+
+.notif .ind.check {
+  background: linear-gradient(135deg, #2ecc71, #16a34a);
+}
+
+.notif .ind svg {
+  width: 12px;
+  height: 12px;
+}
+
+.notif-like {
+  right: -10%;
+  top: 25%;
+}
+
+.notif-buy {
+  left: 6%;
+  bottom: 28%;
+}
+
+/* ════════════════════════════════════════════════
+     SIDE COLUMN
+     ════════════════════════════════════════════════ */
+.side {
+  padding-top: clamp(20px, 3vw, 40px);
+}
+
+.pagination {
+  display: inline-flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  justify-content: flex-start;
+}
+
+.pag-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: var(--text-2);
+  transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+
+.pag-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.pag-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.accordion {
+  margin-top: 60px;
+}
+
+.acc-item {
+  border-bottom: 1px solid var(--line-2);
+}
+
+.acc-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  transition: color 0.25s;
+}
+
+.acc-head:hover {
+  color: var(--text-2);
+}
+
+.acc-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--text-2);
+  transition: transform 0.35s, background 0.25s;
+}
+
+.acc-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.acc-icon .v {
+  transition: opacity 0.25s;
+}
+
+.acc-item[data-open="true"] .acc-icon .v {
+  opacity: 0;
+}
+
+.acc-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.acc-item[data-open="true"] .acc-body {
+  max-height: 200px;
+}
+
+.acc-body-inner {
+  padding-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 260px;
+}
+
+/* ════════════════════════════════════════════════
+     RELATED PRODUCTS
+     ════════════════════════════════════════════════ */
+.related {
+  position: relative;
+  padding: clamp(60px, 8vw, 100px) clamp(20px, 4vw, 56px)
+    clamp(60px, 8vw, 100px);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 30%
+  );
+  z-index: 5;
+}
+
+.related-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.related-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(32px, 5vw, 56px);
+}
+
+.related-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.related-eyebrow::before {
+  content: "";
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+}
+
+.related-title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(28px, 3.4vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  max-width: 16ch;
+}
+
+.related-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  background: white;
+  flex-shrink: 0;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.related-cta:hover {
+  background: var(--dark);
+  color: white;
+  border-color: var(--dark);
+  transform: translateY(-2px);
+}
+
+.related-cta svg {
+  width: 14px;
+  height: 14px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.prod {
+  position: relative;
+  border-radius: 28px;
+  padding: 28px;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.05), 0 20px 40px rgba(0, 0, 0, 0.04);
+}
+
+.prod:hover {
+  transform: translateY(-6px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 6px 16px rgba(0, 0, 0, 0.06), 0 30px 60px rgba(0, 0, 0, 0.1);
+}
+
+.prod.mint {
+  background: linear-gradient(160deg, #d4eedf 0%, #b8e6cf 100%);
+}
+
+.prod.peach {
+  background: linear-gradient(160deg, #ffe4cc 0%, #ffcfa8 100%);
+}
+
+.prod.lavender {
+  background: linear-gradient(160deg, #e4dcff 0%, #c8baff 100%);
+}
+
+.prod-img-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 76%;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.prod-img-wrap img {
+  height: 78%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.18))
+    drop-shadow(0 24px 36px rgba(0, 0, 0, 0.1));
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.prod:hover .prod-img-wrap img {
+  transform: translateY(-6px) scale(1.04);
+}
+
+.prod-tag {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.prod-like {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  color: var(--dark);
+  transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+
+.prod-like:hover {
+  background: var(--dark);
+  color: white;
+  transform: scale(1.08);
+}
+
+.prod-like.liked {
+  background: var(--red);
+  color: white;
+}
+
+.prod-like svg {
+  width: 14px;
+  height: 14px;
+}
+
+.prod-meta {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prod-name {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: var(--dark);
+}
+
+.prod-sub {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+.prod-price {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--dark);
+}
+
+/* ════════════════════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .info {
+    padding-top: 0;
+  }
+
+  .side {
+    padding-top: 0;
+  }
+
+  .stage {
+    min-height: clamp(420px, 80vw, 540px);
+  }
+
+  .notif-like {
+    right: 4%;
+  }
+
+  .notif-buy {
+    left: 4%;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 18px 16px;
+  }
+
+  .nav-left {
+    display: none;
+  }
+
+  .hero {
+    padding: 16px;
+  }
+
+  .related {
+    padding: 60px 16px;
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .related-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stage {
+    min-height: 380px;
+  }
+
+  .sphere {
+    transform: scale(0.7);
+  }
+
+  .notif {
+    font-size: 11px;
+    padding: 6px 12px 6px 6px;
+  }
+
+  .notif .av {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&family=Inter:wght@300..600&family=Caveat:wght@500..700&display=swap" rel="stylesheet">
+
+<div class="page">
+
+  <!-- ═══════════════════ HEADER ═══════════════════ -->
+  <header class="header">
+    <nav class="nav-left" aria-label="Primary">
+      <a href="#">Category</a>
+      <a href="#">Category 2</a>
+      <a href="#">Category 3</a>
+    </nav>
+
+    <button class="brand-toggle" id="brandToggle" aria-label="Toggle mode">
+      <span class="thumb"></span>
+    </button>
+
+    <div class="nav-right">
+      <button class="icon-btn" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21 C2 14, 4 5, 9 5 C11 5, 12 7, 12 7 C12 7, 13 5, 15 5 C20 5, 22 14, 12 21 Z" />
+        </svg>
+      </button>
+      <button class="icon-btn" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 9 L5 17 L19 17 L19 9 L12 4 Z" />
+          <path d="M5 9 L12 14 L19 9" />
+        </svg>
+        <span class="badge">3</span>
+      </button>
+      <button class="avatar-btn" aria-label="Account"></button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <main class="hero">
+
+    <!-- LEFT: INFO -->
+    <section class="info">
+      <h1 class="title">
+        <span class="line line-1">
+          <span class="word-wrap">
+            <svg class="organic-circle" viewBox="0 0 320 110" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M 14 62 C 22 28, 70 12, 165 14 C 235 16, 295 25, 305 55 C 312 80, 285 100, 200 102 C 110 104, 35 96, 12 78 C 8 70, 9 67, 14 62 Z" />
+            </svg>
+            <span class="word">Collagen</span>
+          </span>
+        </span>
+        <span class="line line-2">
+          <span class="word">Serum</span>
+          <span class="title-arrow" aria-hidden="true">
+            <svg viewBox="0 0 100 24" preserveAspectRatio="xMinYMid meet">
+              <path d="M 4 12 L 88 12 M 76 4 L 92 12 L 76 20" />
+            </svg>
+          </span>
+        </span>
+        <span class="line line-3">
+          <span class="word">***</span>
+          <span class="stamp" aria-hidden="true">
+            <span class="mark">
+              <svg viewBox="0 0 20 20">
+                <path d="M 4 6 L 16 6" />
+                <path d="M 10 4 L 10 16" />
+                <path d="M 6 11 L 14 11" />
+                <path d="M 7 16 L 13 16" />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </h1>
+
+      <div class="price">£39.00</div>
+
+      <p class="desc">Fresh, tangy and zesty lime with refreshing minty notes.</p>
+
+      <div class="cta-row">
+        <button class="btn-cart" id="btnCart">
+          <span class="check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12 L10 17 L19 7" />
+            </svg>
+          </span>
+          Add to cart
+        </button>
+        <button class="btn-heart" id="btnHeart" aria-label="Add to wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21 C2 14, 4 5, 9 5 C11 5, 12 7, 12 7 C12 7, 13 5, 15 5 C20 5, 22 14, 12 21 Z" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- CENTER: BOTTLE STAGE -->
+    <section class="stage" id="stage">
+
+      <span class="arch-ring b"></span>
+      <span class="arch-ring"></span>
+      <div class="arch"></div>
+
+      <!-- Hand-drawn ribbon loop behind bottle -->
+      <svg class="ribbon" viewBox="0 0 600 800" preserveAspectRatio="none" aria-hidden="true">
+        <path id="ribbonPath" d="
+          M 100 180
+          C 200 90,  360 110, 430 220
+          C 480 290, 410 360, 340 330
+          C 280 300, 290 380, 360 410
+          C 430 440, 400 530, 320 510
+          C 240 490, 240 590, 320 620
+          C 380 640, 360 720, 280 700
+          C 200 680, 180 750, 220 770
+        " />
+      </svg>
+
+      <!-- Floating spheres -->
+      <span class="sphere s1"></span>
+      <span class="sphere s2"></span>
+      <span class="sphere s3"></span>
+      <span class="sphere s4"></span>
+      <span class="sphere s5"></span>
+
+      <!-- The bottle PNG -->
+      <div class="bottle-wrap">
+        <img class="bottle" id="bottle" src="https://cdn.shopify.com/s/files/1/0185/5999/1872/files/ret-square-05-trans.png?v=1753032835" alt="DermExcel Serum" onerror="this.outerHTML='<div class=&quot;bottle-fallback&quot;></div>'">
+      </div>
+
+      <!-- Floating notification cards -->
+      <div class="notif notif-like">
+        <span class="av" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <defs>
+              <clipPath id="clipA">
+                <circle cx="16" cy="16" r="16" />
+              </clipPath>
+            </defs>
+            <g clip-path="url(#clipA)">
+              <rect width="32" height="32" fill="#f3d2b0" />
+              <circle cx="16" cy="13" r="7" fill="#d9a07a" />
+              <path d="M0 34 Q16 18 32 34 Z" fill="#2a2a2e" />
+              <path d="M10 11 Q12 4 16 4 Q20 4 22 11 Q19 7 16 7 Q13 7 10 11 Z" fill="#1a1a1c" />
+            </g>
+          </svg>
+        </span>
+        <div class="text">
+          <strong>Kohaku</strong> has liked
+          <div class="text-2">this item</div>
+        </div>
+        <span class="ind heart" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21 C2 14, 4 5, 9 5 C11 5, 12 7, 12 7 C12 7, 13 5, 15 5 C20 5, 22 14, 12 21 Z" />
+          </svg>
+        </span>
+      </div>
+
+      <div class="notif notif-buy">
+        <span class="av" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <defs>
+              <clipPath id="clipB">
+                <circle cx="16" cy="16" r="16" />
+              </clipPath>
+            </defs>
+            <g clip-path="url(#clipB)">
+              <rect width="32" height="32" fill="#a8c4e8" />
+              <circle cx="16" cy="13" r="7" fill="#8a5e3c" />
+              <path d="M0 34 Q16 18 32 34 Z" fill="#3a5a8c" />
+              <path d="M9 10 Q12 4 16 4 Q20 4 23 10 Q19 7 16 7 Q13 7 9 10 Z" fill="#1a1a1c" />
+            </g>
+          </svg>
+        </span>
+        <div class="text">
+          <strong>Mayo Shire</strong> has
+          <div class="text-2">just purchased</div>
+        </div>
+        <span class="ind check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12 L10 17 L19 7" />
+          </svg>
+        </span>
+      </div>
+
+      <!-- Scroll-down indicator -->
+      <button class="scroll-down" id="scrollDown" aria-label="Scroll for more">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 10 L12 16 L18 10" />
+        </svg>
+      </button>
+    </section>
+
+    <!-- RIGHT: SIDE COLUMN -->
+    <aside class="side">
+      <div class="pagination">
+        <button class="pag-btn" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 6 L9 12 L15 18" />
+          </svg>
+        </button>
+        <button class="pag-btn" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6 L15 12 L9 18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-item" data-open="false">
+          <button class="acc-head">
+            Description
+            <span class="acc-icon">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M2 6 L10 6" />
+                <path class="v" d="M6 2 L6 10" />
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              A premium kohaku-inspired sparkling water, sourced from a single Japanese alpine spring and infused with cold-pressed citrus oils.
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-open="false">
+          <button class="acc-head">
+            Nutrition
+            <span class="acc-icon">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M2 6 L10 6" />
+                <path class="v" d="M6 2 L6 10" />
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              Zero calories. Zero sugar. Trace electrolytes from natural mineral content — sodium, calcium, magnesium.
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-open="true">
+          <button class="acc-head">
+            Ingredients
+            <span class="acc-icon">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M2 6 L10 6" />
+                <path class="v" d="M6 2 L6 10" />
+              </svg>
+            </span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              Fresh, tangy and zesty lime with refreshing minty notes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ═══════════════════ RELATED PRODUCTS ═══════════════════ -->
+  <section class="related">
+    <div class="related-inner">
+      <div class="related-head">
+        <div class="reveal">
+          <div class="related-eyebrow">More from the collection</div>
+          <h2 class="related-title">Same maker. Different mood.</h2>
+        </div>
+        <a href="#" class="related-cta reveal">
+          See all
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17 L17 7 M8 7 H17 V16" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="related-grid">
+        <article class="prod mint reveal">
+          <span class="prod-tag">New</span>
+          <button class="prod-like" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21 C2 14, 4 5, 9 5 C11 5, 12 7, 12 7 C12 7, 13 5, 15 5 C20 5, 22 14, 12 21 Z" />
+            </svg>
+          </button>
+          <div class="prod-img-wrap">
+            <img src="https://cdn.shopify.com/s/files/1/0185/5999/1872/files/ret-square-05-trans.png?v=1753032835" alt="" loading="lazy">
+          </div>
+          <div class="prod-meta">
+            <div>
+              <div class="prod-name">Retinol serum</div>
+              <div class="prod-sub">Great subtext line</div>
+            </div>
+            <div class="prod-price">£42</div>
+          </div>
+        </article>
+
+        <article class="prod peach reveal">
+          <span class="prod-tag">Bestseller</span>
+          <button class="prod-like" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21 C2 14, 4 5, 9 5 C11 5, 12 7, 12 7 C12 7, 13 5, 15 5 C20 5, 22 14, 12 21 Z" />
+            </svg>
+          </button>
+          <div class="prod-img-wrap">
+            <img src="https://cdn.shopify.com/s/files/1/0185/5999/1872/files/ret-square-05-trans.png?v=1753032835" alt="" loading="lazy">
+          </div>
+          <div class="prod-meta">
+            <div>
+              <div class="prod-name">Inflacin serum</div>
+              <div class="prod-sub">Great subtext line</div>
+            </div>
+            <div class="prod-price">£38</div>
+          </div>
+        </article>
+
+        <article class="prod lavender reveal">
+          <span class="prod-tag">Limited</span>
+          <button class="prod-like" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21 C2 14, 4 5, 9 5 C11 5, 12 7, 12 7 C12 7, 13 5, 15 5 C20 5, 22 14, 12 21 Z" />
+            </svg>
+          </button>
+          <div class="prod-img-wrap">
+            <img src="https://cdn.shopify.com/s/files/1/0185/5999/1872/files/ret-square-05-trans.png?v=1753032835" alt="" loading="lazy">
+          </div>
+          <div class="prod-meta">
+            <div>
+              <div class="prod-name">Litaderm serum</div>
+              <div class="prod-sub">Great subtext line</div>
+            </div>
+            <div class="prod-price">£45</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══════════════════ GSAP ═══════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    (function () {
+  if (!window.gsap) return;
+  gsap.registerPlugin(ScrollTrigger);
+  // ─── PREP SVG paths for stroke-dashoffset draw-in ───
+  const drawPaths = [
+    document.querySelector(".organic-circle path"),
+    document.querySelector(".title-arrow path"),
+    document.getElementById("ribbonPath"),
+    document.querySelector(".stamp .mark svg path:nth-child(1)"),
+    document.querySelector(".stamp .mark svg path:nth-child(2)"),
+    document.querySelector(".stamp .mark svg path:nth-child(3)"),
+    document.querySelector(".stamp .mark svg path:nth-child(4)")
+  ].filter(Boolean);
+  drawPaths.forEach((p) => {
+    const len = p.getTotalLength();
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+  });
+  // ─── INITIAL STATES ───
+  gsap.set(".header > *", {
+    y: -16,
+    opacity: 0
+  });
+  gsap.set(".title .line", {
+    yPercent: 100,
+    opacity: 0
+  });
+  gsap.set(".stamp", {
+    scale: 0,
+    opacity: 0
+  });
+  gsap.set(".price, .desc, .cta-row", {
+    y: 20,
+    opacity: 0
+  });
+  gsap.set(".arch", {
+    scale: 0.55,
+    opacity: 0
+  });
+  gsap.set(".arch-ring", {
+    scale: 0.6,
+    opacity: 0
+  });
+  gsap.set(".bottle, .bottle-fallback", {
+    y: 60,
+    opacity: 0,
+    scale: 0.92
+  });
+  gsap.set(".sphere", {
+    scale: 0,
+    opacity: 0
+  });
+  gsap.set(".notif", {
+    y: 30,
+    opacity: 0,
+    scale: 0.9
+  });
+  gsap.set(".scroll-down", {
+    y: 20,
+    opacity: 0
+  });
+  gsap.set(".pagination, .accordion", {
+    y: 20,
+    opacity: 0
+  });
+  // ─── PAGE LOAD TIMELINE ───
+  const tl = gsap.timeline({
+    defaults: {
+      ease: "power3.out"
+    },
+    delay: 0.2
+  });
+  tl.to(".header > *", {
+    y: 0,
+    opacity: 1,
+    duration: 0.6,
+    stagger: 0.07
+  })
+    .to(
+      ".title .line",
+      {
+        yPercent: 0,
+        opacity: 1,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: "power4.out"
+      },
+      "-=.3"
+    )
+    .to(
+      ".organic-circle path",
+      {
+        strokeDashoffset: 0,
+        duration: 1,
+        ease: "power2.out"
+      },
+      "-=.7"
+    )
+    .to(
+      ".title-arrow path",
+      {
+        strokeDashoffset: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      },
+      "-=.6"
+    )
+    .to(
+      ".stamp",
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.55,
+        ease: "back.out(2)"
+      },
+      "-=.3"
+    )
+    .to(
+      ".stamp .mark svg path",
+      {
+        strokeDashoffset: 0,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: "power2.out"
+      },
+      "-=.3"
+    )
+    .to(
+      ".price",
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5
+      },
+      "-=.5"
+    )
+    .to(
+      ".desc",
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5
+      },
+      "-=.3"
+    )
+    .to(
+      ".cta-row",
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6
+      },
+      "-=.3"
+    )
+    .to(
+      ".arch-ring",
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: "power3.out"
+      },
+      "-=1.8"
+    )
+    .to(
+      ".arch",
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.9,
+        ease: "back.out(1.4)"
+      },
+      "-=1.6"
+    )
+    .to(
+      ".bottle, .bottle-fallback",
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power3.out"
+      },
+      "-=.6"
+    )
+    .to(
+      "#ribbonPath",
+      {
+        strokeDashoffset: 0,
+        duration: 1.6,
+        ease: "power2.out"
+      },
+      "-=.8"
+    )
+    .to(
+      ".sphere",
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "back.out(2)"
+      },
+      "-=1.0"
+    )
+    .to(
+      ".notif",
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.7,
+        stagger: 0.18,
+        ease: "back.out(1.7)"
+      },
+      "-=.6"
+    )
+    .to(
+      ".scroll-down",
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5
+      },
+      "-=.4"
+    )
+    .to(
+      ".pagination, .accordion",
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1
+      },
+      "-=.4"
+    );
+  // ─── CONTINUOUS FLOATS (clay breathing) ───
+  gsap.to(".sphere.s1", {
+    y: "+=12",
+    duration: 3.5,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  gsap.to(".sphere.s2", {
+    y: "-=10",
+    duration: 4.0,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  gsap.to(".sphere.s3", {
+    y: "+=14",
+    duration: 3.8,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  gsap.to(".sphere.s4", {
+    y: "-=12",
+    duration: 4.2,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  gsap.to(".sphere.s5", {
+    y: "+=8",
+    duration: 3.2,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  gsap.to(".bottle, .bottle-fallback", {
+    y: "+=8",
+    duration: 5,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  gsap.to(".notif-like", {
+    y: "+=4",
+    duration: 4,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  gsap.to(".notif-buy", {
+    y: "-=4",
+    duration: 4.5,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
+  // ─── MOUSE PARALLAX over stage ───
+  const stage = document.getElementById("stage");
+  const isCoarse = matchMedia("(pointer: coarse)").matches;
+  if (stage && !isCoarse) {
+    stage.addEventListener("mousemove", (e) => {
+      const r = stage.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      gsap.to(".bottle, .bottle-fallback", {
+        x: x * 14,
+        rotateY: x * 7,
+        rotateX: -y * 4,
+        duration: 0.8,
+        ease: "power3.out",
+        transformPerspective: 1000
+      });
+      gsap.to(".sphere.s1", {
+        x: x * 22,
+        y: y * 18,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.to(".sphere.s2", {
+        x: x * -16,
+        y: y * 22,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.to(".sphere.s3", {
+        x: x * 28,
+        y: y * -20,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.to(".sphere.s4", {
+        x: x * -22,
+        y: y * -18,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.to(".sphere.s5", {
+        x: x * 18,
+        y: y * 14,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.to(".ribbon", {
+        x: x * 10,
+        y: y * 8,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+      gsap.to(".notif-like", {
+        x: x * -12,
+        y: y * -8,
+        duration: 0.8,
+        ease: "power3.out",
+        overwrite: "auto"
+      });
+      gsap.to(".notif-buy", {
+        x: x * 12,
+        y: y * 10,
+        duration: 0.8,
+        ease: "power3.out",
+        overwrite: "auto"
+      });
+    });
+    stage.addEventListener("mouseleave", () => {
+      gsap.to(
+        [
+          ".bottle",
+          ".bottle-fallback",
+          ".sphere",
+          ".ribbon",
+          ".notif-like",
+          ".notif-buy"
+        ],
+        {
+          x: 0,
+          y: 0,
+          rotateY: 0,
+          rotateX: 0,
+          duration: 1,
+          ease: "elastic.out(1, .5)"
+        }
+      );
+    });
+  }
+  // ─── ACCORDION ───
+  document.querySelectorAll(".acc-head").forEach((head) => {
+    head.addEventListener("click", () => {
+      const item = head.closest(".acc-item");
+      const open = item.dataset.open === "true";
+      // close others
+      document
+        .querySelectorAll(".acc-item")
+        .forEach((i) => (i.dataset.open = "false"));
+      // toggle current
+      item.dataset.open = open ? "false" : "true";
+    });
+  });
+  // ─── HEART (wishlist) TOGGLE w/ animation ───
+  document.querySelectorAll(".btn-heart, .prod-like").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      btn.classList.toggle("liked");
+      gsap
+        .timeline()
+        .to(btn, {
+          scale: 1.3,
+          duration: 0.18,
+          ease: "power2.out"
+        })
+        .to(btn, {
+          scale: 1,
+          duration: 0.55,
+          ease: "elastic.out(1, .4)"
+        });
+      if (btn.classList.contains("liked")) {
+        // emit a little floating heart
+        const heart = document.createElement("span");
+        heart.textContent = "♥";
+        Object.assign(heart.style, {
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%,-50%)",
+          color: "#e23744",
+          fontSize: "20px",
+          pointerEvents: "none",
+          zIndex: "99"
+        });
+        btn.appendChild(heart);
+        gsap.fromTo(
+          heart,
+          {
+            y: 0,
+            opacity: 1,
+            scale: 0.6
+          },
+          {
+            y: -40,
+            opacity: 0,
+            scale: 1.4,
+            duration: 0.9,
+            ease: "power2.out",
+            onComplete: () => heart.remove()
+          }
+        );
+      }
+    });
+  });
+  // ─── ADD TO CART feedback ───
+  const btnCart = document.getElementById("btnCart");
+  btnCart?.addEventListener("click", () => {
+    gsap
+      .timeline()
+      .to(btnCart, {
+        scale: 0.94,
+        duration: 0.1,
+        ease: "power2.out"
+      })
+      .to(btnCart, {
+        scale: 1,
+        duration: 0.5,
+        ease: "elastic.out(1, .4)"
+      });
+    // little plus icon flies into the badge
+    const fly = document.createElement("span");
+    fly.textContent = "+1";
+    Object.assign(fly.style, {
+      position: "fixed",
+      left: btnCart.getBoundingClientRect().left + "px",
+      top: btnCart.getBoundingClientRect().top + "px",
+      fontFamily: "Plus Jakarta Sans, sans-serif",
+      fontWeight: "700",
+      fontSize: "14px",
+      color: "#e23744",
+      pointerEvents: "none",
+      zIndex: "999"
+    });
+    document.body.appendChild(fly);
+    const bag = document.querySelector(".icon-btn:nth-of-type(2)");
+    if (bag) {
+      const target = bag.getBoundingClientRect();
+      gsap.to(fly, {
+        left: target.left + 12 + "px",
+        top: target.top + 6 + "px",
+        scale: 0.6,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power2.in",
+        onComplete: () => {
+          fly.remove();
+          gsap.fromTo(
+            bag.querySelector(".badge"),
+            {
+              scale: 1
+            },
+            {
+              scale: 1.4,
+              duration: 0.25,
+              yoyo: true,
+              repeat: 1,
+              ease: "power2.out"
+            }
+          );
+        }
+      });
+    }
+  });
+  // ─── BRAND TOGGLE ───
+  const brand = document.getElementById("brandToggle");
+  brand?.addEventListener("click", () => brand.classList.toggle("on"));
+  // ─── SCROLL DOWN ───
+  document.getElementById("scrollDown")?.addEventListener("click", () => {
+    document.querySelector(".related")?.scrollIntoView({
+      behavior: "smooth"
+    });
+  });
+  // ─── SCROLL PARALLAX on bottle stage ───
+  gsap.to(".bottle, .bottle-fallback", {
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.2
+    },
+    y: -80,
+    scale: 0.92
+  });
+  gsap.to(".arch", {
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.2
+    },
+    y: -40,
+    scale: 1.06
+  });
+  gsap.to(".title", {
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.2
+    },
+    y: -30,
+    opacity: 0.6
+  });
+  gsap.to(".sphere.s3", {
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.5
+    },
+    y: -100,
+    x: 30
+  });
+  gsap.to(".sphere.s4", {
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1.5
+    },
+    y: 80,
+    x: -20
+  });
+  // ─── REVEAL on scroll ───
+  gsap.utils.toArray(".reveal").forEach((el, i) => {
+    gsap.fromTo(
+      el,
+      {
+        y: 60,
+        opacity: 0
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.9,
+        delay: i * 0.08,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 88%",
+          once: true
+        }
+      }
+    );
+  });
+  // ─── PROD card tilt ───
+  if (!isCoarse) {
+    document.querySelectorAll(".prod").forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(card, {
+          rotateY: x * 6,
+          rotateX: -y * 6,
+          duration: 0.4,
+          ease: "power2.out",
+          transformPerspective: 900
+        });
+        gsap.to(card.querySelector(".prod-img-wrap img"), {
+          x: x * 16,
+          y: y * -12,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+      });
+      card.addEventListener("mouseleave", () => {
+        gsap.to(card, {
+          rotateY: 0,
+          rotateX: 0,
+          duration: 0.6,
+          ease: "elastic.out(1, .6)"
+        });
+        gsap.to(card.querySelector(".prod-img-wrap img"), {
+          x: 0,
+          y: 0,
+          duration: 0.6,
+          ease: "elastic.out(1, .5)"
+        });
+      });
+    });
+  }
+})();
+
+  </script>
+</body>
+</html>
