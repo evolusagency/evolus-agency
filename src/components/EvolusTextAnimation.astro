@@ -256,7 +256,8 @@ const uid = `evolus-three-${Math.random().toString(36).slice(2, 9)}`;
     }
 
     function createTweenScrubber(tween, seekSpeed) {
-      seekSpeed = seekSpeed || 0.002;
+      seekSpeed = seekSpeed || 0.00
+      2;
 
       function stop() { TweenMax.to(tween, 2, { timeScale: 0 }); }
       function resume() { TweenMax.to(tween, 2, { timeScale: 1 }); }

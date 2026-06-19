@@ -1,12 +1,9 @@
-/* ============================================
-   PRESTIGE MONTRÉAL MOTORS — main.js
-   ============================================ */
+
 
 (function () {
   'use strict';
 
   /* ── DOM refs ── */
-  const loader  = document.getElementById('loader');
   const bar     = document.getElementById('bar');
   const pct     = document.getElementById('pct');
   const tagEl   = document.getElementById('tagline');
