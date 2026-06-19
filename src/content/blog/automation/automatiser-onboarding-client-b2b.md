@@ -36,7 +36,7 @@ Pour automatiser l'onboarding client B2B, il faut connaître les outils et les m
 
 ## Guide d'implémentation étape par étape
 
-Pour automatiser l'onboarding client B2B, suivez ces étapes étape par étape :
+Pour automatiser l'[onboarding client B2B,](https://evolus.agency/blog/marketing/onboarding-client-b2b-retention/) suivez ces étapes étape par étape :
 
 ### 1. Définition des objectifs et des processus à automatiser
 
