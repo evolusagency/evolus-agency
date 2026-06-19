@@ -1,84 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prestige Montréal Motors</title>
-  <link rel="stylesheet" href="style.css" />
-  <script>.on(".popup-overlay", new RemovePopup())</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Animated</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #site-frame {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- LOADER -->
-  <div id="loader">
-    <div class="loader-logo">ecom premium<span class="gold">·</span>website</div>
-    <div class="loader-tagline" id="tagline"></div>
-    <div class="loader-bar-wrap">
-      <div class="loader-bar" id="bar"></div>
-    </div>
-    <div class="loader-percent" id="pct">0%</div>
-  </div>
-
-  <!-- SHELL -->
-  <div id="shell">
-
-    <!-- FAKE BROWSER BAR -->
-    <div id="topbar">
-      <div class="tb-dots">
-        <div class="tb-dot red"></div>
-        <div class="tb-dot yellow"></div>
-        <div class="tb-dot green"></div>
-      </div>
-      <div class="tb-url">
-        <span class="tb-lock">🔒</span>
-        <span class="tb-domain">
-          ecom-premium-website<strong>.com</strong>
-        </span>
-      </div>
-      <div class="tb-brand">PMM · Montréal</div>
-    </div>
-
-    <!-- IFRAME ZONE -->
-    <div id="frame-wrap">
-      <iframe
-        id="site-frame"
-        src="https://ecommercewebsite.evolusagency.workers.dev/"
-        title="Ecommerce Website"
-        allowfullscreen
-        allow="autoplay; fullscreen"
-        loading="lazy"
-      ></iframe>
-
-      <!-- FALLBACK SI IFRAME BLOQUÉ -->
-      <div id="blocked">
-        <div class="line"></div>
-        <h2 class="blocked-title">Site protégé</h2>
-        <p class="blocked-sub">
-          Webflow bloque les iframes via
-          <code>X-Frame-Options: SAMEORIGIN</code>.<br />
-          Utilisez un proxy Cloudflare Worker ou ouvrez le site directement.
-        </p>
-        <a class="cta" href="https://ecommercewebsite.evolusagency.workers.dev/" target="_blank">
-          Ouvrir le site →
-        </a>
-        <p class="blocked-note">
-          Solution : déployer un Cloudflare Worker proxy et remplacer
-          le <code>src</code> de l'iframe par votre URL proxy.
-        </p>
-        <div class="line"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- CORNER ACCENTS -->
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
-
-  <script src="main.js"></script>
+  <iframe
+    id="site-frame"
+    src="https://ecommercewebsite.evolusagency.workers.dev/"
+    title="Ecommerce Website"
+    allowfullscreen
+    allow="autoplay; fullscreen"
+  ></iframe>
 
 </body>
 </html>

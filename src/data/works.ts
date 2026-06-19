@@ -58,10 +58,10 @@ export const works: WorkItem[] = [
 },
 {
   slug: 'ecom-website',   // ← même nom que le dossier
-  title: 'Ecommerce Website',
-  titleEn: 'Ecommerce Website',
-  description: 'Un site e-commerce interactif mettant en valeur les produits disponibles.',
-  descriptionEn: 'An interactive e-commerce site highlighting the available products.',
+  title: 'La dernière technologie gsap',
+  titleEn: 'latest gsap technology',
+  description: 'Un site web utilisant la dernière technologie GSAP.',
+  descriptionEn: 'A website using the latest GSAP technology.',
   tags: ['UI', 'JS', 'Animation', 'CSS', 'GSAP'],
   height: 600,
 },

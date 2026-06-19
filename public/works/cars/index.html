@@ -58,6 +58,7 @@ body{
   display:flex;
   align-items:center;
   background:radial-gradient(ellipse at 30% 50%, rgba(216,255,77,.10), transparent 55%);
+
 }
 .hero-layout{
   display:grid;
@@ -139,23 +140,23 @@ body{
 .img-slide{
   position:absolute;
   inset:0;
-  /* NO border-radius, NO box-shadow, NO overflow:hidden, NO border */
   transform:translateX(110%) scale(.92);
   opacity:0;
   will-change:transform,opacity;
   display:flex;
   align-items:center;
   justify-content:center;
+  /* Fix 4: Safari backface */
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
 }
-/* no ::after pseudo-element — completely removed */
 .img-slide img{
   width:100%;
   height:100%;
-  object-fit:contain;   /* contain = shows full car, no crop */
+  object-fit:contain;
   object-position:center;
   display:block;
-  background:transparent; /* transparent bg so checkerboard doesn't show */
-  /* mix-blend-mode helps dark images blend into the dark background */
+  background:transparent;
 }
 
 /* scroll hint */
@@ -199,9 +200,76 @@ body{
 .section{padding:100px 0;}
 
 @media(max-width:768px){
-  .hero-layout{grid-template-columns:1fr;gap:30px;padding:0 20px;}
-  .hero-images{height:280px;order:-1;}
-  .hero-scene{height:400vh;}
+
+  .hero-scene{
+    height:300vh;
+  }
+
+  .hero-sticky{
+    align-items:flex-start;
+    padding-top:70px;
+    padding-bottom:20px;
+  }
+
+  .hero-layout{
+    grid-template-columns:1fr;
+    gap:0;
+    padding:20px;
+    text-align:center;
+    align-items:start;
+    width:100%;
+  }
+
+  .hero-text{
+    order:1;
+  }
+
+  .hero-text h1{
+    font-size:clamp(2rem,10vw,3.5rem);
+  }
+
+  .hero-text .sub{
+    font-size:1rem;
+  }
+
+  .hero-chip{
+    margin-inline:auto;
+  }
+
+  .btns{
+    justify-content:center;
+  }
+
+  #imgDots{
+    display:none;
+  }
+
+  .hero-images{
+    order:2;
+    position:relative;
+    width:100%;
+    height:220px;
+    margin-top:16px;
+  }
+
+  .img-slide img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+
+  .scroll-hint{
+    bottom:10px;
+  }
+
+  .car-card img{
+    height:180px;
+  }
+
+  .btns .btn{
+    width:100%;
+  }
+
 }
 </style>
 </head>
@@ -255,7 +323,7 @@ body{
         </div>
 
         <div class="img-slide" id="slide2">
-          <img src="https://vexstockimages.fastly.carvana.io/stockimages/2018_JEEP_WRANGLER%20UNLIMITED_ALL%20NEW%20MOAB%20SPORT%20UTILITY%204D_WHITE_stock_1_desktop.png" alt="jeep side view">
+          <img src="https://vexstockimages.fastly.carvana.io/stockimages/2018_JEEP_WRANGLER%20UNLIMITED_ALL%20NEW%20MOAB%20SPORT%20UTILITY%204D_WHITE_stock_1_desktop.png?v=1770793856.322" alt="jeep side view">
         </div>
 
         <div class="img-slide" id="slide3">
@@ -442,6 +510,15 @@ document.querySelectorAll('.car-card').forEach(card=>{
   card.addEventListener('mouseleave',()=>{
     gsap.to(card,{rotateX:0,rotateY:0,duration:.6});
   });
+});
+
+/* Fix 3: Refresh ScrollTrigger on load and resize */
+window.addEventListener("load", () => {
+  ScrollTrigger.refresh();
+});
+
+window.addEventListener("resize", () => {
+  ScrollTrigger.refresh();
 });
 </script>
 </body>
