@@ -1,15 +1,18 @@
 ---
-title: "Automatiser l'Onboarding Client B2B : Le Guide Complet 2026"
-excerpt: "Découvrez comment automatiser chaque étape de l'onboarding client B2B pour réduire le churn et accélérer le time-to-value avec les outils IA de 2026."
-date: 2026-06-18
-tag: "Automatisation"
-read: "3 min"
-category: automation
-lang: fr
-author: "Evolus Agency"
-featured: false
-pillar: false
+excerpt: Découvrez comment automatiser chaque étape de l'onboarding client B2B
+  pour réduire le churn et accélérer le time-to-value avec les outils IA de
+  2026.
 draft: false
+pillar: false
+author: Evolus Agency
+featured: false
+title: "Automatiser l'Onboarding Client B2B : Le Guide Complet 2026"
+date: 2026-06-18
+tag: Automatisation
+read: 3 min
+lang: fr
+image: /images/seo-onbording.png
+category: automation
 ---
 La productivité, un problème concret pour les équipes B2B. Chaque jour, les opérationnels, les CTOs et les fondateurs tech sont confrontés à la même réalité : trop de tâches répétitives, trop de temps perdu à gérer les détails, trop de risques de perte de clients. L'onboarding client, en particulier, est un processus long et complexe qui nécessite une grande quantité de ressources. Les équipes doivent gérer les demandes de compte, les sessions de formation, les échanges de documents, tout en veillant à ce que les clients soient satisfaits et fidèles. Mais comment faire pour réduire les temps de réponse, améliorer la qualité de service et accélérer le time-to-value ? La réponse est simple : l'automatisation.
 
@@ -33,7 +36,7 @@ Pour automatiser l'onboarding client B2B, suivez ces étapes étape par étape :
 
 ### 1. Définition des objectifs et des processus à automatiser
 
-Identifiez les processus clés de l'onboarding client B2B qui peuvent être automatisés, tels que la gestion des demandes de compte, les sessions de formation, les échanges de documents, etc.
+Identifiez les processus clés de l'[onboarding client B2B ](https://evolus.agency/blog/marketing/onboarding-client-b2b-retention/)qui peuvent être automatisés, tels que la gestion des demandes de compte, les sessions de formation, les échanges de documents, etc.
 
 ### 2. Sélection des outils et des méthodes
 
