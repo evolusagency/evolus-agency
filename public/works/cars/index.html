@@ -58,7 +58,6 @@ body{
   display:flex;
   align-items:center;
   background:radial-gradient(ellipse at 30% 50%, rgba(216,255,77,.10), transparent 55%);
-
 }
 .hero-layout{
   display:grid;
@@ -71,7 +70,7 @@ body{
   margin:0 auto;
 }
 
-/* ── TEXT LEFT ── */
+/* TEXT LEFT */
 .hero-text h1{
   font-size:clamp(2.8rem,5.5vw,5.5rem);
   font-weight:900;
@@ -132,21 +131,25 @@ body{
 }
 .dot.active{background:var(--accent);}
 
-/* ── IMAGE RIGHT — NO BOX ── */
+/* IMAGE RIGHT */
 .hero-images{
   position:relative;
   height:520px;
+  /* FIX: explicit width for Safari */
+  width:100%;
 }
 .img-slide{
   position:absolute;
   inset:0;
+  /* FIX: use visibility instead of opacity:0 + translateX for initial state */
   transform:translateX(110%) scale(.92);
   opacity:0;
   will-change:transform,opacity;
   display:flex;
   align-items:center;
   justify-content:center;
-  /* Fix 4: Safari backface */
+  /* FIX: Safari GPU compositing */
+  -webkit-transform:translateX(110%) scale(.92);
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
 }
@@ -157,6 +160,10 @@ body{
   object-position:center;
   display:block;
   background:transparent;
+  /* FIX: prevent Safari from collapsing image */
+  min-height:1px;
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
 }
 
 /* scroll hint */
@@ -186,7 +193,7 @@ body{
   50%{opacity:.3;}
 }
 
-/* ── REST OF PAGE ── */
+/* REST OF PAGE */
 .page-content{background:var(--bg);}
 .card-custom,.feature,.stat,.footer-box{
   background:var(--card)!important;
@@ -199,16 +206,23 @@ body{
 .feature,.stat,.footer-box{padding:30px;border-radius:20px;}
 .section{padding:100px 0;}
 
+/* ============================
+   MOBILE FIXES (iPhone 14 Pro)
+   ============================ */
 @media(max-width:768px){
 
+  /* FIX: reduce hero height so ScrollTrigger works better on Safari */
   .hero-scene{
-    height:300vh;
+    height:250vh;
   }
 
   .hero-sticky{
     align-items:flex-start;
-    padding-top:70px;
+    padding-top:80px;
     padding-bottom:20px;
+    /* FIX: force GPU layer for sticky on iOS */
+    -webkit-transform:translateZ(0);
+    transform:translateZ(0);
   }
 
   .hero-layout{
@@ -244,18 +258,42 @@ body{
     display:none;
   }
 
+  /* FIX: key fix — give images container a proper height */
   .hero-images{
     order:2;
     position:relative;
     width:100%;
-    height:220px;
+    /* FIX: use vw-based height so it scales with screen */
+    height:55vw;
+    min-height:200px;
+    max-height:300px;
     margin-top:16px;
+    /* FIX: ensure the container is rendered on iOS */
+    -webkit-transform:translateZ(0);
+    transform:translateZ(0);
+    overflow:visible;
+  }
+
+  /* FIX: ensure slides fill container correctly on iOS */
+  .img-slide{
+    position:absolute;
+    top:0; left:0; right:0; bottom:0;
+    width:100%;
+    height:100%;
+    /* FIX: use -webkit-transform prefix for older Safari */
+    -webkit-transform:translateX(110%) scale(.92);
+    transform:translateX(110%) scale(.92);
   }
 
   .img-slide img{
     width:100%;
     height:100%;
     object-fit:contain;
+    object-position:center;
+    /* FIX: iOS Safari sometimes collapses images with object-fit:contain */
+    display:block;
+    max-width:100%;
+    max-height:100%;
   }
 
   .scroll-hint{
@@ -288,7 +326,7 @@ body{
 </div>
 </nav>
 
-<!-- ══ SCROLL SCENE ══════════════════════════ -->
+<!-- SCROLL SCENE -->
 <div class="hero-scene" id="heroScene">
   <div class="hero-sticky" id="heroSticky">
     <div class="hero-layout">
@@ -316,7 +354,7 @@ body{
       </div>
 
       <!-- IMAGES -->
-      <div class="hero-images">
+      <div class="hero-images" id="heroImages">
 
         <div class="img-slide" id="slide1">
           <img src="https://www.bmw-m.com/content/dam/bmw/marketBMW_M/www_bmw-m_com/all-models/model-navigation/bmw-m4-coupe-lci-flyout.png" alt="m4 coupe side profile">
@@ -340,7 +378,7 @@ body{
   </div>
 </div>
 
-<!-- ══ REST OF PAGE ══════════════════════════ -->
+<!-- REST OF PAGE -->
 <div class="page-content">
 
 <section class="container py-5">
@@ -435,11 +473,15 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
+// FIX: detect iOS Safari
+const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
 document.getElementById('themeToggle').addEventListener('click',()=>{
   document.body.classList.toggle('light');
 });
 
-/* ── HERO ENTRANCE ── */
+/* HERO ENTRANCE */
 const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
 tl.to('#heroChip',               { opacity:1, y:0, duration:.6 }, 0.2)
   .to('.hero-text h1 .line span',{ y:'0%', duration:1, stagger:.12 }, 0.4)
@@ -448,13 +490,21 @@ tl.to('#heroChip',               { opacity:1, y:0, duration:.6 }, 0.2)
   .to('#imgDots',                { opacity:1, duration:.5 }, 1.2)
   .to('#scrollHint',             { opacity:1, duration:.8 }, 1.5);
 
-/* first image slides in on load */
+/* FIX: first image — use set() then animate, with webkit prefix support */
+gsap.set('#slide1', { x:'110%', scale:.92, opacity:0 });
 gsap.to('#slide1', {
   x:'0%', scale:1, opacity:1,
-  duration:1.1, ease:'expo.out', delay:0.6
+  duration:1.1, ease:'expo.out', delay:0.6,
+  onComplete: function() {
+    // FIX: force repaint on iOS after animation
+    if(isIOS) {
+      const el = document.getElementById('slide1');
+      el.style.webkitTransform = el.style.transform;
+    }
+  }
 });
 
-/* ── SCROLL IMAGE SEQUENCE ── */
+/* SCROLL IMAGE SEQUENCE */
 const slides = ['#slide1','#slide2','#slide3'];
 const dots   = document.querySelectorAll('.dot');
 let current  = 0;
@@ -464,9 +514,14 @@ function goTo(index) {
   const prev = current;
   current = index;
 
+  // FIX: use gsap.set to ensure clean state before animating
   gsap.to(slides[prev], {
     x:'-110%', scale:.92, opacity:0,
-    duration:.75, ease:'power3.inOut'
+    duration:.75, ease:'power3.inOut',
+    onComplete: function() {
+      // FIX: after hiding, reset so it can come back in from the right
+      gsap.set(slides[prev], { x:'110%' });
+    }
   });
 
   gsap.fromTo(slides[index],
@@ -478,10 +533,13 @@ function goTo(index) {
   dots.forEach((d,i)=> d.classList.toggle('active', i===index));
 }
 
+// FIX: on iOS, use a simpler scroll approach with -webkit-overflow-scrolling
 ScrollTrigger.create({
   trigger: '#heroScene',
   start: 'top top',
   end: 'bottom bottom',
+  // FIX: use invalidateOnRefresh to recalculate on iOS orientation change
+  invalidateOnRefresh: true,
   onUpdate(self) {
     const p = self.progress;
     let idx = 0;
@@ -491,34 +549,46 @@ ScrollTrigger.create({
   }
 });
 
-/* ── SCROLL TRIGGER rest of page ── */
+/* SCROLL TRIGGER rest of page */
 gsap.utils.toArray('.car-card,.feature,.stat').forEach(el=>{
   gsap.from(el,{
-    scrollTrigger:{trigger:el, start:'top 85%'},
+    scrollTrigger:{trigger:el, start:'top 85%', invalidateOnRefresh:true},
     y:60, opacity:0, duration:1
   });
 });
 
-/* ── 3D TILT car cards ── */
-document.querySelectorAll('.car-card').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    const x=((e.clientX-r.left)/r.width -.5)*12;
-    const y=((e.clientY-r.top) /r.height-.5)*-12;
-    gsap.to(card,{rotateY:x,rotateX:y,duration:.3});
+/* 3D TILT car cards — desktop only */
+if(!isIOS && window.matchMedia('(hover:hover)').matches) {
+  document.querySelectorAll('.car-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width -.5)*12;
+      const y=((e.clientY-r.top) /r.height-.5)*-12;
+      gsap.to(card,{rotateY:x,rotateX:y,duration:.3});
+    });
+    card.addEventListener('mouseleave',()=>{
+      gsap.to(card,{rotateX:0,rotateY:0,duration:.6});
+    });
   });
-  card.addEventListener('mouseleave',()=>{
-    gsap.to(card,{rotateX:0,rotateY:0,duration:.6});
-  });
-});
+}
 
-/* Fix 3: Refresh ScrollTrigger on load and resize */
+/* FIX: Refresh ScrollTrigger after fonts/images load, critical for iOS */
 window.addEventListener("load", () => {
-  ScrollTrigger.refresh();
+  // Small delay for iOS to finish layout
+  setTimeout(() => {
+    ScrollTrigger.refresh(true);
+  }, 100);
 });
 
 window.addEventListener("resize", () => {
   ScrollTrigger.refresh();
+});
+
+// FIX: handle iOS orientation change
+window.addEventListener("orientationchange", () => {
+  setTimeout(() => {
+    ScrollTrigger.refresh(true);
+  }, 300);
 });
 </script>
 </body>
