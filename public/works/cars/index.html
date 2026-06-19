@@ -46,6 +46,7 @@ body{
 .btn-accent{background:var(--accent);border:none;color:#000;font-weight:700;}
 .theme-btn{border-radius:999px;}
 
+/* ── HERO SCENE ── */
 .hero-scene{
   position:relative;
   height:200vh;
@@ -70,7 +71,7 @@ body{
   margin:0 auto;
 }
 
-/* TEXT LEFT */
+/* ── TEXT LEFT (desktop) ── */
 .hero-text h1{
   font-size:clamp(2.8rem,5.5vw,5.5rem);
   font-weight:900;
@@ -131,25 +132,22 @@ body{
 }
 .dot.active{background:var(--accent);}
 
-/* IMAGE RIGHT */
+/* ── IMAGE RIGHT (desktop) ── */
 .hero-images{
   position:relative;
   height:520px;
-  /* FIX: explicit width for Safari */
   width:100%;
 }
 .img-slide{
   position:absolute;
   inset:0;
-  /* FIX: use visibility instead of opacity:0 + translateX for initial state */
   transform:translateX(110%) scale(.92);
+  -webkit-transform:translateX(110%) scale(.92);
   opacity:0;
   will-change:transform,opacity;
   display:flex;
   align-items:center;
   justify-content:center;
-  /* FIX: Safari GPU compositing */
-  -webkit-transform:translateX(110%) scale(.92);
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
 }
@@ -160,7 +158,6 @@ body{
   object-position:center;
   display:block;
   background:transparent;
-  /* FIX: prevent Safari from collapsing image */
   min-height:1px;
   -webkit-transform:translateZ(0);
   transform:translateZ(0);
@@ -193,7 +190,7 @@ body{
   50%{opacity:.3;}
 }
 
-/* REST OF PAGE */
+/* ── REST OF PAGE ── */
 .page-content{background:var(--bg);}
 .card-custom,.feature,.stat,.footer-box{
   background:var(--card)!important;
@@ -206,81 +203,85 @@ body{
 .feature,.stat,.footer-box{padding:30px;border-radius:20px;}
 .section{padding:100px 0;}
 
-/* ============================
-   MOBILE FIXES (iPhone 14 Pro)
-   ============================ */
+/* ── MOBILE (iPhone 14 Pro) ── */
 @media(max-width:768px){
 
-  /* FIX: reduce hero height so ScrollTrigger works better on Safari */
   .hero-scene{
-    height:250vh;
+    height:280vh;
   }
 
   .hero-sticky{
     align-items:flex-start;
-    padding-top:80px;
-    padding-bottom:20px;
-    /* FIX: force GPU layer for sticky on iOS */
+    padding-top:0;
+    padding-bottom:0;
     -webkit-transform:translateZ(0);
     transform:translateZ(0);
   }
 
+  /* On mobile: single column, full width */
   .hero-layout{
     grid-template-columns:1fr;
     gap:0;
-    padding:20px;
+    padding:0;
     text-align:center;
     align-items:start;
     width:100%;
+    /* Let it scroll naturally inside sticky */
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    padding-top:70px;
   }
 
+  /* Mobile: hero-text becomes a flex column
+     with images injected between line 1 and line 2-3 */
   .hero-text{
     order:1;
+    width:100%;
+    padding:0 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
   }
 
   .hero-text h1{
-    font-size:clamp(2rem,10vw,3.5rem);
+    font-size:clamp(2rem,10vw,3.2rem);
+    width:100%;
+    text-align:center;
   }
 
-  .hero-text .sub{
-    font-size:1rem;
-  }
-
-  .hero-chip{
-    margin-inline:auto;
-  }
-
-  .btns{
-    justify-content:center;
-  }
-
-  #imgDots{
+  /* Hide desktop h1 lines 2 & 3 on mobile — we use mobile-only ones */
+  .hero-text h1 .line.line-rental,
+  .hero-text h1 .line.line-sales{
     display:none;
   }
 
-  /* FIX: key fix — give images container a proper height */
+  .hero-text .sub{ font-size:1rem; }
+  .hero-chip{ margin-inline:auto; }
+  .btns{ justify-content:center; }
+  #imgDots{ display:none; }
+
+  /* ── Mobile image block — between Premium Cars. and Rental & Sales. ── */
   .hero-images{
     order:2;
     position:relative;
     width:100%;
-    /* FIX: use vw-based height so it scales with screen */
-    height:55vw;
-    min-height:200px;
-    max-height:300px;
-    margin-top:16px;
-    /* FIX: ensure the container is rendered on iOS */
+    height:52vw;
+    min-height:190px;
+    max-height:270px;
+    margin-top:10px;
     -webkit-transform:translateZ(0);
     transform:translateZ(0);
-    overflow:visible;
+    flex-shrink:0;
   }
 
-  /* FIX: ensure slides fill container correctly on iOS */
   .img-slide{
     position:absolute;
-    top:0; left:0; right:0; bottom:0;
+    top:0;left:0;right:0;bottom:0;
     width:100%;
     height:100%;
-    /* FIX: use -webkit-transform prefix for older Safari */
     -webkit-transform:translateX(110%) scale(.92);
     transform:translateX(110%) scale(.92);
   }
@@ -290,24 +291,35 @@ body{
     height:100%;
     object-fit:contain;
     object-position:center;
-    /* FIX: iOS Safari sometimes collapses images with object-fit:contain */
     display:block;
     max-width:100%;
     max-height:100%;
   }
 
-  .scroll-hint{
-    bottom:10px;
-  }
-
-  .car-card img{
-    height:180px;
-  }
-
-  .btns .btn{
+  /* ── Mobile-only "Rental & Sales." + sub + buttons block ── */
+  .mobile-below-images{
+    order:3;
     width:100%;
+    padding:0 20px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:8px;
   }
 
+  /* Desktop hero-images is order:2 originally — keep it out of flow on mobile
+     since we repositioned via flexbox */
+  .hero-text h1 .line{ text-align:center; }
+
+  .scroll-hint{ bottom:10px; }
+  .car-card img{ height:180px; }
+  .btns .btn{ width:100%; }
+}
+
+/* Hide mobile-only block on desktop */
+.mobile-below-images{
+  display:none;
 }
 </style>
 </head>
@@ -317,7 +329,7 @@ body{
 <nav class="navbar navbar-expand-lg">
 <div class="container">
   <a class="navbar-brand text-white d-flex align-items-center gap-2" href="#">
-    <svg fill="#fff" version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 293.1 293.1" xml:space="preserve" width="40px" height="40px">
+    <svg fill="#fff" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 293.1 293.1" xml:space="preserve" width="40px" height="40px">
       <path d="M30.5,22.2l1.3-0.5C69.2,7.9,106.5,0.7,143.9,0c37.4-0.6,74.7,5.3,112.1,17.9l1.4,0.5l0,1.4c-0.3,44.9-0.6,89.8-0.9,134.7c-0.1,23.2-12.3,55.8-35.3,84.3c-18.5,23-44.1,43.4-76.1,54.2l-1.1,0c-32.3-8.3-57.8-27.9-76.4-50.8c-23.8-29.5-36-64.7-36.1-88.6v0v0v0c-0.2-21.7-0.3-43.4-0.5-65L30.5,22.2z"/>
     </svg>
     <strong>Aurum Motors</strong>
@@ -331,18 +343,21 @@ body{
   <div class="hero-sticky" id="heroSticky">
     <div class="hero-layout">
 
-      <!-- TEXT -->
+      <!-- TEXT (chip + "Premium Cars." only on mobile, full h1 on desktop) -->
       <div class="hero-text">
         <div class="hero-chip" id="heroChip">
           <span>NEW</span> 2025 fleet now available
         </div>
         <h1>
-          <div class="line"><span>Premium Cars.</span></div>
-          <div class="line"><span class="accent-word">Rental</span></div>
-          <div class="line"><span>&amp; Sales.</span></div>
+          <!-- Line 1: always visible -->
+          <div class="line line-premium"><span>Premium Cars.</span></div>
+          <!-- Lines 2-3: hidden on mobile, shown in .mobile-below-images instead -->
+          <div class="line line-rental"><span class="accent-word">Rental</span></div>
+          <div class="line line-sales"><span>&amp; Sales.</span></div>
         </h1>
-        <p class="sub">Luxury, electric and performance vehicles<br>with instant availability.</p>
-        <div class="btns d-flex gap-3 flex-wrap">
+        <!-- sub + buttons: hidden on mobile (shown in mobile-below-images) -->
+        <p class="sub desktop-sub">Luxury, electric and performance vehicles<br>with instant availability.</p>
+        <div class="btns desktop-btns d-flex gap-3 flex-wrap">
           <button class="btn btn-accent btn-lg">Browse Inventory</button>
           <button class="btn btn-outline-light btn-lg">Book a Test Drive</button>
         </div>
@@ -355,20 +370,32 @@ body{
 
       <!-- IMAGES -->
       <div class="hero-images" id="heroImages">
-
         <div class="img-slide" id="slide1">
-          <img src="https://www.bmw-m.com/content/dam/bmw/marketBMW_M/www_bmw-m_com/all-models/model-navigation/bmw-m4-coupe-lci-flyout.png" alt="m4 coupe side profile">
+          <img src="https://www.bmw-m.com/content/dam/bmw/marketBMW_M/www_bmw-m_com/all-models/model-navigation/bmw-m4-coupe-lci-flyout.png" alt="BMW M4 Coupe">
         </div>
-
         <div class="img-slide" id="slide2">
-          <img src="https://vexstockimages.fastly.carvana.io/stockimages/2018_JEEP_WRANGLER%20UNLIMITED_ALL%20NEW%20MOAB%20SPORT%20UTILITY%204D_WHITE_stock_1_desktop.png?v=1770793856.322" alt="jeep side view">
+          <img src="https://vexstockimages.fastly.carvana.io/stockimages/2018_JEEP_WRANGLER%20UNLIMITED_ALL%20NEW%20MOAB%20SPORT%20UTILITY%204D_WHITE_stock_1_desktop.png?v=1770793856.322" alt="Jeep Wrangler">
         </div>
-
         <div class="img-slide" id="slide3">
-          <img src="https://pngimg.com/uploads/mercedes/mercedes_PNG80189.png" alt="Mercedes front view">
+          <img src="https://pngimg.com/uploads/mercedes/mercedes_PNG80189.png" alt="Mercedes">
         </div>
-
       </div>
+
+      <!-- MOBILE ONLY: "Rental & Sales." + sub + buttons shown BELOW images -->
+      <div class="mobile-below-images" id="mobileBelow">
+        <h1 style="font-size:clamp(2rem,10vw,3.2rem);font-weight:900;line-height:1.05;letter-spacing:-0.02em;overflow:hidden;">
+          <div class="line" style="overflow:hidden;"><span class="mobile-line accent-word" style="display:block;transform:translateY(110%);">Rental</span></div>
+          <div class="line" style="overflow:hidden;"><span class="mobile-line" style="display:block;transform:translateY(110%);">&amp; Sales.</span></div>
+        </h1>
+        <p class="sub mobile-sub" style="color:var(--muted);font-size:1rem;opacity:0;transform:translateY(20px);margin-top:12px;margin-bottom:20px;">
+          Luxury, electric and performance vehicles<br>with instant availability.
+        </p>
+        <div class="btns mobile-btns d-flex gap-3 flex-wrap" style="opacity:0;transform:translateY(20px);justify-content:center;">
+          <button class="btn btn-accent btn-lg" style="width:100%;">Browse Inventory</button>
+          <button class="btn btn-outline-light btn-lg" style="width:100%;">Book a Test Drive</button>
+        </div>
+      </div>
+
     </div>
 
     <div class="scroll-hint" id="scrollHint">
@@ -473,30 +500,42 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// FIX: detect iOS Safari
 const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isMobile = window.innerWidth <= 768;
 
 document.getElementById('themeToggle').addEventListener('click',()=>{
   document.body.classList.toggle('light');
 });
 
-/* HERO ENTRANCE */
+/* ── HERO ENTRANCE ── */
 const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
-tl.to('#heroChip',               { opacity:1, y:0, duration:.6 }, 0.2)
-  .to('.hero-text h1 .line span',{ y:'0%', duration:1, stagger:.12 }, 0.4)
-  .to('.hero-text .sub',         { opacity:1, y:0, duration:.8 }, 0.9)
-  .to('.hero-text .btns',        { opacity:1, y:0, duration:.7 }, 1.1)
-  .to('#imgDots',                { opacity:1, duration:.5 }, 1.2)
-  .to('#scrollHint',             { opacity:1, duration:.8 }, 1.5);
 
-/* FIX: first image — use set() then animate, with webkit prefix support */
+if(isMobile) {
+  // Mobile: animate chip + "Premium Cars." line only
+  tl.to('#heroChip',              { opacity:1, y:0, duration:.6 }, 0.2)
+    .to('.line-premium span',     { y:'0%', duration:.9 }, 0.4)
+    // Mobile lines (Rental & Sales) come after images
+    .to('.mobile-line',           { y:'0%', duration:.9, stagger:.1 }, 0.9)
+    .to('.mobile-sub',            { opacity:1, y:0, duration:.7 }, 1.2)
+    .to('.mobile-btns',           { opacity:1, y:0, duration:.6 }, 1.4)
+    .to('#scrollHint',            { opacity:1, duration:.8 }, 1.6);
+} else {
+  // Desktop: full animation as before
+  tl.to('#heroChip',               { opacity:1, y:0, duration:.6 }, 0.2)
+    .to('.hero-text h1 .line span',{ y:'0%', duration:1, stagger:.12 }, 0.4)
+    .to('.hero-text .sub',         { opacity:1, y:0, duration:.8 }, 0.9)
+    .to('.hero-text .btns',        { opacity:1, y:0, duration:.7 }, 1.1)
+    .to('#imgDots',                { opacity:1, duration:.5 }, 1.2)
+    .to('#scrollHint',             { opacity:1, duration:.8 }, 1.5);
+}
+
+/* First image slides in */
 gsap.set('#slide1', { x:'110%', scale:.92, opacity:0 });
 gsap.to('#slide1', {
   x:'0%', scale:1, opacity:1,
   duration:1.1, ease:'expo.out', delay:0.6,
   onComplete: function() {
-    // FIX: force repaint on iOS after animation
     if(isIOS) {
       const el = document.getElementById('slide1');
       el.style.webkitTransform = el.style.transform;
@@ -504,7 +543,7 @@ gsap.to('#slide1', {
   }
 });
 
-/* SCROLL IMAGE SEQUENCE */
+/* ── SCROLL IMAGE SEQUENCE ── */
 const slides = ['#slide1','#slide2','#slide3'];
 const dots   = document.querySelectorAll('.dot');
 let current  = 0;
@@ -514,12 +553,10 @@ function goTo(index) {
   const prev = current;
   current = index;
 
-  // FIX: use gsap.set to ensure clean state before animating
   gsap.to(slides[prev], {
     x:'-110%', scale:.92, opacity:0,
     duration:.75, ease:'power3.inOut',
     onComplete: function() {
-      // FIX: after hiding, reset so it can come back in from the right
       gsap.set(slides[prev], { x:'110%' });
     }
   });
@@ -533,12 +570,10 @@ function goTo(index) {
   dots.forEach((d,i)=> d.classList.toggle('active', i===index));
 }
 
-// FIX: on iOS, use a simpler scroll approach with -webkit-overflow-scrolling
 ScrollTrigger.create({
   trigger: '#heroScene',
   start: 'top top',
   end: 'bottom bottom',
-  // FIX: use invalidateOnRefresh to recalculate on iOS orientation change
   invalidateOnRefresh: true,
   onUpdate(self) {
     const p = self.progress;
@@ -549,7 +584,7 @@ ScrollTrigger.create({
   }
 });
 
-/* SCROLL TRIGGER rest of page */
+/* ── SCROLL TRIGGER rest of page ── */
 gsap.utils.toArray('.car-card,.feature,.stat').forEach(el=>{
   gsap.from(el,{
     scrollTrigger:{trigger:el, start:'top 85%', invalidateOnRefresh:true},
@@ -557,7 +592,7 @@ gsap.utils.toArray('.car-card,.feature,.stat').forEach(el=>{
   });
 });
 
-/* 3D TILT car cards — desktop only */
+/* ── 3D TILT — desktop only ── */
 if(!isIOS && window.matchMedia('(hover:hover)').matches) {
   document.querySelectorAll('.car-card').forEach(card=>{
     card.addEventListener('mousemove',e=>{
@@ -572,23 +607,12 @@ if(!isIOS && window.matchMedia('(hover:hover)').matches) {
   });
 }
 
-/* FIX: Refresh ScrollTrigger after fonts/images load, critical for iOS */
 window.addEventListener("load", () => {
-  // Small delay for iOS to finish layout
-  setTimeout(() => {
-    ScrollTrigger.refresh(true);
-  }, 100);
+  setTimeout(() => { ScrollTrigger.refresh(true); }, 100);
 });
-
-window.addEventListener("resize", () => {
-  ScrollTrigger.refresh();
-});
-
-// FIX: handle iOS orientation change
+window.addEventListener("resize", () => { ScrollTrigger.refresh(); });
 window.addEventListener("orientationchange", () => {
-  setTimeout(() => {
-    ScrollTrigger.refresh(true);
-  }, 300);
+  setTimeout(() => { ScrollTrigger.refresh(true); }, 300);
 });
 </script>
 </body>
