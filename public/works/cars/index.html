@@ -2,574 +2,1092 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurum Motors</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Aurum Motors — Premium Cars. Rental & Sales.</title>
 
+<!-- Dependencies -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 
+<!-- ============================================================
+     AURUM MOTORS — PREMIUM CSS
+     Architecture:
+       1. Design Tokens (CSS variables — dark/light)
+       2. Reset & Base
+       3. Navbar
+       4. Theme Switch (Apple-style)
+       5. Hero — Mobile First
+       6. Hero — Desktop overrides
+       7. Car shadow / float effect
+       8. Crossfade slide system
+       9. Scroll hint
+      10. Page sections (stats, cards, features, CTA, modal)
+      11. Responsive breakpoints
+      12. Reduced-motion fallback
+     ============================================================ -->
 <style>
-:root{
-  --bg:#070707;
-  --card:#111;
-  --text:#fff;
-  --muted:#a7a7a7;
-  --accent:#d8ff4d;
-  --border:rgba(255,255,255,.08);
-}
-.light{
-  --bg:#f5f6f8;
-  --card:#fff;
-  --text:#111;
-  --muted:#666;
-  --accent:#a5d600;
-  --border:rgba(0,0,0,.08);
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:auto;}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,sans-serif;
-  transition:background .3s,color .3s;
-  overflow-x:hidden;
-}
-.navbar{
-  background:var(--card)!important;
-  border-bottom:1px solid var(--border);
-  position:fixed;
-  top:0;left:0;right:0;
-  z-index:100;
-}
-.btn-accent{background:var(--accent);border:none;color:#000;font-weight:700;}
-.theme-btn{border-radius:999px;}
 
-/* ── HERO SCENE ── */
-.hero-scene{
-  position:relative;
-  height:200vh;
-}
-.hero-sticky{
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  background:radial-gradient(ellipse at 30% 50%, rgba(216,255,77,.10), transparent 55%);
-}
-.hero-layout{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:60px;
-  align-items:center;
-  width:100%;
-  padding:0 40px;
-  max-width:1400px;
-  margin:0 auto;
+/* ── 1. DESIGN TOKENS ─────────────────────────────────────────── */
+:root {
+  /* Dark theme (default) */
+  --bg:         #080808;
+  --bg-hero:    #0a0a0a;
+  --card:       #111111;
+  --card-hover: #181818;
+  --text:       #f0f0f0;
+  --text-dim:   #999999;
+  --accent:     #d8ff4d;
+  --accent-dim: rgba(216,255,77,.12);
+  --border:     rgba(255,255,255,.07);
+  --shadow:     rgba(0,0,0,.6);
+  --navbar-bg:  rgba(8,8,8,.88);
+  --modal-bg:   #0e0e0e;
+  --glow:       rgba(216,255,77,.18);
+
+  /* Layout */
+  --nav-h: 64px;
+  --hero-car-glow: 0 40px 100px rgba(0,0,0,.55), 0 8px 30px rgba(0,0,0,.35);
 }
 
-/* ── TEXT LEFT (desktop) ── */
-.hero-text h1{
-  font-size:clamp(2.8rem,5.5vw,5.5rem);
-  font-weight:900;
-  line-height:1.05;
-  letter-spacing:-0.02em;
-}
-.hero-text h1 .line{
-  display:block;
-  overflow:hidden;
-}
-.hero-text h1 .line span{
-  display:block;
-  transform:translateY(110%);
-}
-.accent-word{color:var(--accent);}
-.hero-text .sub{
-  color:var(--muted);
-  font-size:1.1rem;
-  opacity:0;
-  transform:translateY(20px);
-  margin-top:20px;
-  margin-bottom:28px;
-}
-.hero-text .btns{opacity:0;transform:translateY(20px);}
-.hero-chip{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:999px;
-  padding:6px 14px 6px 8px;
-  font-size:.8rem;
-  color:var(--muted);
-  margin-bottom:24px;
-  opacity:0;
-  transform:translateY(12px);
-}
-.hero-chip span{
-  background:var(--accent);
-  color:#000;
-  border-radius:999px;
-  padding:2px 10px;
-  font-weight:700;
-  font-size:.75rem;
-}
-.img-dots{
-  display:flex;
-  gap:8px;
-  margin-top:32px;
-  opacity:0;
-}
-.dot{
-  width:28px;height:4px;
-  border-radius:2px;
-  background:var(--border);
-  transition:background .4s;
-}
-.dot.active{background:var(--accent);}
-
-/* ── IMAGE RIGHT (desktop) ── */
-.hero-images{
-  position:relative;
-  height:520px;
-  width:100%;
-}
-.img-slide{
-  position:absolute;
-  inset:0;
-  transform:translateX(110%) scale(.92);
-  -webkit-transform:translateX(110%) scale(.92);
-  opacity:0;
-  will-change:transform,opacity;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-}
-.img-slide img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center;
-  display:block;
-  background:transparent;
-  min-height:1px;
-  -webkit-transform:translateZ(0);
-  transform:translateZ(0);
+/* Light theme */
+body.light {
+  --bg:         #f4f5f7;
+  --bg-hero:    #f0f1f4;
+  --card:       #ffffff;
+  --card-hover: #f9f9fb;
+  --text:       #0d0d0d;
+  --text-dim:   #666666;
+  --accent:     #8fba00;
+  --accent-dim: rgba(143,186,0,.10);
+  --border:     rgba(0,0,0,.07);
+  --shadow:     rgba(0,0,0,.15);
+  --navbar-bg:  rgba(244,245,247,.92);
+  --modal-bg:   #ffffff;
+  --glow:       rgba(143,186,0,.15);
+  --hero-car-glow: 0 32px 80px rgba(0,0,0,.18), 0 6px 20px rgba(0,0,0,.10);
 }
 
-/* scroll hint */
-.scroll-hint{
-  position:absolute;
-  bottom:28px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  color:var(--muted);
-  font-size:.7rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  opacity:0;
-  pointer-events:none;
-}
-.scroll-hint .bar{
-  width:1px;height:40px;
-  background:linear-gradient(to bottom,var(--accent),transparent);
-  animation:pulse 1.6s ease-in-out infinite;
-}
-@keyframes pulse{
-  0%,100%{opacity:1;}
-  50%{opacity:.3;}
+/* ── 2. RESET & BASE ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+  /* GPU layer for body to avoid Safari paint flicker */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
-/* ── REST OF PAGE ── */
-.page-content{background:var(--bg);}
-.card-custom,.feature,.stat,.footer-box{
-  background:var(--card)!important;
-  border:1px solid var(--border);
+/* Utility */
+.muted { color: var(--text-dim); }
+.accent-word { color: var(--accent); }
+
+/* ── 3. NAVBAR ────────────────────────────────────────────────── */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--navbar-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid var(--border);
+  z-index: 200;
+  transition: background 0.35s;
 }
-.muted{color:var(--muted);}
-.car-card{border-radius:24px;overflow:hidden;transition:.3s;transform-style:preserve-3d;}
-.car-card img{height:220px;object-fit:cover;width:100%;}
-.card-custom{border-radius:24px;overflow:hidden;}
-.feature,.stat,.footer-box{padding:30px;border-radius:20px;}
-.section{padding:100px 0;}
+.navbar .container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text) !important;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: .95rem;
+  letter-spacing: .01em;
+}
+.navbar-brand svg path {
+  fill: var(--text);
+  transition: fill 0.35s;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+/* CTA button */
+.btn-accent {
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: .85rem;
+  letter-spacing: .01em;
+  transition: opacity .2s, transform .2s;
+  cursor: pointer;
+}
+.btn-accent:hover { opacity: .88; transform: translateY(-1px); }
+.btn-accent:active { transform: translateY(0); }
 
-/* ── MOBILE (iPhone 14 Pro) ── */
-@media(max-width:768px){
+/* ── 4. THEME SWITCH (Apple / Linear style) ───────────────────── */
+.theme-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.theme-track {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition: background .3s, border-color .3s;
+  overflow: hidden;
+}
+body.light .theme-track {
+  background: rgba(0,0,0,.10);
+}
+.theme-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  transition: transform .35s cubic-bezier(.34,1.4,.64,1), background .3s;
+  will-change: transform;
+}
+body.light .theme-thumb {
+  transform: translateX(22px);
+  background: var(--text);
+}
+.theme-icon-moon { display: block; }
+.theme-icon-sun  { display: none; }
+body.light .theme-icon-moon { display: none; }
+body.light .theme-icon-sun  { display: block; }
 
-  .hero-scene{
-    height:280vh;
+/* ── 5. HERO — MOBILE FIRST ───────────────────────────────────── */
+
+/* Scroll scene creates the scroll distance for ScrollTrigger */
+.hero-scene {
+  position: relative;
+  height: 260vh; /* more room for 3 cars */
+}
+
+/* Sticky panel */
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport for iOS safari */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--bg-hero);
+  /* iOS GPU compositing */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Subtle radial gradient atmosphere */
+.hero-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 30%, var(--glow), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mobile layout: car on top, text below */
+.hero-layout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: var(--nav-h);
+  height: 100%;
+}
+
+/* ── CAR STAGE (mobile: top 50% of screen) ── */
+.hero-images {
+  position: relative;
+  width: 100%;
+  flex: 0 0 48%;
+  max-height: 52vh;
+  /* iOS: explicit sizing */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  overflow: visible;
+}
+
+/* Floating car shadow */
+.hero-images::after {
+  content: '';
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 18px;
+  background: radial-gradient(ellipse, rgba(0,0,0,.4) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity .5s;
+}
+body.light .hero-images::after {
+  background: radial-gradient(ellipse, rgba(0,0,0,.15) 0%, transparent 70%);
+}
+
+/* ── CROSSFADE SLIDES ── */
+.img-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Initial state: invisible, scale slightly up */
+  opacity: 0;
+  /* Use scale only — NO translateX, no horizontal slide */
+  transform: scale(1.08);
+  -webkit-transform: scale(1.08);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Safari GPU */
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  z-index: 1;
+}
+.img-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+}
+/* Crossfade transition — CSS driven for Safari reliability */
+.img-slide {
+  transition: opacity .65s cubic-bezier(.4,0,.2,1),
+              transform .65s cubic-bezier(.4,0,.2,1),
+              -webkit-transform .65s cubic-bezier(.4,0,.2,1);
+}
+/* Car image itself */
+.img-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  display: block;
+  min-height: 1px;
+  /* Floating shadow */
+  filter: drop-shadow(var(--hero-car-glow));
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  transition: filter .35s;
+}
+/* Slightly elevate the "floating" car */
+.img-slide.is-active img {
+  animation: carFloat 5s ease-in-out infinite;
+}
+@keyframes carFloat {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  50%       { transform: translateY(-8px) translateZ(0); }
+}
+
+/* ── HERO TEXT (mobile: below car) ── */
+.hero-text {
+  width: 100%;
+  padding: 0 24px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  padding-top: 8px;
+}
+
+/* Badge chip */
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 14px 5px 6px;
+  font-size: .72rem;
+  color: var(--text-dim);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(10px);
+  -webkit-transform: translateY(10px);
+}
+.hero-chip .badge-pill {
+  background: var(--accent);
+  color: #000;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-weight: 700;
+  font-size: .68rem;
+  letter-spacing: .05em;
+}
+
+/* Headline */
+.hero-text h1 {
+  font-size: clamp(2.1rem, 9vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin-bottom: 0;
+}
+.hero-text h1 .line {
+  display: block;
+  overflow: hidden;
+}
+.hero-text h1 .line span {
+  display: block;
+  transform: translateY(110%);
+  -webkit-transform: translateY(110%);
+}
+
+/* Sub-heading */
+.hero-sub {
+  color: var(--text-dim);
+  font-size: .9rem;
+  font-weight: 400;
+  line-height: 1.55;
+  margin-top: 14px;
+  margin-bottom: 22px;
+  opacity: 0;
+  transform: translateY(16px);
+  -webkit-transform: translateY(16px);
+}
+
+/* CTA buttons */
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(16px);
+  -webkit-transform: translateY(16px);
+}
+.hero-btns .btn-primary-hero {
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+}
+.hero-btns .btn-primary-hero:hover { opacity: .85; transform: translateY(-2px); }
+.hero-btns .btn-ghost-hero {
+  background: transparent;
+  color: var(--text);
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, transform .15s;
+}
+.hero-btns .btn-ghost-hero:hover {
+  border-color: var(--text-dim);
+  background: var(--card);
+  transform: translateY(-2px);
+}
+
+/* Progress dots */
+.car-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  opacity: 0;
+}
+.car-dot {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: background .4s, width .3s;
+  cursor: pointer;
+}
+.car-dot.active {
+  background: var(--accent);
+  width: 36px;
+}
+
+/* ── 6. HERO — TABLET & DESKTOP ───────────────────────────────── */
+@media (min-width: 768px) {
+  .hero-layout {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 0;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+  .hero-text {
+    flex: 1;
+    text-align: left;
+    align-items: flex-start;
+    padding: 0;
+    order: 1;
+  }
+  .hero-images {
+    flex: 0 0 52%;
+    max-width: 52%;
+    max-height: 70vh;
+    order: 2;
+  }
+  .hero-text h1 {
+    font-size: clamp(3rem, 4.5vw, 5.2rem);
+  }
+  .hero-sub { font-size: 1.05rem; }
+  .hero-btns { justify-content: flex-start; }
+  .hero-btns .btn-primary-hero,
+  .hero-btns .btn-ghost-hero { width: auto; }
+  .car-dots { display: flex; }
+}
+
+@media (min-width: 1024px) {
+  .hero-layout {
+    gap: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .hero-images { max-height: 75vh; }
+}
+
+/* UltraWide */
+@media (min-width: 1800px) {
+  .hero-layout { padding-left: 80px; padding-right: 80px; max-width: 1600px; }
+}
+
+/* ── 7. SCROLL HINT ───────────────────────────────────────────── */
+.scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-dim);
+  font-size: .62rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.scroll-hint .bar {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: barPulse 1.8s ease-in-out infinite;
+}
+@keyframes barPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .2; }
+}
+
+/* ── 8. PAGE CONTENT ──────────────────────────────────────────── */
+.page-content {
+  background: var(--bg);
+  position: relative;
+  z-index: 2;
+}
+
+/* Stats */
+.stats-section {
+  padding: 72px 0 56px;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  transition: background .3s, transform .3s;
+}
+.stat:hover { background: var(--card-hover); transform: translateY(-3px); }
+.stat h2 {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.stat p { color: var(--text-dim); font-size: .85rem; margin-top: 4px; }
+
+/* Section title */
+.section-eyebrow {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: block;
+}
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+/* Featured vehicles */
+.vehicles-section { padding: 72px 0; }
+.car-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: background .3s, transform .35s, box-shadow .35s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+.car-card:hover {
+  background: var(--card-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px var(--shadow);
+}
+.car-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s;
+}
+.car-card:hover img { transform: scale(1.04); }
+.car-card .card-body {
+  padding: 24px;
+}
+.car-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  margin-bottom: 4px;
+}
+.car-card .price {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  margin: 10px 0 16px;
+}
+
+/* Features */
+.features-section { padding: 72px 0; }
+.feature {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  transition: background .3s, transform .3s;
+}
+.feature:hover { background: var(--card-hover); transform: translateY(-3px); }
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-dim);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 1.25rem;
+  margin-bottom: 18px;
+}
+.feature h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* CTA Banner */
+.cta-section { padding: 72px 0 80px; }
+.cta-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 60px 40px;
+  text-align: center;
+}
+.cta-box h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-bottom: 12px;
+}
+.cta-box p { color: var(--text-dim); margin-bottom: 28px; }
+
+/* ── 9. MODAL ─────────────────────────────────────────────────── */
+.modal-content {
+  background: var(--modal-bg) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.modal-body h2 { font-weight: 800; letter-spacing: -.02em; margin-bottom: 12px; }
+.modal-body ul { padding-left: 20px; color: var(--text-dim); line-height: 1.9; }
+
+/* ── 10. RESPONSIVE ───────────────────────────────────────────── */
+
+/* Mobile: car first is the default (flex-direction:column + order) */
+@media (max-width: 767px) {
+  /* hero-layout already column on mobile via base styles */
+  .car-dots { display: none; }
+
+  /* Pill buttons full-width on mobile */
+  .hero-btns {
+    width: 100%;
+    flex-direction: column;
+  }
+  .hero-btns .btn-primary-hero,
+  .hero-btns .btn-ghost-hero {
+    width: 100%;
+    text-align: center;
   }
 
-  .hero-sticky{
-    align-items:flex-start;
-    padding-top:0;
-    padding-bottom:0;
-    -webkit-transform:translateZ(0);
-    transform:translateZ(0);
-  }
+  /* Scroll hint hidden on mobile */
+  .scroll-hint { display: none; }
 
-  /* On mobile: single column, full width */
-  .hero-layout{
-    grid-template-columns:1fr;
-    gap:0;
-    padding:0;
-    text-align:center;
-    align-items:start;
-    width:100%;
-    /* Let it scroll naturally inside sticky */
-    height:100vh;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    padding-top:70px;
-  }
+  /* Stats: 2 cols */
+  .stats-section .row > div { flex: 0 0 50%; max-width: 50%; }
 
-  /* Mobile: hero-text becomes a flex column
-     with images injected between line 1 and line 2-3 */
-  .hero-text{
-    order:1;
-    width:100%;
-    padding:0 20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  .hero-text h1{
-    font-size:clamp(2rem,10vw,3.2rem);
-    width:100%;
-    text-align:center;
-  }
-
-  /* Hide desktop h1 lines 2 & 3 on mobile — we use mobile-only ones */
-  .hero-text h1 .line.line-rental,
-  .hero-text h1 .line.line-sales{
-    display:none;
-  }
-
-  .hero-text .sub{ font-size:1rem; }
-  .hero-chip{ margin-inline:auto; }
-  .btns{ justify-content:center; }
-  #imgDots{ display:none; }
-
-  /* ── Mobile image block — between Premium Cars. and Rental & Sales. ── */
-  .hero-images{
-    order:2;
-    position:relative;
-    width:100%;
-    height:52vw;
-    min-height:190px;
-    max-height:270px;
-    margin-top:10px;
-    -webkit-transform:translateZ(0);
-    transform:translateZ(0);
-    flex-shrink:0;
-  }
-
-  .img-slide{
-    position:absolute;
-    top:0;left:0;right:0;bottom:0;
-    width:100%;
-    height:100%;
-    -webkit-transform:translateX(110%) scale(.92);
-    transform:translateX(110%) scale(.92);
-  }
-
-  .img-slide img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    object-position:center;
-    display:block;
-    max-width:100%;
-    max-height:100%;
-  }
-
-  /* ── Mobile-only "Rental & Sales." + sub + buttons block ── */
-  .mobile-below-images{
-    order:3;
-    width:100%;
-    padding:0 20px;
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    margin-top:8px;
-  }
-
-  /* Desktop hero-images is order:2 originally — keep it out of flow on mobile
-     since we repositioned via flexbox */
-  .hero-text h1 .line{ text-align:center; }
-
-  .scroll-hint{ bottom:10px; }
-  .car-card img{ height:180px; }
-  .btns .btn{ width:100%; }
+  /* Padding tightening */
+  .cta-box { padding: 40px 24px; }
 }
 
-/* Hide mobile-only block on desktop */
-.mobile-below-images{
-  display:none;
+/* iPad portrait */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-images { max-height: 60vh; }
+  .hero-text h1 { font-size: clamp(2.8rem, 5vw, 4rem); }
 }
+
+/* ── 11. REDUCED MOTION ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  @keyframes carFloat { 0%, 100% { transform: translateZ(0); } }
+}
+
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg">
-<div class="container">
-  <a class="navbar-brand text-white d-flex align-items-center gap-2" href="#">
-    <svg fill="#fff" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 293.1 293.1" xml:space="preserve" width="40px" height="40px">
-      <path d="M30.5,22.2l1.3-0.5C69.2,7.9,106.5,0.7,143.9,0c37.4-0.6,74.7,5.3,112.1,17.9l1.4,0.5l0,1.4c-0.3,44.9-0.6,89.8-0.9,134.7c-0.1,23.2-12.3,55.8-35.3,84.3c-18.5,23-44.1,43.4-76.1,54.2l-1.1,0c-32.3-8.3-57.8-27.9-76.4-50.8c-23.8-29.5-36-64.7-36.1-88.6v0v0v0c-0.2-21.7-0.3-43.4-0.5-65L30.5,22.2z"/>
-    </svg>
-    <strong>Aurum Motors</strong>
-  </a>
-  <button id="themeToggle" class="btn btn-accent theme-btn">Dark / Light</button>
-</div>
-</nav>
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav class="navbar">
+  <div class="container">
 
-<!-- SCROLL SCENE -->
-<div class="hero-scene" id="heroScene">
-  <div class="hero-sticky" id="heroSticky">
-    <div class="hero-layout">
+    <!-- Logo -->
+    <a class="navbar-brand" href="#">
+      <svg viewBox="0 0 293.1 293.1" width="34" height="34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M30.5,22.2l1.3-0.5C69.2,7.9,106.5,0.7,143.9,0c37.4-0.6,74.7,5.3,112.1,17.9l1.4,0.5l0,1.4c-0.3,44.9-0.6,89.8-0.9,134.7c-0.1,23.2-12.3,55.8-35.3,84.3c-18.5,23-44.1,43.4-76.1,54.2l-1.1,0c-32.3-8.3-57.8-27.9-76.4-50.8c-23.8-29.5-36-64.7-36.1-88.6v0v0v0c-0.2-21.7-0.3-43.4-0.5-65L30.5,22.2z"/>
+      </svg>
+      <strong>Aurum Motors</strong>
+    </a>
 
-      <!-- TEXT (chip + "Premium Cars." only on mobile, full h1 on desktop) -->
-      <div class="hero-text">
-        <div class="hero-chip" id="heroChip">
-          <span>NEW</span> 2025 fleet now available
+    <!-- Right side: theme switch -->
+    <div class="nav-right">
+      <!-- Apple-style dark/light toggle -->
+      <label class="theme-switch" for="themeToggle" title="Toggle dark / light mode" aria-label="Toggle dark / light mode">
+        <input type="checkbox" id="themeToggle" role="switch" aria-checked="false">
+        <div class="theme-track">
+          <div class="theme-thumb">
+            <span class="theme-icon-moon">🌙</span>
+            <span class="theme-icon-sun">☀️</span>
+          </div>
         </div>
-        <h1>
-          <!-- Line 1: always visible -->
-          <div class="line line-premium"><span>Premium Cars.</span></div>
-          <!-- Lines 2-3: hidden on mobile, shown in .mobile-below-images instead -->
-          <div class="line line-rental"><span class="accent-word">Rental</span></div>
-          <div class="line line-sales"><span>&amp; Sales.</span></div>
-        </h1>
-        <!-- sub + buttons: hidden on mobile (shown in mobile-below-images) -->
-        <p class="sub desktop-sub">Luxury, electric and performance vehicles<br>with instant availability.</p>
-        <div class="btns desktop-btns d-flex gap-3 flex-wrap">
-          <button class="btn btn-accent btn-lg">Browse Inventory</button>
-          <button class="btn btn-outline-light btn-lg">Book a Test Drive</button>
-        </div>
-        <div class="img-dots" id="imgDots">
-          <div class="dot active"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-
-      <!-- IMAGES -->
-      <div class="hero-images" id="heroImages">
-        <div class="img-slide" id="slide1">
-          <img src="https://www.bmw-m.com/content/dam/bmw/marketBMW_M/www_bmw-m_com/all-models/model-navigation/bmw-m4-coupe-lci-flyout.png" alt="BMW M4 Coupe">
-        </div>
-        <div class="img-slide" id="slide2">
-          <img src="https://vexstockimages.fastly.carvana.io/stockimages/2018_JEEP_WRANGLER%20UNLIMITED_ALL%20NEW%20MOAB%20SPORT%20UTILITY%204D_WHITE_stock_1_desktop.png?v=1770793856.322" alt="Jeep Wrangler">
-        </div>
-        <div class="img-slide" id="slide3">
-          <img src="https://pngimg.com/uploads/mercedes/mercedes_PNG80189.png" alt="Mercedes">
-        </div>
-      </div>
-
-      <!-- MOBILE ONLY: "Rental & Sales." + sub + buttons shown BELOW images -->
-      <div class="mobile-below-images" id="mobileBelow">
-        <h1 style="font-size:clamp(2rem,10vw,3.2rem);font-weight:900;line-height:1.05;letter-spacing:-0.02em;overflow:hidden;">
-          <div class="line" style="overflow:hidden;"><span class="mobile-line accent-word" style="display:block;transform:translateY(110%);">Rental</span></div>
-          <div class="line" style="overflow:hidden;"><span class="mobile-line" style="display:block;transform:translateY(110%);">&amp; Sales.</span></div>
-        </h1>
-        <p class="sub mobile-sub" style="color:var(--muted);font-size:1rem;opacity:0;transform:translateY(20px);margin-top:12px;margin-bottom:20px;">
-          Luxury, electric and performance vehicles<br>with instant availability.
-        </p>
-        <div class="btns mobile-btns d-flex gap-3 flex-wrap" style="opacity:0;transform:translateY(20px);justify-content:center;">
-          <button class="btn btn-accent btn-lg" style="width:100%;">Browse Inventory</button>
-          <button class="btn btn-outline-light btn-lg" style="width:100%;">Book a Test Drive</button>
-        </div>
-      </div>
-
+      </label>
     </div>
 
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     HERO SCROLL SCENE
+     height: 260vh — creates scroll distance for 3 car transitions
+     ============================================================ -->
+<div class="hero-scene" id="heroScene">
+  <div class="hero-sticky" id="heroSticky">
+
+    <div class="hero-layout">
+
+      <!-- ── IMAGES (order:1 mobile → appears first visually) ── -->
+      <div class="hero-images" id="heroImages">
+
+        <div class="img-slide is-active" id="slide1">
+          <img
+            src="https://www.bmw-m.com/content/dam/bmw/marketBMW_M/www_bmw-m_com/all-models/model-navigation/bmw-m4-coupe-lci-flyout.png"
+            alt="BMW M4 Competition — side profile"
+            loading="eager"
+            decoding="async"
+          >
+        </div>
+
+        <div class="img-slide" id="slide2">
+          <img
+            src="https://vexstockimages.fastly.carvana.io/stockimages/2018_JEEP_WRANGLER%20UNLIMITED_ALL%20NEW%20MOAB%20SPORT%20UTILITY%204D_WHITE_stock_1_desktop.png?v=1770793856.322"
+            alt="Jeep Wrangler Unlimited — side view"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+
+        <div class="img-slide" id="slide3">
+          <img
+            src="https://pngimg.com/uploads/mercedes/mercedes_PNG80189.png"
+            alt="Mercedes — front view"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+
+      </div>
+
+      <!-- ── TEXT (order:2 mobile → below car) ── -->
+      <div class="hero-text">
+
+        <div class="hero-chip" id="heroChip">
+          <span class="badge-pill">NEW</span>
+          2025 fleet now available
+        </div>
+
+        <h1 id="heroH1">
+          <div class="line"><span>Premium Cars.</span></div>
+          <div class="line"><span class="accent-word">Rental</span></div>
+          <div class="line"><span>&amp; Sales.</span></div>
+        </h1>
+
+        <p class="hero-sub" id="heroSub">
+          Luxury, electric and performance vehicles<br>
+          with instant availability.
+        </p>
+
+        <div class="hero-btns" id="heroBtns">
+          <button class="btn-primary-hero">Browse Inventory</button>
+          <button class="btn-ghost-hero">Book a Test Drive</button>
+        </div>
+
+        <!-- Progress dots (hidden on mobile) -->
+        <div class="car-dots" id="carDots">
+          <div class="car-dot active" data-index="0"></div>
+          <div class="car-dot" data-index="1"></div>
+          <div class="car-dot" data-index="2"></div>
+        </div>
+
+      </div>
+    </div><!-- /.hero-layout -->
+
+    <!-- Scroll cue -->
     <div class="scroll-hint" id="scrollHint">
       <div class="bar"></div>
       scroll
     </div>
-  </div>
-</div>
 
-<!-- REST OF PAGE -->
+  </div><!-- /.hero-sticky -->
+</div><!-- /.hero-scene -->
+
+
+<!-- ============================================================
+     PAGE CONTENT
+     ============================================================ -->
 <div class="page-content">
 
-<section class="container py-5">
-<div class="row g-4 text-center">
-  <div class="col-md-3"><div class="stat"><h2>500+</h2><p class="muted">Vehicles</p></div></div>
-  <div class="col-md-3"><div class="stat"><h2>24h</h2><p class="muted">Delivery</p></div></div>
-  <div class="col-md-3"><div class="stat"><h2>4.9★</h2><p class="muted">Rating</p></div></div>
-  <div class="col-md-3"><div class="stat"><h2>12k+</h2><p class="muted">Clients</p></div></div>
-</div>
-</section>
+  <!-- Stats -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="stat"><h2>500+</h2><p>Vehicles</p></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat"><h2>24h</h2><p>Delivery</p></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat"><h2>4.9★</h2><p>Rating</p></div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat"><h2>12k+</h2><p>Clients</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="section">
-<div class="container">
-  <h2 class="mb-5">Featured Vehicles</h2>
-  <div class="row g-4">
-    <div class="col-lg-4">
-    <div class="card-custom car-card">
-      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200" alt="">
-      <div class="p-4">
-        <h4>BMW M4 Competition</h4>
-        <p class="muted">Purchase or rental available.</p>
-        <h3>€89/day · €69,900</h3>
-        <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+  <!-- Featured Vehicles -->
+  <section class="vehicles-section">
+    <div class="container">
+      <span class="section-eyebrow">Fleet</span>
+      <h2 class="section-title mb-5">Featured Vehicles</h2>
+      <div class="row g-4">
+
+        <div class="col-lg-4">
+          <div class="car-card">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200" alt="BMW M4 Competition">
+            <div class="card-body">
+              <h4>BMW M4 Competition</h4>
+              <p class="muted" style="font-size:.85rem;">Purchase or rental available.</p>
+              <p class="price">€89<span style="font-weight:400;font-size:.85rem;color:var(--text-dim)">/day</span> · €69,900</p>
+              <button class="btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="car-card">
+            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200" alt="Tesla Model S">
+            <div class="card-body">
+              <h4>Tesla Model S</h4>
+              <p class="muted" style="font-size:.85rem;">Long range electric sedan.</p>
+              <p class="price">€99<span style="font-weight:400;font-size:.85rem;color:var(--text-dim)">/day</span> · €74,900</p>
+              <button class="btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="car-card">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200" alt="Porsche 911">
+            <div class="card-body">
+              <h4>Porsche 911</h4>
+              <p class="muted" style="font-size:.85rem;">Weekend performance package.</p>
+              <p class="price">€199<span style="font-weight:400;font-size:.85rem;color:var(--text-dim)">/day</span> · €124,900</p>
+              <button class="btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-    </div>
-    <div class="col-lg-4">
-    <div class="card-custom car-card">
-      <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200" alt="">
-      <div class="p-4">
-        <h4>Tesla Model S</h4>
-        <p class="muted">Long range electric sedan.</p>
-        <h3>€99/day · €74,900</h3>
-        <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+  </section>
+
+  <!-- Features -->
+  <section class="features-section">
+    <div class="container">
+      <span class="section-eyebrow">Why Aurum</span>
+      <h2 class="section-title mb-5">Built around you</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature">
+            <div class="feature-icon"><i class="bi bi-lightning-charge"></i></div>
+            <h4>Fast Approval</h4>
+            <p class="muted" style="font-size:.88rem;">Get approved within minutes. No paperwork delays.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature">
+            <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+            <h4>Full Warranty</h4>
+            <p class="muted" style="font-size:.88rem;">Extended protection plans on every vehicle.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature">
+            <div class="feature-icon"><i class="bi bi-car-front"></i></div>
+            <h4>Premium Fleet</h4>
+            <p class="muted" style="font-size:.88rem;">Luxury, electric, and performance vehicles.</p>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
-    <div class="col-lg-4">
-    <div class="card-custom car-card">
-      <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200" alt="">
-      <div class="p-4">
-        <h4>Porsche 911</h4>
-        <p class="muted">Weekend performance package.</p>
-        <h3>€199/day · €124,900</h3>
-        <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <span class="section-eyebrow">Get started</span>
+        <h2>Ready to Drive?</h2>
+        <p>Schedule a visit, request financing, or reserve a rental vehicle.</p>
+        <button class="btn-accent" style="font-size:1rem;padding:14px 36px;border-radius:12px;">Contact Sales</button>
       </div>
     </div>
+  </section>
+
+</div><!-- /.page-content -->
+
+
+<!-- ============================================================
+     MODAL
+     ============================================================ -->
+<div class="modal fade" id="vehicleModal" tabindex="-1" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+        <button type="button" class="btn-close btn-close-white float-end" data-bs-dismiss="modal" aria-label="Close" style="filter: var(--bs-btn-close-filter, invert(1));"></button>
+        <h2 id="vehicleModalLabel">Vehicle Quick Look</h2>
+        <p class="muted" style="margin-bottom:20px;">Premium leather interior, adaptive suspension, digital cockpit — financing and rental options available.</p>
+        <ul>
+          <li>Instant reservation</li>
+          <li>Nationwide delivery</li>
+          <li>Financing available</li>
+          <li>Insurance packages</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
-</section>
 
-<section class="section">
-<div class="container">
-  <div class="row g-4">
-    <div class="col-md-4"><div class="feature"><i class="bi bi-lightning-charge fs-1"></i><h4 class="mt-3">Fast Approval</h4><p class="muted">Get approved within minutes.</p></div></div>
-    <div class="col-md-4"><div class="feature"><i class="bi bi-shield-check fs-1"></i><h4 class="mt-3">Warranty</h4><p class="muted">Extended protection plans.</p></div></div>
-    <div class="col-md-4"><div class="feature"><i class="bi bi-car-front fs-1"></i><h4 class="mt-3">Premium Fleet</h4><p class="muted">Luxury and electric vehicles.</p></div></div>
-  </div>
-</div>
-</section>
 
-<section class="section text-center">
-<div class="container footer-box">
-  <h2>Ready To Drive?</h2>
-  <p class="muted">Schedule a visit, request financing or reserve a rental vehicle.</p>
-  <button class="btn btn-accent btn-lg">Contact Sales</button>
-</div>
-</section>
-
-</div>
-
-<!-- MODAL -->
-<div class="modal fade" id="vehicleModal" tabindex="-1">
-<div class="modal-dialog modal-lg modal-dialog-centered">
-  <div class="modal-content bg-dark text-white">
-    <div class="modal-body p-5">
-      <h2>Vehicle Quick Look</h2>
-      <p>Premium leather interior, adaptive suspension, digital cockpit, financing and rental options available.</p>
-      <ul>
-        <li>Instant reservation</li>
-        <li>Nationwide delivery</li>
-        <li>Financing available</li>
-        <li>Insurance packages</li>
-      </ul>
-    </div>
-  </div>
-</div>
-</div>
-
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+/* ============================================================
+   AURUM MOTORS — JAVASCRIPT
+   Sections:
+     A. Utilities & iOS detection
+     B. Theme switch (localStorage persistence)
+     C. Hero entrance animation (GSAP)
+     D. Crossfade slide system (CSS class-based, no translateX)
+     E. ScrollTrigger — car sequence
+     F. ScrollTrigger — page cards
+     G. 3D card tilt (desktop only)
+     H. ScrollTrigger refresh hooks
+   ============================================================ */
+
+/* ── A. UTILITIES ─────────────────────────────────────────────── */
 gsap.registerPlugin(ScrollTrigger);
 
+// iOS / Safari detection
 const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-const isMobile = window.innerWidth <= 768;
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-document.getElementById('themeToggle').addEventListener('click',()=>{
-  document.body.classList.toggle('light');
-});
 
-/* ── HERO ENTRANCE ── */
-const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
+/* ── B. THEME SWITCH ──────────────────────────────────────────── */
+const themeToggle = document.getElementById('themeToggle');
 
-if(isMobile) {
-  // Mobile: animate chip + "Premium Cars." line only
-  tl.to('#heroChip',              { opacity:1, y:0, duration:.6 }, 0.2)
-    .to('.line-premium span',     { y:'0%', duration:.9 }, 0.4)
-    // Mobile lines (Rental & Sales) come after images
-    .to('.mobile-line',           { y:'0%', duration:.9, stagger:.1 }, 0.9)
-    .to('.mobile-sub',            { opacity:1, y:0, duration:.7 }, 1.2)
-    .to('.mobile-btns',           { opacity:1, y:0, duration:.6 }, 1.4)
-    .to('#scrollHint',            { opacity:1, duration:.8 }, 1.6);
-} else {
-  // Desktop: full animation as before
-  tl.to('#heroChip',               { opacity:1, y:0, duration:.6 }, 0.2)
-    .to('.hero-text h1 .line span',{ y:'0%', duration:1, stagger:.12 }, 0.4)
-    .to('.hero-text .sub',         { opacity:1, y:0, duration:.8 }, 0.9)
-    .to('.hero-text .btns',        { opacity:1, y:0, duration:.7 }, 1.1)
-    .to('#imgDots',                { opacity:1, duration:.5 }, 1.2)
-    .to('#scrollHint',             { opacity:1, duration:.8 }, 1.5);
+// Restore saved preference
+const savedTheme = localStorage.getItem('aurum-theme');
+if (savedTheme === 'light') {
+  document.body.classList.add('light');
+  themeToggle.checked = true;
+  themeToggle.setAttribute('aria-checked', 'true');
 }
 
-/* First image slides in */
-gsap.set('#slide1', { x:'110%', scale:.92, opacity:0 });
-gsap.to('#slide1', {
-  x:'0%', scale:1, opacity:1,
-  duration:1.1, ease:'expo.out', delay:0.6,
-  onComplete: function() {
-    if(isIOS) {
-      const el = document.getElementById('slide1');
-      el.style.webkitTransform = el.style.transform;
-    }
+themeToggle.addEventListener('change', () => {
+  const isLight = themeToggle.checked;
+  document.body.classList.toggle('light', isLight);
+  themeToggle.setAttribute('aria-checked', String(isLight));
+  localStorage.setItem('aurum-theme', isLight ? 'light' : 'dark');
+});
+
+
+/* ── C. HERO ENTRANCE ANIMATION ───────────────────────────────── */
+// Only run after DOM is ready
+(function heroEntrance() {
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  // 1. Badge chip fades in
+  tl.to('#heroChip', { opacity: 1, y: 0, duration: 0.6 }, 0.15)
+
+  // 2. Headline lines reveal
+    .to('#heroH1 .line span', { y: '0%', duration: 0.9, stagger: 0.1 }, 0.35)
+
+  // 3. Sub + buttons
+    .to('#heroSub',   { opacity: 1, y: 0, duration: 0.7 }, 0.75)
+    .to('#heroBtns',  { opacity: 1, y: 0, duration: 0.6 }, 0.9)
+    .to('#carDots',   { opacity: 1, duration: 0.4 }, 1.05)
+    .to('#scrollHint',{ opacity: 1, duration: 0.8 }, 1.3);
+})();
+
+
+/* ── D. CROSSFADE SLIDE SYSTEM ────────────────────────────────── */
+// Uses CSS classes (opacity + scale via .is-active) — NO translateX
+// This avoids Safari horizontal-slide bugs entirely.
+
+const slideIds  = ['slide1', 'slide2', 'slide3'];
+const slideEls  = slideIds.map(id => document.getElementById(id));
+const dotEls    = document.querySelectorAll('.car-dot');
+let   currentSlide = 0;
+
+function goToSlide(index) {
+  if (index === currentSlide) return;
+
+  // Remove active from current
+  slideEls[currentSlide].classList.remove('is-active');
+  dotEls[currentSlide]?.classList.remove('active');
+
+  // Stop float animation on old slide
+  // (handled by CSS: only .is-active img animates)
+
+  currentSlide = index;
+
+  // Add active to new
+  slideEls[currentSlide].classList.add('is-active');
+  dotEls[currentSlide]?.classList.add('active');
+
+  // iOS Safari: force repaint after class toggle
+  if (isIOS || isSafari) {
+    const el = slideEls[currentSlide];
+    // eslint-disable-next-line no-unused-expressions
+    el.offsetHeight; // trigger reflow
   }
-});
-
-/* ── SCROLL IMAGE SEQUENCE ── */
-const slides = ['#slide1','#slide2','#slide3'];
-const dots   = document.querySelectorAll('.dot');
-let current  = 0;
-
-function goTo(index) {
-  if(index === current) return;
-  const prev = current;
-  current = index;
-
-  gsap.to(slides[prev], {
-    x:'-110%', scale:.92, opacity:0,
-    duration:.75, ease:'power3.inOut',
-    onComplete: function() {
-      gsap.set(slides[prev], { x:'110%' });
-    }
-  });
-
-  gsap.fromTo(slides[index],
-    { x:'110%', scale:.92, opacity:0 },
-    { x:'0%',   scale:1,   opacity:1,
-      duration:.75, ease:'expo.out' }
-  );
-
-  dots.forEach((d,i)=> d.classList.toggle('active', i===index));
 }
 
+// Dot click navigation
+dotEls.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = parseInt(dot.dataset.index, 10);
+    goToSlide(idx);
+  });
+});
+
+
+/* ── E. SCROLLTRIGGER — CAR SEQUENCE ─────────────────────────── */
 ScrollTrigger.create({
   trigger: '#heroScene',
   start: 'top top',
@@ -578,42 +1096,70 @@ ScrollTrigger.create({
   onUpdate(self) {
     const p = self.progress;
     let idx = 0;
-    if(p >= 0.66)      idx = 2;
-    else if(p >= 0.33) idx = 1;
-    goTo(idx);
+    if      (p >= 0.66) idx = 2;
+    else if (p >= 0.33) idx = 1;
+    goToSlide(idx);
   }
 });
 
-/* ── SCROLL TRIGGER rest of page ── */
-gsap.utils.toArray('.car-card,.feature,.stat').forEach(el=>{
-  gsap.from(el,{
-    scrollTrigger:{trigger:el, start:'top 85%', invalidateOnRefresh:true},
-    y:60, opacity:0, duration:1
+
+/* ── F. SCROLLTRIGGER — PAGE CARDS ───────────────────────────── */
+gsap.utils.toArray('.car-card, .feature, .stat, .cta-box').forEach(el => {
+  gsap.from(el, {
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 88%',
+      invalidateOnRefresh: true
+    },
+    y: 48,
+    opacity: 0,
+    duration: 0.85,
+    ease: 'power3.out'
   });
 });
 
-/* ── 3D TILT — desktop only ── */
-if(!isIOS && window.matchMedia('(hover:hover)').matches) {
-  document.querySelectorAll('.car-card').forEach(card=>{
-    card.addEventListener('mousemove',e=>{
-      const r=card.getBoundingClientRect();
-      const x=((e.clientX-r.left)/r.width -.5)*12;
-      const y=((e.clientY-r.top) /r.height-.5)*-12;
-      gsap.to(card,{rotateY:x,rotateX:y,duration:.3});
+
+/* ── G. 3D TILT — DESKTOP ONLY ───────────────────────────────── */
+if (!isIOS && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.car-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width  - 0.5) * 10;
+      const y = ((e.clientY - r.top)  / r.height - 0.5) * -10;
+      gsap.to(card, { rotateY: x, rotateX: y, duration: 0.3, ease: 'power2.out' });
     });
-    card.addEventListener('mouseleave',()=>{
-      gsap.to(card,{rotateX:0,rotateY:0,duration:.6});
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power2.out' });
     });
   });
 }
 
-window.addEventListener("load", () => {
-  setTimeout(() => { ScrollTrigger.refresh(true); }, 100);
+
+/* ── H. SCROLLTRIGGER REFRESH HOOKS ──────────────────────────── */
+
+// After all assets load — critical for iOS layout calculation
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    ScrollTrigger.refresh(true);
+  }, isIOS ? 200 : 50);
 });
-window.addEventListener("resize", () => { ScrollTrigger.refresh(); });
-window.addEventListener("orientationchange", () => {
-  setTimeout(() => { ScrollTrigger.refresh(true); }, 300);
+
+// Orientation change (iOS)
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    ScrollTrigger.refresh(true);
+  }, 350);
 });
+
+// Resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 100);
+});
+
 </script>
 </body>
 </html>

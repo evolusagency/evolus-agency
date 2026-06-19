@@ -9,9 +9,9 @@ media_folder: public/images
 public_folder: /images
 
 collections:
-  - name: blog
-    label: Articles Blog
-    folder: src/content/blog
+  - name: automation
+    label: Automation
+    folder: src/content/blog/automation
     create: true
     slug: "{{slug}}"
     extension: md
@@ -19,9 +19,60 @@ collections:
     fields:
       - { label: Titre, name: title, widget: string }
       - { label: Extrait, name: excerpt, widget: text }
-      - { label: Date, name: date, widget: string, hint: "Format: 12 Juin 2025" }
-      - { label: Tag, name: tag, widget: string, hint: "Ex: Stratégie B2B, SEO B2B" }
-      - { label: "Temps de lecture", name: read, widget: string, hint: "Ex: 8 min" }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
+
+  - name: marketing
+    label: Marketing
+    folder: src/content/blog/marketing
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
+
+  - name: seo
+    label: SEO
+    folder: src/content/blog/seo
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
+
+  - name: web_design
+    label: Web Design
+    folder: src/content/blog/web-design
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
       - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
       - { label: "Image de couverture", name: image, widget: image, required: false }
       - { label: Corps, name: body, widget: markdown }
