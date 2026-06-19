@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Pricing Cards</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+<style>
+:root{
+ --bg:#050505;
+ --card:#111;
+ --border:rgba(255,255,255,.08);
+ --text:#fff;
+ --muted:#9a9a9a;
+ --accent:#d7ff52;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+ min-height:100vh;
+ background:radial-gradient(circle at top,#181818 0%,#080808 45%,#050505 100%);
+ color:var(--text);
+ font-family:Inter,system-ui,sans-serif;
+ padding:80px 20px;
+ overflow-x:hidden;
+}
+
+.section-title{text-align:center;margin-bottom:70px}
+.section-title h1{font-size:clamp(2.5rem,5vw,5rem);font-weight:800}
+.section-title p{color:var(--muted)}
+
+.cards{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+ gap:32px;
+ max-width:1400px;
+ margin:auto;
+ perspective:2000px;
+}
+
+.pricing-card{
+ position:relative;
+ min-height:720px;
+ transform-style:preserve-3d;
+ cursor:pointer;
+}
+
+.pricing-card::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ border-radius:30px;
+ background:radial-gradient(500px circle at var(--x,50%) var(--y,50%),rgba(215,255,82,.14),transparent 40%);
+ pointer-events:none;
+ z-index:10;
+}
+
+.card-inner{
+ position:relative;
+ width:100%;
+ height:720px;
+ transform-style:preserve-3d;
+ transition:transform .9s cubic-bezier(.23,1,.32,1);
+}
+
+.pricing-card.flipped .card-inner{
+ transform:rotateY(180deg);
+}
+
+.card-face{
+ position:absolute;
+ inset:0;
+ display:flex;
+ flex-direction:column;
+ padding:32px;
+ border-radius:30px;
+ border:1px solid var(--border);
+ background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+ backdrop-filter:blur(18px);
+ backface-visibility:hidden;
+ overflow:hidden;
+}
+
+.back{
+ transform:rotateY(180deg);
+ overflow-y:auto;
+}
+
+.glow{
+ position:absolute;
+ width:300px;
+ height:300px;
+ top:-80px;
+ right:-80px;
+ border-radius:50%;
+ filter:blur(120px);
+ background:rgba(215,255,82,.08);
+ pointer-events:none;
+}
+
+.icon,h3,.description,.price,ul,.cta,.flip-label,.badge-popular,.back h4{
+ position:relative;
+ z-index:2;
+}
+
+.badge-popular{
+ position:absolute;
+ top:20px;
+ right:20px;
+ background:var(--accent);
+ color:#000;
+ padding:8px 14px;
+ border-radius:999px;
+ font-size:.75rem;
+ font-weight:700;
+}
+
+.icon svg{
+ width:80px;
+ height:80px;
+ stroke:var(--accent);
+}
+
+h3{font-size:2rem;margin:10px 0}
+.description{color:var(--muted);margin-bottom:20px}
+
+.price{
+ font-size:3rem;
+ font-weight:900;
+ margin-bottom:20px;
+}
+
+.price span{
+ font-size:1rem;
+ color:var(--muted);
+}
+
+ul{
+ list-style:none;
+ flex:1;
+ margin-top:10px;
+}
+
+ul li{
+ padding:12px 0;
+ border-bottom:1px solid rgba(255,255,255,.06);
+ color:#ddd;
+}
+
+.cta{
+ margin-top:24px;
+ border:none;
+ border-radius:16px;
+ padding:16px;
+ font-weight:700;
+ background:var(--accent);
+ color:#000;
+}
+
+.flip-label{
+ margin-top:20px;
+ color:var(--muted);
+}
+
+.featured{
+ transform:scale(1.03);
+}
+
+@media(max-width:992px){
+ .featured{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="section-title">
+<h1>Growth Systems</h1>
+<p>Click a card to reveal all services</p>
+</div>
+
+<div class="cards">
+
+<div class="pricing-card">
+<div class="card-inner">
+<div class="card-face front">
+<div class="glow"></div>
+<div class="icon">
+<svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 2L19 9L12 22L5 9Z"/></svg>
+</div>
+<h3>Launch</h3>
+<div class="description">Perfect for new businesses.</div>
+<div class="price">€990 <span>/month</span></div>
+<ul>
+<li>Professional Website</li>
+<li>SEO Foundations</li>
+<li>Analytics Setup</li>
+<li>Lead Capture Forms</li>
+</ul>
+<button class="cta">Start Growing</button>
+<div class="flip-label">Click to see details →</div>
+</div>
+
+<div class="card-face back">
+<h4>Included Services</h4>
+<ul>
+<li>Up to 5 Pages</li>
+<li>Technical SEO</li>
+<li>Google Search Console</li>
+<li>Speed Optimization</li>
+<li>Monthly Reporting</li>
+<li>Email Support</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="pricing-card featured">
+<div class="card-inner">
+<div class="card-face front">
+<div class="badge-popular">MOST POPULAR</div>
+<div class="glow"></div>
+<div class="icon">
+<svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 18L10 12L14 15L20 7"/></svg>
+</div>
+<h3>Growth</h3>
+<div class="description">Complete acquisition engine.</div>
+<div class="price">€1990 <span>/month</span></div>
+<ul>
+<li>Advanced SEO</li>
+<li>Content Strategy</li>
+<li>Conversion Optimization</li>
+<li>Lead Funnels</li>
+</ul>
+<button class="cta">Scale Faster</button>
+<div class="flip-label">Click to see details →</div>
+</div>
+
+<div class="card-face back">
+<h4>Included Services</h4>
+<ul>
+<li>Unlimited Landing Pages</li>
+<li>SEO Content Creation</li>
+<li>Monthly CRO Reviews</li>
+<li>Lead Magnet Creation</li>
+<li>Marketing Automation</li>
+<li>Priority Support</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="pricing-card">
+<div class="card-inner">
+<div class="card-face front">
+<div class="glow"></div>
+<div class="icon">
+<svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 3L15 9L22 9L17 14L19 21L12 17L5 21L7 14L2 9L9 9Z"/></svg>
+</div>
+<h3>Authority</h3>
+<div class="description">Dominant market positioning.</div>
+<div class="price">€3490 <span>/month</span></div>
+<ul>
+<li>Full SEO Department</li>
+<li>Content Engine</li>
+<li>Dedicated Strategist</li>
+<li>Growth Consulting</li>
+</ul>
+<button class="cta">Become Leader</button>
+<div class="flip-label">Click to see details →</div>
+</div>
+
+<div class="card-face back">
+<h4>Included Services</h4>
+<ul>
+<li>Weekly Strategy Calls</li>
+<li>Unlimited SEO Content</li>
+<li>Full Funnel Optimization</li>
+<li>Technical Audits</li>
+<li>Sales Enablement</li>
+<li>Dedicated Growth Team</li>
+</ul>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+gsap.from(".pricing-card",{
+ y:100,
+ opacity:0,
+ duration:1,
+ stagger:.15,
+ ease:"power4.out"
+});
+
+document.querySelectorAll(".pricing-card").forEach(card=>{
+
+ card.addEventListener("mousemove",(e)=>{
+   const r=card.getBoundingClientRect();
+   const x=e.clientX-r.left;
+   const y=e.clientY-r.top;
+
+   card.style.setProperty("--x",x+"px");
+   card.style.setProperty("--y",y+"px");
+
+   const ry=((x/r.width)-.5)*12;
+   const rx=((y/r.height)-.5)*-12;
+
+   gsap.to(card,{rotateX:rx,rotateY:ry,duration:.35});
+ });
+
+ card.addEventListener("mouseleave",()=>{
+   gsap.to(card,{rotateX:0,rotateY:0,duration:.8});
+ });
+
+ card.addEventListener("click",()=>{
+   card.classList.toggle("flipped");
+ });
+});
+</script>
+
+</body>
+</html>

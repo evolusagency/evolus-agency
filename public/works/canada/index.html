@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canada</title>
+
+<style>
+html, body {
+  height: 100vh;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, white, whitesmoke);
+}
+
+.flag {
+  width: 90vmin;
+  height: 45vmin;
+
+  background: rgb(190, 58, 58);
+  background-image: url("https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHg0cjA1ZXp2MG96cTYyZDF6Y25oejNyMXJwcm9qamlld2Zna2RsaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1gTRNR33zQmi4gsbYN/giphy.gif");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+
+  clip-path: polygon(
+    50% 9%, 54% 23%, 58% 20%, 56% 43%, 61% 32%, 63% 38%,
+    69% 36%, 67% 48%, 70% 52%, 60% 68%, 60% 75%, 51% 73%,
+    51% 93%, 49% 93%, 49% 73%, 40% 75%, 40% 68%, 30% 52%,
+    33% 49%, 31% 36%, 37% 38%, 38% 32%, 44% 42%, 42% 20%,
+    46% 23%
+  );
+
+  transition: all 1s ease;
+  animation: canada 1.5s 1s backwards;
+}
+
+.flag:hover {
+  clip-path: polygon(
+    50% 0, 57% 0, 62% 0, 68% 0, 73% 0, 87% 0, 100% 0,
+    100% 43%, 100% 62%, 100% 100%, 66% 100%, 56% 100%,
+    51% 100%, 40% 100%, 18% 100%, 0 100%, 0 68%, 0 51%,
+    0 43%, 0 28%, 0 0, 16% 0, 28% 0, 38% 0, 44% 0
+  );
+
+  background-color: transparent;
+}
+
+@keyframes canada {
+  from {
+    clip-path: polygon(
+      50% 0, 57% 0, 62% 0, 68% 0, 73% 0, 87% 0, 100% 0,
+      100% 43%, 100% 62%, 100% 100%, 66% 100%, 56% 100%,
+      51% 100%, 40% 100%, 18% 100%, 0 100%, 0 68%, 0 51%,
+      0 43%, 0 28%, 0 0, 16% 0, 28% 0, 38% 0, 44% 0
+    );
+
+    background-color: transparent;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="flag"></div>
+
+</body>
+</html>

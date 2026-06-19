@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tesla Hero Slider</title>
+
+  <!-- External Libraries -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-transition-group/2.2.0/react-transition-group.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.1/prop-types.js"></script>
+  <script src="https://unpkg.com/lodash@4.17.5/lodash.js"></script>
+  <script src="https://unpkg.com/bezier-easing@2.1.0/dist/bezier-easing.min.js"></script>
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <style>
+/* Typography */
+@font-face {
+  font-family: 'BebasNeue';
+  src: url('https://raw.githubusercontent.com/10clouds/codepen/tesla-hero-slider/tesla-hero-slider/src/assets/fonts/BebasNeue-Regular.otf');
+}
+
+* { box-sizing: border-box; }
+
+:root {
+  --btn-color: white;
+  --car-color: white;
+  --bckg-height: 300px;
+  --shadow-opacity: 0.2;
+  --car-shadow-height: 300px;
+}
+
+html { font-size: 62.5%; }
+
+body {
+  margin: 0;
+  background-color: black;
+  overflow-x: hidden;
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 22px;
+  line-height: 2.2rem;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  color: #fff;
+}
+
+ul { padding: 0; list-style: none; }
+
+a { text-decoration: none; color: #fff; }
+
+h1 {
+  margin: 0;
+  font-size: 5.5rem;
+  line-height: 1;
+  font-family: 'BebasNeue','Helvetica','Arial',sans-serif;
+  letter-spacing: 0.9px;
+  font-weight: 500;
+}
+
+.container {
+  max-width: 780px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+/* Button */
+.button {
+  position: relative;
+  height: 55px;
+  width: 180px;
+  background: none;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 300;
+  text-align: center;
+  border: 0;
+  cursor: pointer;
+}
+.button:focus { outline: none; }
+.button:hover:before { height: 100%; opacity: 1; }
+.button:before {
+  position: absolute;
+  content: '';
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  background-color: var(--btn-color);
+  transition: all 0.3s;
+  z-index: -1;
+}
+.button__border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 55px;
+  width: 180px;
+  border: 1px solid var(--btn-color);
+  transition: all 0.6s ease-in-out;
+}
+.button__border:after {
+  position: absolute;
+  content: '';
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  height: 220%;
+  opacity: 0.3;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, var(--btn-color) 1%, transparent 80%);
+  z-index: -1;
+  transition: opacity 0.6s ease-in-out, background 0.6s linear 0.5s;
+}
+.button__border--enter { border: 1px solid transparent; }
+.button__border--enter:after { opacity: 0; background: transparent; }
+.button__border--exit { border: 1px solid transparent; }
+.button__border--exit:after { opacity: 0.2; background: transparent; }
+
+/* Header */
+.tesla-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 0;
+}
+.tesla-header__logo img { height: 12.5px; width: auto; }
+.tesla-header__nav img { height: 20px; width: auto; }
+
+/* Slide Item */
+.tesla-slide {
+  position: relative;
+  margin-top: 50px;
+  width: 100%;
+  order: 1;
+}
+
+/* Slide Img */
+.tesla-slide__img {
+  position: absolute;
+  overflow: hidden;
+  transform: translateX(0) scale(1);
+  transition: opacity 0.8s ease-in-out 0.05s, transform 0.8s ease-in-out 0.1s;
+}
+.tesla-slide__img:before {
+  position: absolute;
+  content: '';
+  width: calc(var(--car-shadow-height));
+  height: calc(var(--car-shadow-height) * 1.4);
+  top: 45%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  opacity: 0.35;
+  background: radial-gradient(ellipse at center, var(--car-color) 10%, transparent 75%);
+  transition: opacity 0.5s ease-in 0.3s;
+  z-index: 9;
+}
+.tesla-slide__img-floor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all 0.7s ease-in-out 0.4s;
+}
+.tesla-slide__img-car { transition: opacity 0.6s ease-in-out 0.1s; }
+
+.tesla-slide__img img {
+  max-width: 100%;
+  min-width: 600px;
+  transform: translateX(-50%);
+  margin: -100px 0 0 55%;
+}
+
+/* Slide img transitions */
+.tesla-slide__img--enter { opacity: 0; transform: translateX(-5%) scale(1.1); }
+.tesla-slide__img--enter .tesla-slide__img-floor { opacity: 0; }
+.tesla-slide__img--enter .tesla-slide__img-car { opacity: 0; }
+.tesla-slide__img--enter:before { opacity: 0; }
+.animation-back .tesla-slide__img--enter { opacity: 0; transform: scale(0.8); }
+
+.tesla-slide__img--exit {
+  transition: opacity 0.5s ease-in-out 0.4s, transform 0.8s ease-in-out 0.3s;
+  opacity: 0;
+  transform: scale(0.9);
+}
+.tesla-slide__img--exit .tesla-slide__img-floor { transition: all 0.5s ease-in-out 0.2s; opacity: 0; }
+.tesla-slide__img--exit:before { transition: opacity 0.5s ease-in-out; opacity: 0; }
+.animation-back .tesla-slide__img--exit {
+  transition: opacity 0.5s ease-in-out 0.6s, transform 0.9s ease-in-out 0.1s;
+  transform: translateX(-5%) scale(1.1);
+}
+.animation-back .tesla-slide__img--exit .tesla-slide__img-floor { transition: all 0.5s ease-in-out 0.2s; opacity: 0; }
+.animation-back .tesla-slide__img--exit .tesla-slide__img-car { transition: opacity 0.6s ease-in-out 0.5s; opacity: 0; }
+.animation-back .tesla-slide__img--exit:before { transition: opacity 0.5s ease-in 0.3s; }
+
+/* Slide Bckg */
+.tesla-slide__bckg {
+  position: absolute;
+  right: 5%;
+  bottom: 38%;
+  width: 250px;
+  height: calc(var(--bckg-height) / 2.2);
+  z-index: -1;
+}
+.tesla-slide__bckg:before,
+.tesla-slide__bckg:after {
+  position: absolute;
+  content: '';
+  transition: all 0.8s ease-in-out 0.3s;
+}
+.tesla-slide__bckg:after {
+  width: calc(var(--bckg-height) * 1.2);
+  height: calc(var(--bckg-height) * 0.8);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  background: radial-gradient(ellipse at center, var(--car-color) 25%, transparent 65%);
+}
+.tesla-slide__bckg:before {
+  width: calc(var(--bckg-height) * 1.5);
+  height: calc(var(--bckg-height) * 0.7);
+  top: 70%;
+  left: -40%;
+  opacity: var(--shadow-opacity);
+  background: radial-gradient(ellipse at center, var(--car-color) 10%, transparent 65%);
+}
+.tesla-slide__bckg-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+  background: var(--car-color);
+  transition: all 0.8s ease-in 0.3s, transform 0.8s ease-in-out, background 0s;
+}
+
+/* Bckg transitions */
+.tesla-slide__bckg--enter .tesla-slide__bckg-fill {
+  height: 0;
+  top: 0;
+  bottom: 100%;
+  opacity: 0.3;
+  transform: translateY(-20px) scale(1.1);
+  transition: all 0.7s ease-in 0.5s, transform 0.8s ease-in-out 0.1s, background 0s;
+}
+.tesla-slide__bckg--enter:before,
+.tesla-slide__bckg--enter:after { opacity: 0; }
+.animation-back .tesla-slide__bckg--enter .tesla-slide__bckg-fill {
+  bottom: 0;
+  top: 100%;
+  transform: translateY(10px) scale(0.9);
+}
+.tesla-slide__bckg--exit .tesla-slide__bckg-fill {
+  transition: all 0.6s ease-in 0.1s, background 0s;
+  height: 0;
+  top: 100%;
+  bottom: 0;
+  opacity: 0.2;
+  transform: translateY(10px) scale(0.9);
+}
+.tesla-slide__bckg--exit:before { transition: all 0.6s ease-in-out 0.2s; }
+.tesla-slide__bckg--exit:before,
+.tesla-slide__bckg--exit:after { opacity: 0; }
+.animation-back .tesla-slide__bckg--exit .tesla-slide__bckg-fill {
+  top: 0;
+  bottom: 100%;
+  transform: translateY(-20px) scale(1.1);
+}
+
+/* Slide Aside */
+.tesla-slide-aside { text-align: left; }
+
+.tesla-slide-aside__wholename { height: auto; }
+.tesla-slide-aside__wholename > span { height: 55px; vertical-align: top; }
+
+.tesla-slide-aside__name {
+  position: relative;
+  display: inline-block;
+  width: 40%;
+  overflow: hidden;
+}
+.tesla-slide-aside__name-part {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 1;
+  display: block;
+  margin-left: 15px;
+  transition: top 0.5s ease-out 0.1s, opacity 0.4s linear;
+}
+.tesla-slide-aside__name-part--enter { left: 0; top: 100%; opacity: 0; }
+.animation-back .tesla-slide-aside__name-part--enter { top: -100%; }
+.tesla-slide-aside__name-part--exit {
+  left: 0;
+  top: -100%;
+  opacity: 0;
+  transition: top 0.5s ease-out 0.4s, opacity 0.4s linear 0.4s;
+}
+.animation-back .tesla-slide-aside__name-part--exit { top: 100%; }
+
+.tesla-slide-aside__desc {
+  position: relative;
+  margin: 10px 0 0;
+  max-width: 420px;
+  height: 5rem;
+  overflow: hidden;
+}
+.tesla-slide-aside__desc-text {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  line-height: 2.5rem;
+  letter-spacing: 0.5px;
+  font-weight: 300;
+  opacity: 1;
+  transition: top 0.4s ease-out 0.2s, bottom 0.4s ease-out 0.2s, opacity 0.4s ease-out 0.3s, line-height 0.3s ease-out 0.5s;
+}
+.tesla-slide-aside__desc-text--enter { left: 0; top: 100%; bottom: 0; opacity: 0; line-height: 4rem; }
+.animation-back .tesla-slide-aside__desc-text--enter { top: -100%; bottom: auto; line-height: 3rem; }
+.tesla-slide-aside__desc-text--exit {
+  transition: bottom 0.5s ease-out 0.3s, top 0.5s ease-out 0.3s, opacity 0.4s ease-out 0.3s, line-height 0.3s ease-out 0.2s;
+  left: 0;
+  top: auto;
+  bottom: 100%;
+  opacity: 0;
+  line-height: 4rem;
+}
+.animation-back .tesla-slide-aside__desc-text--exit { top: 100%; bottom: auto; }
+
+.tesla-slide-aside__button {
+  position: relative;
+  height: 50px;
+  margin-top: 25px;
+}
+.tesla-slide-aside__button button { z-index: 1; }
+
+/* Slide Params */
+.tesla-slide-params { margin: 250px 0 30px; }
+.tesla-slide-params__list {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+.tesla-slide-params__item { text-align: center; width: 190px; }
+.tesla-slide-params__item:first-of-type .tesla-slide-params__wrapper {
+  padding-left: 10px;
+  width: 160px;
+  text-align: left;
+}
+.tesla-slide-params__item:first-of-type .tesla-slide-params__value { padding-left: 5px; }
+.tesla-slide-params__wrapper { display: inline-block; margin-bottom: 10px; }
+.tesla-slide-params__value {
+  padding: 0 8px;
+  font-size: 3.1rem;
+  transition: opacity 0.05s ease-in;
+}
+.tesla-slide-params__value--enter { opacity: 0.7; }
+.tesla-slide-params__value--exit { opacity: 0; }
+.tesla-slide-params__prefix { display: inline-block; vertical-align: top; font-size: 2rem; }
+.tesla-slide-params__name { margin-top: -5px; font-size: 1.4rem; }
+.tesla-slide-params__sufix {
+  font-family: 'BebasNeue','Helvetica','Arial',sans-serif;
+  letter-spacing: 0.9px;
+  font-size: initial;
+}
+
+/* Slider */
+.tesla-slider { padding-top: 20px; }
+.tesla-slider__scroll { order: 3; width: 100%; }
+.tesla-slider__scroll img { display: block; margin: 0 auto; }
+
+/* Navigation */
+.tesla-slider-navigation__list {
+  display: flex;
+  margin: 0;
+  justify-content: space-around;
+  text-align: center;
+}
+.tesla-slider-navigation__item {
+  display: inline-block;
+  padding: 0 5px;
+  text-transform: uppercase;
+  line-height: 1;
+  font-size: 1.2rem;
+}
+.tesla-slider-navigation__link--active {
+  font-size: 1.2rem;
+  transition: font-size 0.3s linear, color 0.2s linear 0.8s;
+}
+
+/* Responsive */
+@media only screen and (min-width: 768px) {
+  body { font-size: 1.6rem; line-height: 2.6rem; }
+  h1 { font-size: 7rem; }
+  .button { font-size: 1.8rem; width: 210px; }
+  .button__border { width: 210px; }
+  .tesla-header { padding: 50px 0 60px; }
+  .container { padding: 0 20px; max-width: 1000px; }
+  .tesla-slide { margin-top: 70px; }
+  .tesla-slide__img {
+    margin-top: 0;
+    top: -5%;
+    right: -50%;
+    z-index: -1;
+  }
+  .tesla-slide__img img { max-width: 85%; transform: none; margin: -40px 0 0; min-width: 600px; }
+  .tesla-slide__bckg { width: 300px; height: calc(var(--bckg-height) / 1.8); bottom: 40%; right: 0; }
+  .tesla-slide__bckg:after { width: calc(var(--bckg-height) * 2); height: calc(var(--bckg-height) * 1.5); }
+  .tesla-slide__bckg:before { width: calc(var(--bckg-height) * 3.5); height: var(--bckg-height); top: 100%; left: -80%; }
+  .tesla-slide-aside__wholename { height: 75px; }
+  .tesla-slide-aside__wholename > span { height: 75px; }
+  .tesla-slide-aside__name { width: 65%; }
+  .tesla-slide-aside__desc { margin-top: 40px; }
+  .tesla-slide-aside__button { margin-top: 50px; }
+  .tesla-slide-params { margin-top: 130px; }
+  .tesla-slide-params__value { font-size: 4.8rem; }
+  .tesla-slide-params__prefix { font-size: 3rem; }
+  .tesla-slider-navigation__item { font-size: 1.5rem; letter-spacing: 0.6px; }
+  .tesla-slider-navigation__link--active { font-size: 1.4rem; }
+}
+
+@media only screen and (min-width: 992px) {
+  .tesla-slide__img { top: -35%; right: -25%; }
+  .tesla-slide__img:before { width: calc(var(--car-shadow-height) * 2); height: calc(var(--car-shadow-height) * 1.8); opacity: 0.4; }
+  .tesla-slide__img img { min-width: 800px; margin-top: 0; max-width: 1300px; }
+  .tesla-slide__bckg { width: 400px; height: calc(var(--bckg-height) / 1.5); right: -2%; }
+  .tesla-slide-params { margin: 170px 0 20px; }
+}
+
+@media only screen and (min-width: 1200px) {
+  body { font-size: 1.8rem; }
+  h1 { font-size: 8rem; }
+  .container { max-width: 1200px; }
+  .tesla-header { padding: 50px 0 60px; }
+  .tesla-slide { margin-top: 0; width: calc(100% - 150px); }
+  .tesla-slide__bckg { bottom: 56%; }
+  .tesla-slider { display: flex; justify-content: space-between; flex-wrap: wrap; padding-top: 0; }
+  .tesla-slider-navigation { order: 2; width: 150px; }
+  .tesla-slider-navigation__list { display: block; order: 2; text-align: right; margin: 5px; }
+  .tesla-slider-navigation__item { display: block; margin-top: 90px; }
+  .tesla-slider-navigation__item:first-of-type { margin-top: 0; }
+  .tesla-slider-navigation__link--active { font-size: 1.8rem; }
+  .tesla-slide-params__list { padding-left: 10%; }
+}
+
+@media only screen and (min-width: 1800px) {
+  h1 { font-size: 9.2rem; }
+  .container { max-width: 1550px; }
+  .tesla-header { padding: 80px 0; }
+  .tesla-slide__img { top: -50%; right: -19%; }
+  .tesla-slide__img img { max-width: 2000px; }
+  .tesla-slide__bckg { height: var(--bckg-height); width: 570px; right: 2%; }
+  .tesla-slide__bckg:after { width: calc(var(--bckg-height) * 3.5); height: calc(var(--bckg-height) * 2.2); }
+  .tesla-slide__bckg:before { width: calc(var(--bckg-height) * 4.5); }
+  .tesla-slide-params { margin: 225px 0 80px; }
+  .tesla-slider { padding-top: 135px; }
+  .tesla-slider-navigation__item { margin-top: 95px; }
+}
+
+@media only screen and (max-width: 480px) {
+  .tesla-slide__img { width: 100%; transform: none; overflow: initial; }
+  .tesla-slide-aside__name { width: 230px; }
+  .tesla-slide__bckg { right: 3%; bottom: 35%; height: calc(var(--bckg-height) / 2.5); }
+  .tesla-slide__img img { margin: -10px 0 0 40%; }
+  .tesla-slide-params { margin-top: 350px; }
+}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { TransitionGroup, CSSTransition } = ReactTransitionGroup;
+
+    const roadsterFloorImg = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1780138/roadster-floor.png',
+      roadsterImg = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1780138/roadster-car.png',
+      truckFloorImg = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1780138/truck-floor.png',
+      truckImg = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1780138/truck-car.png';
+
+    const slides = [
+      { id: 1, name: "Model S", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et ", color: "#0047fd", imgFloorUrl: truckFloorImg, imgUrl: truckImg, topSpeed: 75, mph: 4.5, mileRange: 400, bckgHeight: 300, carShadowHeight: 300, shadowOpacity: 0.2 },
+      { id: 2, name: "Model X", desc: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", color: "#ee0101", imgFloorUrl: roadsterFloorImg, imgUrl: roadsterImg, topSpeed: 255, mph: 3, mileRange: 520, bckgHeight: 250, carShadowHeight: 0, shadowOpacity: 0.5 },
+      { id: 3, name: "Model 3", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et ", color: "#0047fd", imgFloorUrl: truckFloorImg, imgUrl: truckImg, topSpeed: 55, mph: 6, mileRange: 550, bckgHeight: 300, carShadowHeight: 250, shadowOpacity: 0.2 },
+      { id: 4, name: "Roadster", desc: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", color: "#ee0101", imgFloorUrl: roadsterFloorImg, imgUrl: roadsterImg, topSpeed: 250, mph: 1.9, mileRange: 620, bckgHeight: 340, carShadowHeight: 150, shadowOpacity: 0.5 },
+      { id: 5, name: "Semi truck", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore", color: "#0047fd", imgFloorUrl: truckFloorImg, imgUrl: truckImg, topSpeed: 65, mph: 5, mileRange: 500, bckgHeight: 390, carShadowHeight: 400, shadowOpacity: 0.2 }
+    ];
+
+    class SetCSSVariables extends React.Component {
+      componentWillReceiveProps(props) {
+        Object.keys(props.cssVariables).forEach(function(key) {
+          document.documentElement.style.setProperty(key, props.cssVariables[key]);
+        });
+      }
+      render() { return (this.props.children); }
+    }
+
+    function SlideAside(props) {
+      const activeCar = props.activeCar;
+      return (
+        <div className='tesla-slide-aside'>
+          <h1 className='tesla-slide-aside__wholename'>
+            <span>Tesla</span>
+            <TransitionGroup component='span' className='tesla-slide-aside__name'>
+              <CSSTransition key={activeCar.name} timeout={{enter: 800, exit: 1000}} className='tesla-slide-aside__name-part' classNames='tesla-slide-aside__name-part-' mountOnEnter={true} unmountOnExit={true}>
+                <span>{activeCar.name}</span>
+              </CSSTransition>
+            </TransitionGroup>
+          </h1>
+          <TransitionGroup className='tesla-slide-aside__desc'>
+            <CSSTransition key={activeCar.desc} timeout={{enter: 900, exit: 1200}} className='tesla-slide-aside__desc-text' classNames='tesla-slide-aside__desc-text-' mountOnEnter={true} unmountOnExit={true}>
+              <p>{activeCar.desc}</p>
+            </CSSTransition>
+          </TransitionGroup>
+          <div className='tesla-slide-aside__button'>
+            <button className='button'>Reserve now</button>
+            <TransitionGroup>
+              <CSSTransition key={activeCar.color} timeout={{enter: 800, exit: 1000}} mountOnEnter={true} unmountOnExit={true} classNames='button__border-'>
+                <SetCSSVariables cssVariables={{'--btn-color': activeCar.color}}>
+                  <span className='button__border'/>
+                </SetCSSVariables>
+              </CSSTransition>
+            </TransitionGroup>
+          </div>
+        </div>
+      );
+    }
+
+    function animate(render, duration, easing, next = () => null) {
+      const start = Date.now();
+      (function loop() {
+        const current = Date.now(), delta = current - start, step = delta / duration;
+        if (step > 1) { render(1); next(); }
+        else { requestAnimationFrame(loop); render(easing(step * 2)); }
+      })();
+    }
+
+    const myEasing = BezierEasing(.4, -0.7, .1, 1.5);
+
+    class AnimValue extends React.Component {
+      static defaultProps = { delay: 0, duration: 800, transformFn: value => Math.floor(value) };
+      node = null;
+      timeout = null;
+      animate(previousValue, newValue, applyFn) {
+        window.clearTimeout(this.timeout);
+        const diff = newValue - previousValue;
+        const renderFunction = (step) => {
+          this.timeout = setTimeout(() => {
+            applyFn(this.props.transformFn(previousValue + diff * step, step), step);
+          }, this.props.delay);
+        };
+        animate(renderFunction, this.props.duration, myEasing);
+      }
+      setValue = (value, step) => {
+        if (!this.node) return;
+        if (step === 1) { this.node.style.opacity = 1; } else { this.node.style.opacity = 0.7; }
+        this.node.innerHTML = value;
+      };
+      componentDidMount() { this.animate(0, this.props.value, this.setValue); }
+      componentWillReceiveProps(props) {
+        let previousValue = this.props.value;
+        if (previousValue !== props.value) { this.animate(previousValue, props.value, this.setValue); }
+      }
+      componentWillUnmount() { window.clearTimeout(this.timeout); this.timeout = null; }
+      render() { return <span className={this.props.className} children='0' ref={node => (this.node = node)}/>; }
+    }
+
+    class AnimateValue extends React.Component {
+      render() {
+        return (
+          <AnimValue
+            className={this.props.className}
+            delay={this.props.delay}
+            value={this.props.value}
+            transformFn={(value, step) => step === 1 ? (value % 1 != 0 ? value.toFixed(1) : value) : Math.abs(Math.floor(value))}
+          />
+        );
+      }
+    }
+
+    let DELAY_TOP_SPEED = 200, DELAY_MPH = 700, DELAY_MILE_RANG = 1200;
+
+    class SlideParams extends React.Component {
+      componentWillReceiveProps(props) {
+        if (!props.animationForward) { DELAY_TOP_SPEED = 1200; DELAY_MILE_RANG = 200; }
+        else { DELAY_TOP_SPEED = 200; DELAY_MILE_RANG = 1200; }
+      }
+      render() {
+        const {activeCar} = this.props;
+        return (
+          <div className='tesla-slide-params'>
+            <ul className='tesla-slide-params__list'>
+              <li className='tesla-slide-params__item'>
+                <div className='tesla-slide-params__wrapper'>
+                  <span className='tesla-slide-params__prefix'>+</span>
+                  <AnimateValue className='tesla-slide-params__value' value={activeCar.topSpeed} delay={DELAY_TOP_SPEED}/>
+                  <span className='tesla-slide-params__sufix'>mph</span>
+                </div>
+                <p className='tesla-slide-params__name'>Top speed</p>
+              </li>
+              <li className='tesla-slide-params__item'>
+                <div className='tesla-slide-params__wrapper'>
+                  <AnimateValue className='tesla-slide-params__value' value={activeCar.mph} delay={DELAY_MPH}/>
+                  <span className='tesla-slide-params__sufix'>s</span>
+                </div>
+                <p className='tesla-slide-params__name'>0-60 mph</p>
+              </li>
+              <li className='tesla-slide-params__item'>
+                <div className='tesla-slide-params__wrapper'>
+                  <AnimateValue className='tesla-slide-params__value' value={activeCar.mileRange} delay={DELAY_MILE_RANG}/>
+                  <span className='tesla-slide-params__sufix'>mi</span>
+                </div>
+                <p className='tesla-slide-params__name'>Mile Range</p>
+              </li>
+            </ul>
+          </div>
+        );
+      }
+    }
+
+    const ANIMATION_PHASES = { PENDING: 'PENDING', STOP: 'STOP' };
+
+    class Slide extends React.Component {
+      handleEnter = e => { this.props.setAnimationState(this.props.ANIMATION_PHASES.STOP); };
+      render() {
+        const { activeSlide, animationForward } = this.props;
+        return (
+          <div className={`tesla-slide ${animationForward ? 'animation-forward' : 'animation-back'}`}>
+            <SlideAside activeCar={activeSlide} />
+            <TransitionGroup>
+              <CSSTransition key={activeSlide.name} timeout={{ enter: 800, exit: 1000 }} classNames='tesla-slide__bckg-' mountOnEnter={true} unmountOnExit={true}>
+                <SetCSSVariables cssVariables={{'--car-color': activeSlide.color, '--bckg-height': activeSlide.bckgHeight + 'px', '--shadow-opacity': activeSlide.shadowOpacity, '--car-shadow-height': activeSlide.carShadowHeight + 'px'}}>
+                  <div className='tesla-slide__bckg'>
+                    <div className='tesla-slide__bckg-fill' />
+                  </div>
+                </SetCSSVariables>
+              </CSSTransition>
+            </TransitionGroup>
+            <TransitionGroup>
+              <CSSTransition key={activeSlide.name} timeout={{ enter: 700, exit: 1200 }} classNames='tesla-slide__img-' mountOnEnter={true} unmountOnExit={true} onEntered={this.handleEnter}>
+                <div className='tesla-slide__img'>
+                  <img className='tesla-slide__img-floor' src={activeSlide.imgFloorUrl} alt='' />
+                  <img className='tesla-slide__img-car' src={activeSlide.imgUrl} alt='' />
+                </div>
+              </CSSTransition>
+            </TransitionGroup>
+            <SlideParams activeCar={activeSlide} animationForward={animationForward} />
+          </div>
+        );
+      }
+    }
+
+    class SliderNavigation extends React.Component {
+      render() {
+        return (
+          <div className='tesla-slider-navigation'>
+            <ul className='tesla-slider-navigation__list'>
+              {this.props.carsNames.map(car => (
+                <li key={car.id} className='tesla-slider-navigation__item'>
+                  <a href='#' onClick={event => { event.preventDefault(); this.props.setActiveSlide(this.props.carsNames.indexOf(car)); }}
+                    className={`tesla-slider-navigation__link ${this.props.carsNames[this.props.activeSlide] === car ? 'tesla-slider-navigation__link--active' : ''}`}
+                    style={{ color: this.props.carsNames[this.props.activeSlide] === car ? car.color : '' }}>
+                    {car.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+    }
+
+    const logoTesla = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1780138/logoTesla.svg',
+      mouseImg = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1780138/mouse.svg',
+      hamburger = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1780138/hamburger.svg';
+
+    class Slider extends React.Component {
+      state = { activeSlide: 0, animationForward: true, slidesCount: slides.length, animationState: null };
+      slider = { header: '', content: '' };
+
+      componentDidMount() {
+        this.setState({ activeSlide: 3 });
+        this.setAnimationState(ANIMATION_PHASES.PENDING);
+        this.slider.header = document.querySelector('.tesla-header');
+        this.slider.content = document.querySelector('.tesla-slider');
+        document.body.addEventListener('wheel', this.handleScroll);
+      }
+
+      setAnimationState = animationState => this.setState({ animationState });
+
+      setActiveSlide = slideId => {
+        this.setState({ activeSlide: slideId, animationForward: this.state.activeSlide < slideId ? true : false });
+        this.setAnimationState(ANIMATION_PHASES.PENDING);
+      };
+
+      timeout = null;
+
+      handleScroll = e => {
+        let sliderHeight = this.slider.content.clientHeight,
+          headerHeight = this.slider.header.clientHeight;
+        if (window.innerHeight < sliderHeight + headerHeight) return;
+        e.preventDefault();
+        window.clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          if (e.deltaY < 0 && this.state.activeSlide !== 0) this.setActiveSlide(this.state.activeSlide - 1);
+          if (e.deltaY > 0 && this.state.activeSlide !== this.state.slidesCount - 1) this.setActiveSlide(this.state.activeSlide + 1);
+        }, 50);
+      };
+
+      componentWillUnmount() {
+        document.body.removeEventListener('wheel', this.handleScroll);
+        window.clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+
+      render() {
+        return (
+          <div className='tesla-slider'>
+            <SliderNavigation activeSlide={this.state.activeSlide} setActiveSlide={this.setActiveSlide}
+              carsNames={slides.map(slide => ({ id: slide.id, name: slide.name, color: slide.color }))}
+            />
+            <Slide animationForward={this.state.animationForward} activeSlide={slides[this.state.activeSlide]}
+              animationState={this.state.animationState} setAnimationState={this.setAnimationState} ANIMATION_PHASES={ANIMATION_PHASES}
+            />
+            <div className='tesla-slider__scroll'>
+              <img src={mouseImg} alt='' />
+            </div>
+          </div>
+        );
+      }
+    }
+
+    function Header() {
+      return (
+        <div className="tesla-header">
+          <div className="tesla-header__logo"><img src={logoTesla} alt=""/></div>
+          <div className="tesla-header__nav"><img src={hamburger} alt=""/></div>
+        </div>
+      );
+    }
+
+    class App extends React.Component {
+      render() {
+        return (
+          <div className="container">
+            <Header/>
+            <Slider/>
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById("root"));
+  </script>
+</body>
+</html>

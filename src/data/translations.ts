@@ -99,6 +99,7 @@ export const translations: Record<Lang, Translations> = {
     nav: {
       services: 'Services',
       process:  'Process',
+      works:    'Réalisations',
       blog:     'Blog',
       contact:  'Contact',
       cta:      'Démarrer →',
@@ -186,6 +187,7 @@ export const translations: Record<Lang, Translations> = {
     nav: {
       services: 'Services',
       process:  'Process',
+      works:    'Our Work',
       blog:     'Blog',
       contact:  'Contact',
       cta:      'Get started →',

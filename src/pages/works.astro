@@ -1,0 +1,251 @@
+---
+// src/pages/works.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar     from '../components/Navbar.astro';
+import Footer     from '../components/Footer.astro';
+import { works }  from '../data/works.ts';
+
+const title       = 'Nos réalisations — Evolus Agency';
+const description = 'Découvrez des exemples concrets de ce que nous pouvons construire pour votre site web.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Navbar />
+
+  <main id="main-content">
+    <section class="works-intro">
+      <p class="works-label" data-i18n="works.label">Nos réalisations</p>
+      <h1 class="works-title rv" data-i18n="works.title">
+        Ce qu'on peut<br>construire pour vous.
+      </h1>
+      <p class="works-sub rv" data-i18n="works.sub">
+        Quelques exemples interactifs, en conditions réelles.
+      </p>
+    </section>
+
+    <section class="works-list">
+      {works.map((work) => (
+        <article class="work-item rv">
+          <div class="work-text">
+            {work.tags && (
+              <div class="work-tags">
+                {work.tags.map((tag) => <span class="work-tag">{tag}</span>)}
+              </div>
+            )}
+            <h2
+              class="work-title"
+              data-i18n-fr={work.title}
+              data-i18n-en={work.titleEn}
+            >
+              {work.title}
+            </h2>
+            <p
+              class="work-desc"
+              data-i18n-fr={work.description}
+              data-i18n-en={work.descriptionEn}
+            >
+              {work.description}
+            </p>
+          </div>
+
+          <div class="work-embed">
+            <iframe
+              src={`/works/${work.slug}/index.html`}
+              loading="lazy"
+              title={work.title}
+              style={`height:${work.height ?? 600}px`}
+            ></iframe>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .works-intro {
+    padding: calc(var(--nav-h) + 4rem) var(--section-px) 2rem;
+    max-width: 900px;
+  }
+  .works-label {
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+  .works-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .works-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 560px;
+  }
+
+  .works-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    padding: 2rem var(--section-px) 6rem;
+  }
+
+  .work-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .work-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .work-tag {
+    font-size: 0.75rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .work-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .work-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .work-embed {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #0d0d0d;
+  }
+  .work-embed iframe {
+    width: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Scroll reveal — matches homepage .rv pattern */
+  .rv {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity var(--dur-mid) var(--ease-out),
+                transform var(--dur-mid) var(--ease-out);
+  }
+  .rv.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .works-intro { padding: calc(var(--nav-h) + 2rem) 1rem 1.5rem; }
+    .works-list  { padding: 1rem 1rem 4rem; gap: 3.5rem; }
+    .work-embed iframe { height: 420px !important; }
+  }
+</style>
+
+<script>
+  // ─── SCROLL REVEAL ────────────────────────────────────────
+  const revealObs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          revealObs.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.07 }
+  );
+  document.querySelectorAll('.rv').forEach((el) => revealObs.observe(el));
+
+  // ─── BILINGUAL SWAP ───────────────────────────────────────
+  type Lang = 'fr' | 'en';
+
+  const T: Record<Lang, Record<string, string>> = {
+    fr: {
+      'works.label': 'Nos réalisations',
+      'works.title': 'Ce qu\'on peut<br>construire pour vous.',
+      'works.sub':   'Quelques exemples interactifs, en conditions réelles.',
+    },
+    en: {
+      'works.label': 'Our work',
+      'works.title': 'What we can<br>build for you.',
+      'works.sub':   'A few interactive examples, in real conditions.',
+    },
+  };
+
+  function applyWorksLang(lang: Lang) {
+    // Static i18n keys
+    document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n')!;
+      if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+    });
+    // Dynamic per-work titles & descriptions
+    document.querySelectorAll<HTMLElement>('[data-i18n-fr]').forEach((el) => {
+      const text = lang === 'en' ? el.dataset.i18nEn : el.dataset.i18nFr;
+      if (text) el.textContent = text;
+    });
+    // Lang button states
+    const btnFr = document.getElementById('lb-fr');
+    const btnEn = document.getElementById('lb-en');
+    if (btnFr) { btnFr.classList.toggle('on', lang === 'fr'); btnFr.setAttribute('aria-pressed', String(lang === 'fr')); }
+    if (btnEn) { btnEn.classList.toggle('on', lang === 'en'); btnEn.setAttribute('aria-pressed', String(lang === 'en')); }
+  }
+
+  function setLang(l: Lang) {
+    try { localStorage.setItem('evolus_lang', l); } catch {}
+    applyWorksLang(l);
+  }
+
+  document.getElementById('lb-fr')?.addEventListener('click', () => setLang('fr'));
+  document.getElementById('lb-en')?.addEventListener('click', () => setLang('en'));
+
+  // Apply saved preference on load
+  try {
+    const saved = localStorage.getItem('evolus_lang') as Lang | null;
+    applyWorksLang(saved === 'en' ? 'en' : 'fr');
+  } catch {
+    applyWorksLang('fr');
+  }
+
+  // ─── CUSTOM CURSOR ────────────────────────────────────────
+  const cursor = document.getElementById('cur');
+  if (cursor && window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.addEventListener('mouseleave', () => cursor.classList.add('off'));
+    document.addEventListener('mouseenter', () => cursor.classList.remove('off'));
+
+    const hoverTargets = 'a, button, .work-item, .work-embed';
+    document.querySelectorAll<HTMLElement>(hoverTargets).forEach((el) => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('h'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('h'));
+    });
+  } else {
+    if (cursor) cursor.style.display = 'none';
+    document.body.style.cursor = 'auto';
+  }
+</script>

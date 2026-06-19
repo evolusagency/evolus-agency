@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo</title>
+<style>
+          :root {
+            --bg: #030303;
+            /* Slightly darker */
+            --fg: #e0e0e0;
+            --accent: #ccff00;
+            --secondary: #ff00ff;
+            /* Neon magenta */
+            --danger: #ff3333;
+            --easing: cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* --- GRAIN OVERLAY --- */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.07;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- SCROLL CONTENT WRAPPER --- */
+        #scroll-content {
+            will-change: transform;
+            /* Smooth skewing performance */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            /* Force vertical scroll */
+        }
+
+        /* --- CURSOR --- */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s var(--easing), height 0.3s var(--easing), transform 0.05s linear;
+        }
+
+        #cursor.magnet {
+            width: 90px;
+            height: 90px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            backdrop-filter: blur(0px);
+            /* Performance fix */
+        }
+
+        #cursor.magnet::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* --- NAVBAR --- */
+        .brutal-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition:
+                padding 0.7s var(--easing),
+                top 0.7s var(--easing),
+                width 0.7s var(--easing),
+                background 0.5s var(--easing),
+                border-radius 0.7s var(--easing);
+            mix-blend-mode: exclusion;
+            transform-style: preserve-3d;
+            perspective: 1200px;
+        }
+
+        .brutal-nav.scrolled {
+            top: 1.5rem;
+            padding: 0.8rem 2rem;
+            width: auto;
+            min-width: 500px;
+            /* Consistent width */
+            left: 50%;
+            transform: translateX(-50%);
+            /* JS handles the rest */
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            /* Less rounded, more brutal tech */
+            mix-blend-mode: normal;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Logo Glitch */
+        .nav-logo {
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: -2px;
+            color: #fff;
+            user-select: none;
+            position: relative;
+        }
+
+        .nav-logo:hover {
+            animation: glitch-anim 0.3s infinite;
+        }
+
+        .nav-logo::before,
+        .nav-logo::after {
+            content: "EVOLUS";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            opacity: 0.8;
+            display: none;
+        }
+
+        .nav-logo:hover::before,
+        .nav-logo:hover::after {
+            display: block;
+        }
+
+        .nav-logo:hover::before {
+            color: var(--secondary);
+            z-index: -1;
+            transform: translate(-2px, -2px);
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            animation: glitch-anim-2 0.5s infinite linear alternate-reverse;
+        }
+
+        .nav-logo:hover::after {
+            color: var(--accent);
+            z-index: -2;
+            transform: translate(2px, 2px);
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            animation: glitch-anim-2 0.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                transform: translate(0);
+            }
+
+            20% {
+                transform: translate(-2px, 2px);
+            }
+
+            40% {
+                transform: translate(-2px, -2px);
+            }
+
+            60% {
+                transform: translate(2px, 2px);
+            }
+
+            80% {
+                transform: translate(2px, -2px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        /* Nav Items */
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px;
+        }
+
+        .nav-link::before {
+            content: '>';
+            position: absolute;
+            left: -10px;
+            opacity: 0;
+            transition: all 0.2s;
+            color: var(--accent);
+        }
+
+        .nav-link:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+
+        .nav-link:hover {
+            padding-left: 15px;
+        }
+
+        /* CTA Button */
+        .cta-btn {
+            position: relative;
+            padding: 0.8rem 2rem;
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            font-family: 'Space Grotesk';
+            font-size: 0.9rem;
+            /* Smaller text */
+            letter-spacing: 1px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .cta-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transform: translateX(-101%);
+            transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 1;
+        }
+
+        .cta-btn span {
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s;
+        }
+
+        .cta-btn:hover span {
+            color: #000;
+        }
+
+        .cta-btn:hover::after {
+            transform: translateX(0);
+        }
+
+        .brutal-nav.scrolled .cta-btn {
+            padding: 0.6rem 1.5rem;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            /* perspective: 1000px; - Removed to fix skew conflict */
+        }
+
+        .hero-title-container {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .hero h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 13vw;
+            line-height: 0.8;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--fg);
+            position: relative;
+            z-index: 10;
+            mix-blend-mode: color-dodge;
+            transform: translateZ(50px);
+            /* 3D pop */
+        }
+
+        .hero h1 .word {
+            display: inline-block;
+        }
+
+        .hero h1 .char {
+            display: inline-block;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .hero h1:hover .char {
+            color: var(--accent);
+            -webkit-text-stroke: 0px;
+            transform: translateZ(20px);
+        }
+
+        /* Running Text Tape */
+        .tape-wrapper {
+            position: absolute;
+            bottom: 5vh;
+            left: -10%;
+            width: 120%;
+            background: var(--accent);
+            color: #000;
+            transform: rotate(-2deg);
+            padding: 10px 0;
+            border-top: 3px solid #000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .tape-text {
+            font-family: 'Syncopate';
+            font-size: 2rem;
+            font-weight: 800;
+            white-space: nowrap;
+            animation: tapeScroll 10s linear infinite;
+        }
+
+        @keyframes tapeScroll {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* --- CONTENT SECTIONS --- */
+        .section-dark {
+            min-height: 80vh;
+            background: #080808;
+            display: flex;
+            align-items: center;
+            padding: 10vw;
+            border-top: 1px solid #222;
+        }
+
+        .big-text {
+            font-size: 5vw;
+            line-height: 1.1;
+            font-weight: 300;
+            color: #444;
+        }
+
+        .big-text span {
+            color: #fff;
+            font-weight: 700;
+        }
+</style>
+</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syncopate:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="noise"></div>
+    <div id="cursor"></div>
+
+    <nav class="brutal-nav">
+        <a href="#our-work" class="nav-logo magnetic" style="text-decoration: none;">EVOLUS</a>
+        <ul class="nav-menu">
+            <li><a href="#" class="nav-link magnetic" data-text="WORK">WORK</a></li>
+            <li><a href="#" class="nav-link magnetic" data-text="ABOUT">ABOUT</a></li>
+            <li><a href="#" class="nav-link magnetic" data-text="LABS">LABS</a></li>
+        </ul>
+        <button class="cta-btn magnetic"><span>LET'S TALK</span></button>
+    </nav>
+
+    <div id="scroll-content">
+        <section class="hero">
+            <div class="hero-title-container">
+                <h1>
+                    <div class="word">BRUTAL</div><br>
+                    <div class="word">MAGIC</div>
+                </h1>
+            </div>
+
+            <div class="tape-wrapper">
+                <div class="tape-text">
+                    EVOLUS STUDIO ✦ SCROLL VELOCITY ✦ INTERACTIVE SYSTEMS ✦ EVOLUS STUDIO ✦ SCROLL VELOCITY ✦
+                    INTERACTIVE SYSTEMS ✦
+                </div>
+            </div>
+        </section>
+
+        <section class="section-dark">
+            <p class="big-text">
+                WE BUILD <span>DIGITAL EXPERIENCES</span> THAT DEFY GRAVITY. NO TEMPLATES. NO LIMITS. JUST <span>PURE
+                    CODE</span> AND <span>RAW AESTHETICS</span>.
+            </p>
+        </section>
+
+        <section class="section-dark" style="justify-content: flex-end; text-align: right;">
+            <p class="big-text">
+                INTERACTION<br>
+                <span>REDEFINED</span>
+            </p>
+        </section>
+
+        <footer
+            style="height: 40vh; background: var(--fg); color: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column;">
+            <h2 style="font-family: 'Syncopate'; font-size: 3rem; margin-bottom:1rem;"><a
+                    href="#our-work" style="color: inherit; text-decoration: none;"></a>EVOLUS</a></h2>
+            <p>© 2026</p>
+        </footer>
+    </div>
+    <script>      const words = document.querySelectorAll('.hero h1 .word');
+        words.forEach(word => {
+            const text = word.innerText;
+            word.innerHTML = '';
+            text.split('').forEach(char => {
+                const span = document.createElement('span');
+                span.classList.add('char');
+                span.innerText = char;
+                word.appendChild(span);
+            });
+        });
+
+        // --- MAGNET & CURSOR ---
+        const cursor = document.getElementById('cursor');
+        const magneticElements = document.querySelectorAll('.magnetic');
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        window.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
+        }
+
+        function animateCursor() {
+            cursorX = lerp(cursorX, mouseX, 0.15);
+            cursorY = lerp(cursorY, mouseY, 0.15);
+            cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        magneticElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const dist = 0.5; // Magnetic strength
+
+                const moveX = (e.clientX - centerX) * dist;
+                const moveY = (e.clientY - centerY) * dist;
+
+                el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                cursor.classList.add('magnet');
+            });
+
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'translate(0, 0)';
+                cursor.classList.remove('magnet');
+            });
+        });
+
+        const nav = document.querySelector('.brutal-nav');
+        let isScrolled = false;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                if (!isScrolled) {
+                    nav.classList.add('scrolled');
+                    isScrolled = true;
+                }
+            } else {
+                if (isScrolled) {
+                    nav.classList.remove('scrolled');
+                    nav.style.transform = '';
+                    isScrolled = false;
+                }
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isScrolled) return;
+            const cx = window.innerWidth / 2;
+            const cy = 100; // Pivot near top
+
+            // Subtle tilt
+            const rx = (e.clientY - cy) * 0.02;
+            const ry = (e.clientX - cx) * 0.02;
+
+            // Constrain
+            const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
+            nav.style.transform = `translateX(-50%) perspective(1000px) rotateX(${-clamp(rx, -10, 10)}deg) rotateY(${clamp(ry, -10, 10)}deg)`;
+        });
+
+        const content = document.getElementById('scroll-content');
+        let currentScroll = 0;
+        let targetScroll = 0;
+        let skew = 0;
+
+        let lastScrollTop = 0;
+
+        function scrollLoop() {
+            const scrollTop = window.scrollY;
+            const velocity = scrollTop - lastScrollTop;
+            lastScrollTop = scrollTop;
+
+            const maxSkew = 5.0;
+            const speed = Math.min(Math.max(velocity * 0.1, -maxSkew), maxSkew);
+
+            // Lerp current skew to target speed
+            skew = lerp(skew, speed, 0.1);
+
+            if (Math.abs(skew) > 0.01) {
+                content.style.transform = `skewY(${skew}deg)`;
+            } else {
+                content.style.transform = `skewY(0deg)`;
+            }
+
+            requestAnimationFrame(scrollLoop);
+        }
+        scrollLoop();
+
+        // --- HACKER TEXT RE-INIT ---
+        const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        document.querySelectorAll('[data-text]').forEach(link => {
+            link.addEventListener('mouseenter', event => {
+                let iter = 0;
+                const original = event.target.dataset.text;
+                clearInterval(event.target.interval);
+
+                event.target.interval = setInterval(() => {
+                    event.target.innerText = original.split("")
+                        .map((l, i) => {
+                            if (i < iter) return original[i];
+                            return alpha[Math.floor(Math.random() * 26)]
+                        })
+                        .join("");
+
+                    if (iter >= original.length) clearInterval(event.target.interval);
+                    iter += 1 / 3;
+                }, 30);
+            });
+            link.addEventListener('mouseleave', e => {
+                clearInterval(e.target.interval);
+                e.target.innerText = e.target.dataset.text;
+            });
+        });
+</script>
+</body>
+</html>

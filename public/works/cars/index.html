@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurum Motors</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+<style>
+:root{
+  --bg:#070707;
+  --card:#111;
+  --text:#fff;
+  --muted:#a7a7a7;
+  --accent:#d8ff4d;
+  --border:rgba(255,255,255,.08);
+}
+.light{
+  --bg:#f5f6f8;
+  --card:#fff;
+  --text:#111;
+  --muted:#666;
+  --accent:#a5d600;
+  --border:rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:auto;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,sans-serif;
+  transition:background .3s,color .3s;
+  overflow-x:hidden;
+}
+.navbar{
+  background:var(--card)!important;
+  border-bottom:1px solid var(--border);
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+}
+.btn-accent{background:var(--accent);border:none;color:#000;font-weight:700;}
+.theme-btn{border-radius:999px;}
+
+.hero-scene{
+  position:relative;
+  height:200vh;
+}
+.hero-sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  background:radial-gradient(ellipse at 30% 50%, rgba(216,255,77,.10), transparent 55%);
+}
+.hero-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+  width:100%;
+  padding:0 40px;
+  max-width:1400px;
+  margin:0 auto;
+}
+
+/* ── TEXT LEFT ── */
+.hero-text h1{
+  font-size:clamp(2.8rem,5.5vw,5.5rem);
+  font-weight:900;
+  line-height:1.05;
+  letter-spacing:-0.02em;
+}
+.hero-text h1 .line{
+  display:block;
+  overflow:hidden;
+}
+.hero-text h1 .line span{
+  display:block;
+  transform:translateY(110%);
+}
+.accent-word{color:var(--accent);}
+.hero-text .sub{
+  color:var(--muted);
+  font-size:1.1rem;
+  opacity:0;
+  transform:translateY(20px);
+  margin-top:20px;
+  margin-bottom:28px;
+}
+.hero-text .btns{opacity:0;transform:translateY(20px);}
+.hero-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:6px 14px 6px 8px;
+  font-size:.8rem;
+  color:var(--muted);
+  margin-bottom:24px;
+  opacity:0;
+  transform:translateY(12px);
+}
+.hero-chip span{
+  background:var(--accent);
+  color:#000;
+  border-radius:999px;
+  padding:2px 10px;
+  font-weight:700;
+  font-size:.75rem;
+}
+.img-dots{
+  display:flex;
+  gap:8px;
+  margin-top:32px;
+  opacity:0;
+}
+.dot{
+  width:28px;height:4px;
+  border-radius:2px;
+  background:var(--border);
+  transition:background .4s;
+}
+.dot.active{background:var(--accent);}
+
+/* ── IMAGE RIGHT — NO BOX ── */
+.hero-images{
+  position:relative;
+  height:520px;
+}
+.img-slide{
+  position:absolute;
+  inset:0;
+  /* NO border-radius, NO box-shadow, NO overflow:hidden, NO border */
+  transform:translateX(110%) scale(.92);
+  opacity:0;
+  will-change:transform,opacity;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+/* no ::after pseudo-element — completely removed */
+.img-slide img{
+  width:100%;
+  height:100%;
+  object-fit:contain;   /* contain = shows full car, no crop */
+  object-position:center;
+  display:block;
+  background:transparent; /* transparent bg so checkerboard doesn't show */
+  /* mix-blend-mode helps dark images blend into the dark background */
+}
+
+/* scroll hint */
+.scroll-hint{
+  position:absolute;
+  bottom:28px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  color:var(--muted);
+  font-size:.7rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  opacity:0;
+  pointer-events:none;
+}
+.scroll-hint .bar{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,var(--accent),transparent);
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;}
+  50%{opacity:.3;}
+}
+
+/* ── REST OF PAGE ── */
+.page-content{background:var(--bg);}
+.card-custom,.feature,.stat,.footer-box{
+  background:var(--card)!important;
+  border:1px solid var(--border);
+}
+.muted{color:var(--muted);}
+.car-card{border-radius:24px;overflow:hidden;transition:.3s;transform-style:preserve-3d;}
+.car-card img{height:220px;object-fit:cover;width:100%;}
+.card-custom{border-radius:24px;overflow:hidden;}
+.feature,.stat,.footer-box{padding:30px;border-radius:20px;}
+.section{padding:100px 0;}
+
+@media(max-width:768px){
+  .hero-layout{grid-template-columns:1fr;gap:30px;padding:0 20px;}
+  .hero-images{height:280px;order:-1;}
+  .hero-scene{height:400vh;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+<div class="container">
+  <a class="navbar-brand text-white d-flex align-items-center gap-2" href="#">
+    <svg fill="#fff" version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 293.1 293.1" xml:space="preserve" width="40px" height="40px">
+      <path d="M30.5,22.2l1.3-0.5C69.2,7.9,106.5,0.7,143.9,0c37.4-0.6,74.7,5.3,112.1,17.9l1.4,0.5l0,1.4c-0.3,44.9-0.6,89.8-0.9,134.7c-0.1,23.2-12.3,55.8-35.3,84.3c-18.5,23-44.1,43.4-76.1,54.2l-1.1,0c-32.3-8.3-57.8-27.9-76.4-50.8c-23.8-29.5-36-64.7-36.1-88.6v0v0v0c-0.2-21.7-0.3-43.4-0.5-65L30.5,22.2z"/>
+    </svg>
+    <strong>Aurum Motors</strong>
+  </a>
+  <button id="themeToggle" class="btn btn-accent theme-btn">Dark / Light</button>
+</div>
+</nav>
+
+<!-- ══ SCROLL SCENE ══════════════════════════ -->
+<div class="hero-scene" id="heroScene">
+  <div class="hero-sticky" id="heroSticky">
+    <div class="hero-layout">
+
+      <!-- TEXT -->
+      <div class="hero-text">
+        <div class="hero-chip" id="heroChip">
+          <span>NEW</span> 2025 fleet now available
+        </div>
+        <h1>
+          <div class="line"><span>Premium Cars.</span></div>
+          <div class="line"><span class="accent-word">Rental</span></div>
+          <div class="line"><span>&amp; Sales.</span></div>
+        </h1>
+        <p class="sub">Luxury, electric and performance vehicles<br>with instant availability.</p>
+        <div class="btns d-flex gap-3 flex-wrap">
+          <button class="btn btn-accent btn-lg">Browse Inventory</button>
+          <button class="btn btn-outline-light btn-lg">Book a Test Drive</button>
+        </div>
+        <div class="img-dots" id="imgDots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+
+      <!-- IMAGES -->
+      <div class="hero-images">
+
+        <div class="img-slide" id="slide1">
+          <img src="https://www.bmw-m.com/content/dam/bmw/marketBMW_M/www_bmw-m_com/all-models/model-navigation/bmw-m4-coupe-lci-flyout.png" alt="m4 coupe side profile">
+        </div>
+
+        <div class="img-slide" id="slide2">
+          <img src="https://vexstockimages.fastly.carvana.io/stockimages/2018_JEEP_WRANGLER%20UNLIMITED_ALL%20NEW%20MOAB%20SPORT%20UTILITY%204D_WHITE_stock_1_desktop.png" alt="jeep side view">
+        </div>
+
+        <div class="img-slide" id="slide3">
+          <img src="https://pngimg.com/uploads/mercedes/mercedes_PNG80189.png" alt="Mercedes front view">
+        </div>
+
+      </div>
+    </div>
+
+    <div class="scroll-hint" id="scrollHint">
+      <div class="bar"></div>
+      scroll
+    </div>
+  </div>
+</div>
+
+<!-- ══ REST OF PAGE ══════════════════════════ -->
+<div class="page-content">
+
+<section class="container py-5">
+<div class="row g-4 text-center">
+  <div class="col-md-3"><div class="stat"><h2>500+</h2><p class="muted">Vehicles</p></div></div>
+  <div class="col-md-3"><div class="stat"><h2>24h</h2><p class="muted">Delivery</p></div></div>
+  <div class="col-md-3"><div class="stat"><h2>4.9★</h2><p class="muted">Rating</p></div></div>
+  <div class="col-md-3"><div class="stat"><h2>12k+</h2><p class="muted">Clients</p></div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+  <h2 class="mb-5">Featured Vehicles</h2>
+  <div class="row g-4">
+    <div class="col-lg-4">
+    <div class="card-custom car-card">
+      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200" alt="">
+      <div class="p-4">
+        <h4>BMW M4 Competition</h4>
+        <p class="muted">Purchase or rental available.</p>
+        <h3>€89/day · €69,900</h3>
+        <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+      </div>
+    </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="card-custom car-card">
+      <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200" alt="">
+      <div class="p-4">
+        <h4>Tesla Model S</h4>
+        <p class="muted">Long range electric sedan.</p>
+        <h3>€99/day · €74,900</h3>
+        <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+      </div>
+    </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="card-custom car-card">
+      <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200" alt="">
+      <div class="p-4">
+        <h4>Porsche 911</h4>
+        <p class="muted">Weekend performance package.</p>
+        <h3>€199/day · €124,900</h3>
+        <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#vehicleModal">Quick Look</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+  <div class="row g-4">
+    <div class="col-md-4"><div class="feature"><i class="bi bi-lightning-charge fs-1"></i><h4 class="mt-3">Fast Approval</h4><p class="muted">Get approved within minutes.</p></div></div>
+    <div class="col-md-4"><div class="feature"><i class="bi bi-shield-check fs-1"></i><h4 class="mt-3">Warranty</h4><p class="muted">Extended protection plans.</p></div></div>
+    <div class="col-md-4"><div class="feature"><i class="bi bi-car-front fs-1"></i><h4 class="mt-3">Premium Fleet</h4><p class="muted">Luxury and electric vehicles.</p></div></div>
+  </div>
+</div>
+</section>
+
+<section class="section text-center">
+<div class="container footer-box">
+  <h2>Ready To Drive?</h2>
+  <p class="muted">Schedule a visit, request financing or reserve a rental vehicle.</p>
+  <button class="btn btn-accent btn-lg">Contact Sales</button>
+</div>
+</section>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="vehicleModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content bg-dark text-white">
+    <div class="modal-body p-5">
+      <h2>Vehicle Quick Look</h2>
+      <p>Premium leather interior, adaptive suspension, digital cockpit, financing and rental options available.</p>
+      <ul>
+        <li>Instant reservation</li>
+        <li>Nationwide delivery</li>
+        <li>Financing available</li>
+        <li>Insurance packages</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  document.body.classList.toggle('light');
+});
+
+/* ── HERO ENTRANCE ── */
+const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
+tl.to('#heroChip',               { opacity:1, y:0, duration:.6 }, 0.2)
+  .to('.hero-text h1 .line span',{ y:'0%', duration:1, stagger:.12 }, 0.4)
+  .to('.hero-text .sub',         { opacity:1, y:0, duration:.8 }, 0.9)
+  .to('.hero-text .btns',        { opacity:1, y:0, duration:.7 }, 1.1)
+  .to('#imgDots',                { opacity:1, duration:.5 }, 1.2)
+  .to('#scrollHint',             { opacity:1, duration:.8 }, 1.5);
+
+/* first image slides in on load */
+gsap.to('#slide1', {
+  x:'0%', scale:1, opacity:1,
+  duration:1.1, ease:'expo.out', delay:0.6
+});
+
+/* ── SCROLL IMAGE SEQUENCE ── */
+const slides = ['#slide1','#slide2','#slide3'];
+const dots   = document.querySelectorAll('.dot');
+let current  = 0;
+
+function goTo(index) {
+  if(index === current) return;
+  const prev = current;
+  current = index;
+
+  gsap.to(slides[prev], {
+    x:'-110%', scale:.92, opacity:0,
+    duration:.75, ease:'power3.inOut'
+  });
+
+  gsap.fromTo(slides[index],
+    { x:'110%', scale:.92, opacity:0 },
+    { x:'0%',   scale:1,   opacity:1,
+      duration:.75, ease:'expo.out' }
+  );
+
+  dots.forEach((d,i)=> d.classList.toggle('active', i===index));
+}
+
+ScrollTrigger.create({
+  trigger: '#heroScene',
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate(self) {
+    const p = self.progress;
+    let idx = 0;
+    if(p >= 0.66)      idx = 2;
+    else if(p >= 0.33) idx = 1;
+    goTo(idx);
+  }
+});
+
+/* ── SCROLL TRIGGER rest of page ── */
+gsap.utils.toArray('.car-card,.feature,.stat').forEach(el=>{
+  gsap.from(el,{
+    scrollTrigger:{trigger:el, start:'top 85%'},
+    y:60, opacity:0, duration:1
+  });
+});
+
+/* ── 3D TILT car cards ── */
+document.querySelectorAll('.car-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width -.5)*12;
+    const y=((e.clientY-r.top) /r.height-.5)*-12;
+    gsap.to(card,{rotateY:x,rotateX:y,duration:.3});
+  });
+  card.addEventListener('mouseleave',()=>{
+    gsap.to(card,{rotateX:0,rotateY:0,duration:.6});
+  });
+});
+</script>
+</body>
+</html>
