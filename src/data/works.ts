@@ -25,6 +25,15 @@ export const works: WorkItem[] = [
   height: 600,
 },
   {
+  slug: 'design',   // ← même nom que le dossier
+  title: 'Nous concevons avec du code',
+  titleEn: 'We design with code',
+  description: 'Effet d\'animation avec Gsap',
+  descriptionEn: 'Gsap code Effect animation',
+  tags: ['UI', 'JS', 'Animation', 'CSS', 'GSAP',],
+  height: 600,
+},
+  {
     slug: 'hero-animation',
     title: 'Animation de Hero',
     titleEn: 'Hero Animation',
@@ -54,6 +63,15 @@ export const works: WorkItem[] = [
   description: 'Une page d’accueil animée avec des effets visuels attrayants.',
   descriptionEn: 'An animated landing page with attractive visual effects.',
   tags: ['UI', 'JS', 'Animation', 'CSS', 'GSAP', 'Scroll Velocity', 'Interactive Systems'],
+  height: 600,
+},
+{
+  slug: 'gsap',   // ← même nom que le dossier
+  title: 'Slider responsive avec effet de vague sur les boutons',
+  titleEn: 'Responsive GSAP Slider with Button Wave Effect',
+  description: 'Un slider responsive avec effet de vague sur les boutons.',
+  descriptionEn: 'Responsive GSAP Slider with Button Wave Effect.',
+  tags: ['UI', 'JS', 'Animation', 'CSS', 'GSAP', 'Scroll Velocity'],
   height: 600,
 },
 {

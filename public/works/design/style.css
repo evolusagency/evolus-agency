@@ -1,0 +1,36 @@
+body {
+  background:#1d1d1d;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+text{
+  text-anchor:middle;
+  font-family:"brandon-grotesque", Helvetica Neue, Arial,sans-serif;
+  font-weight:700;
+  font-size:42px;
+  letter-spacing:-1px;
+}
+svg{
+ 
+  width:90%;
+  height:90%;
+  visibility:hidden;
+  overflow:visible; 
+  opacity:1;
+
+
+}
+
+.maskText3{
+  opacity:0
+}
