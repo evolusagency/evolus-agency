@@ -1,139 +1,902 @@
 ---
-// src/components/Results.astro
+// src/components/Results.astro — Rebuilt clean
 ---
 
-<section class="sec" style="background:var(--black)">
-  <div class="rv">
+<section class="res-sec" id="results">
+
+  <div class="rv res-header">
     <div class="sec-label" data-i18n="results.label">Nos chiffres</div>
-    <h2 class="sec-title" data-i18n-html="results.title">Des résultats<br>qui parlent.</h2>
+    <h2 class="sec-title" data-i18n-html="results.title">Des résultats<br><span class="title-em">qui parlent.</span></h2>
   </div>
 
-  <div class="res-grid rv d1">
+  <div class="rv d1 res-grid">
 
-    <!-- Featured card -->
-    <div class="res-card feat">
-      <div>
-        <div class="res-ico" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <!-- ══ CARD 1 · FEATURED · +340% trafic ══════════════════════ -->
+    <article class="rc rc-feat" id="rc1" aria-label="+340% trafic organique">
+
+      <!-- Terminal bar -->
+      <div class="term-bar">
+        <span class="term-dot" style="background:#ff5f57"></span>
+        <span class="term-dot" style="background:#febc2e"></span>
+        <span class="term-dot" style="background:#28c840"></span>
+        <span class="term-name">traffic_analytics.live</span>
+        <span class="term-live" id="termLive">LIVE</span>
+      </div>
+
+      <!-- Sparkline -->
+      <div class="spark-wrap">
+        <svg id="sparkSvg" class="spark-svg" viewBox="0 0 280 72" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="rgba(0,0,0,0.25)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </linearGradient>
+          </defs>
+          <path id="sFill" fill="url(#sg)"/>
+          <path id="sLine" fill="none" stroke="rgba(0,0,0,0.55)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle id="sDot" r="3" fill="rgba(0,0,0,0.7)"/>
+        </svg>
+        <div class="spark-axis">
+          <span id="sMax">—</span>
+          <span id="sMin">—</span>
+        </div>
+      </div>
+
+      <!-- Stat -->
+      <div class="feat-stat">
+        <div class="feat-ico">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
           </svg>
         </div>
-        <div class="res-big">+340%</div>
-        <div class="res-lbl" data-i18n="results.items.0.label">de trafic organique moyen</div>
+        <div class="feat-num">+<span id="featCnt" data-target="340">0</span>%</div>
+        <div class="feat-lbl" data-i18n="results.items.0.label">de trafic organique moyen</div>
+        <p class="feat-desc" data-i18n="results.items.0.desc">Le trafic triple en 6 mois en moyenne.</p>
       </div>
-      <p class="res-desc" data-i18n="results.items.0.desc">Le trafic triple en 6 mois en moyenne.</p>
-    </div>
 
-    <div class="res-card">
-      <div class="res-ico" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 6v6l4 2"/>
+      <a class="rc-btn rc-btn--inv" href="/works">
+        Voir les cas clients
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </article>
+
+    <!-- ══ CARD 2 · 21j · Délai ═══════════════════════════════════ -->
+    <article class="rc" id="rc2" aria-label="Délai moyen 21 jours">
+      <div class="rc-ico">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
         </svg>
       </div>
-      <div class="res-big">21j</div>
-      <div class="res-lbl" data-i18n="results.items.1.label">Délai moyen</div>
-      <p class="res-desc" data-i18n="results.items.1.desc">Rapidité sans compromis.</p>
-    </div>
 
-    <div class="res-card">
-      <div class="res-ico" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <!-- Segment display -->
+      <div class="seg-row">
+        <div class="seg-box" id="seg0">2</div>
+        <div class="seg-box" id="seg1">1</div>
+        <span class="seg-unit">j</span>
+      </div>
+
+      <div class="rc-num">21j</div>
+      <div class="rc-lbl" data-i18n="results.items.1.label">Délai moyen de livraison</div>
+      <p class="rc-desc" data-i18n="results.items.1.desc">Rapidité sans compromis sur la qualité.</p>
+
+      <!-- Arc gauge compact -->
+      <div class="arc-row">
+        <svg class="arc-svg" viewBox="0 0 120 66" fill="none">
+          <path d="M12 60 A 48 48 0 0 1 108 60" stroke="rgba(200,240,62,.12)" stroke-width="5" stroke-linecap="round"/>
+          <path id="arcPath" d="M12 60 A 48 48 0 0 1 108 60" stroke="#c8f03e" stroke-width="5" stroke-linecap="round"
+                stroke-dasharray="151" stroke-dashoffset="151"/>
+        </svg>
+        <span class="arc-note">vs 45j marché</span>
+      </div>
+
+      <button class="rc-btn" id="btn2">
+        Démarrer mon projet
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+    </article>
+
+    <!-- ══ CARD 3 · 120+ clients ═══════════════════════════════════ -->
+    <article class="rc" id="rc3" aria-label="120 clients accompagnés">
+      <div class="rc-ico">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
           <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
         </svg>
       </div>
-      <div class="res-big">120+</div>
-      <div class="res-lbl" data-i18n="results.items.2.label">Clients</div>
-      <p class="res-desc" data-i18n="results.items.2.desc">De la startup à la PME.</p>
-    </div>
 
-    <div class="res-card">
-      <div class="res-ico" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <div class="orb-field" id="orbField" aria-hidden="true"></div>
+
+      <div class="rc-num"><span id="cliCnt" data-target="120">0</span>+</div>
+      <div class="rc-lbl" data-i18n="results.items.2.label">Clients accompagnés</div>
+      <p class="rc-desc" data-i18n="results.items.2.desc">De la startup à la PME, tous secteurs.</p>
+
+      <button class="rc-btn" id="btn3">
+        Rejoindre la liste
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </article>
+
+    <!-- ══ CARD 4 · ROI 3x ═════════════════════════════════════════ -->
+    <article class="rc" id="rc4" aria-label="ROI moyen 3x">
+      <div class="rc-ico">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
           <polyline points="17 6 23 6 23 12"/>
         </svg>
       </div>
-      <div class="res-big">3x</div>
-      <div class="res-lbl" data-i18n="results.items.3.label">ROI moyen</div>
-      <p class="res-desc" data-i18n="results.items.3.desc">Chaque euro en génère 3.</p>
-    </div>
+
+      <!-- ROI bars -->
+      <div class="roi-bars">
+        <div class="roi-row">
+          <span class="roi-tag">Invest.</span>
+          <div class="roi-track"><div class="roi-fill" id="roiA" data-w="33"></div></div>
+          <span class="roi-val">1x</span>
+        </div>
+        <div class="roi-row">
+          <span class="roi-tag">Retour</span>
+          <div class="roi-track"><div class="roi-fill roi-fill--accent" id="roiB" data-w="100"></div></div>
+          <span class="roi-val" id="roiVal">3x</span>
+        </div>
+      </div>
+
+      <div class="rc-num">3x</div>
+      <div class="rc-lbl" data-i18n="results.items.3.label">ROI moyen constaté</div>
+      <p class="rc-desc" data-i18n="results.items.3.desc">Chaque euro investi en génère trois.</p>
+
+      <!-- Ticker -->
+      <div class="ticker">
+        <span class="ticker-lbl">client actuel</span>
+        <span class="ticker-val" id="ticker">+218%</span>
+      </div>
+
+      <button class="rc-btn" id="btn4">
+        Calculer mon ROI
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <rect x="4" y="4" width="16" height="16" rx="2"/>
+          <path d="M9 9h.01M12 9h.01M15 9h.01M9 12h.01M12 12h.01M15 12h.01M9 15h.01M12 15h.01"/>
+        </svg>
+      </button>
+    </article>
 
   </div>
 </section>
 
 <style>
+/* ── SECTION ─────────────────────────────────────────────────── */
+.res-sec {
+  background: var(--black);
+  padding: clamp(5rem, 8vw, 9rem) var(--section-px);
+  overflow: hidden;
+}
+
+.title-em {
+  color: var(--accent);
+}
+
+/* ── GRID ────────────────────────────────────────────────────── */
 .res-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
+  grid-template-rows: auto auto;
+  gap: 1rem;
   margin-top: clamp(2.5rem, 4vw, 4rem);
 }
 
-.res-card {
+/* Featured spans both row slots on the left */
+.rc-feat {
+  grid-row: span 2;
+}
+
+/* ── CARD BASE ───────────────────────────────────────────────── */
+.rc {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: clamp(1.8rem, 2.5vw, 2.5rem);
-  transition: border-color var(--dur-mid);
+  padding: clamp(1.4rem, 2vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  will-change: transform;
 }
-.res-card:hover { border-color: var(--border-hover); }
+.rc:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
 
-/* Featured: accent background, spans 2 rows */
-.res-card.feat {
+/* Radial shimmer that follows mouse */
+.rc::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(200,240,62,0.05) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.rc:hover::before { opacity: 1; }
+
+/* ── FEATURED CARD ───────────────────────────────────────────── */
+.rc-feat {
   background: var(--accent);
   border-color: transparent;
-  grid-row: span 2;
+}
+.rc-feat:hover {
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+.rc-feat::before {
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(0,0,0,0.06) 0%, transparent 55%
+  );
+}
+
+/* ── TERMINAL BAR (featured) ─────────────────────────────────── */
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 0.3rem;
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: rgba(0,0,0,0.45);
+  flex-shrink: 0;
+}
+.term-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.term-name { flex: 1; }
+.term-live {
+  color: rgba(0,0,0,0.6);
+  font-weight: 700;
+  animation: blink 2s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+/* ── SPARKLINE ───────────────────────────────────────────────── */
+.spark-wrap {
+  position: relative;
+  flex-shrink: 0;
+  height: 72px;
+  margin-bottom: 0.5rem;
+}
+.spark-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.spark-axis {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  color: rgba(0,0,0,0.35);
+  pointer-events: none;
+  padding: 1px 0;
 }
-.res-card.feat:hover { border-color: transparent; }
 
-.res-ico {
-  width: 36px; height: 36px;
-  background: rgba(200,240,62,.1);
-  border-radius: 9px;
+/* ── FEATURED STAT BLOCK ─────────────────────────────────────── */
+.feat-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+.feat-ico {
+  width: 28px;
+  height: 28px;
+  background: rgba(0,0,0,0.12);
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
+  color: rgba(0,0,0,0.65);
+  flex-shrink: 0;
 }
-.res-card.feat .res-ico {
-  background: rgba(0,0,0,.15);
-  color: var(--black);
-}
-
-.res-big {
+.feat-num {
   font-family: 'Syne', sans-serif;
   font-size: clamp(2.8rem, 5vw, 5rem);
   font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--white);
-  margin-bottom: 0.3rem;
+  letter-spacing: -0.05em;
+  color: var(--black);
+  margin-top: 0.3rem;
 }
-.res-card.feat .res-big { color: var(--black); }
-
-.res-lbl {
+.feat-lbl {
   font-size: var(--text-small);
-  color: var(--muted);
+  color: rgba(0,0,0,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
-.res-card.feat .res-lbl { color: rgba(0,0,0,0.6); }
-
-.res-desc {
+.feat-desc {
   font-size: var(--text-small);
-  color: var(--muted);
-  margin-top: 1rem;
-  line-height: 1.6;
+  color: rgba(0,0,0,0.4);
+  line-height: 1.65;
   font-weight: 300;
 }
-.res-card.feat .res-desc { color: rgba(0,0,0,0.5); margin-top: 0.6rem; }
 
-@media (max-width: 768px) {
+/* ── CARD ICON ───────────────────────────────────────────────── */
+.rc-ico {
+  width: 30px;
+  height: 30px;
+  background: rgba(200,240,62,0.08);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ── CARD NUMBERS/LABELS ─────────────────────────────────────── */
+.rc-num {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--white);
+}
+.rc-lbl {
+  font-size: var(--text-small);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.rc-desc {
+  font-size: var(--text-small);
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+  flex: 1;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────────────── */
+.rc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(200,240,62,0.22);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--white);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  align-self: flex-start;
+  margin-top: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rc-btn:hover {
+  background: rgba(200,240,62,0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.02);
+}
+.rc-btn:active { transform: scale(0.96); }
+
+/* Inverted button (on accent bg) */
+.rc-btn--inv {
+  border-color: rgba(0,0,0,0.25);
+  color: var(--black);
+  background: rgba(0,0,0,0.1);
+}
+.rc-btn--inv:hover {
+  background: rgba(0,0,0,0.2);
+  border-color: rgba(0,0,0,0.4);
+  color: var(--black);
+}
+
+/* ── CARD 2: SEGMENT DISPLAY ─────────────────────────────────── */
+.seg-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.seg-box {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(200,240,62,0.07);
+  border: 1px solid rgba(200,240,62,0.14);
+  border-radius: 5px;
+  width: 2em;
+  height: 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.seg-unit {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-left: 2px;
+  letter-spacing: 0.06em;
+}
+
+/* ── CARD 2: ARC GAUGE ───────────────────────────────────────── */
+.arc-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+.arc-svg {
+  width: 72px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.arc-note {
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── CARD 3: ORB FIELD ───────────────────────────────────────── */
+.orb-field {
+  position: relative;
+  height: 44px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* ── CARD 4: ROI BARS ────────────────────────────────────────── */
+.roi-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.roi-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.roi-tag {
+  font-size: 0.6rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  width: 3.2rem;
+  flex-shrink: 0;
+}
+.roi-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.roi-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  background: rgba(200,240,62,0.3);
+  transition: width 1.4s cubic-bezier(0.22,1,0.36,1);
+}
+.roi-fill--accent { background: var(--accent); }
+.roi-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--white);
+  width: 1.6rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── TICKER ──────────────────────────────────────────────────── */
+.ticker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(200,240,62,0.04);
+  border: 1px solid rgba(200,240,62,0.09);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.ticker-lbl {
+  font-family: 'Courier New', monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.ticker-val {
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+/* ── REVEAL STATE ────────────────────────────────────────────── */
+.rc.pre-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
   .res-grid { grid-template-columns: 1fr; }
-  .res-card.feat { grid-row: span 1; }
+  .rc-feat  { grid-row: span 1; }
+  .spark-wrap { height: 60px; }
+}
+@media (max-width: 480px) {
+  .seg-box { font-size: 0.95rem; }
+  .arc-svg { width: 56px; }
+  .feat-num { font-size: 2.6rem; }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .rc, .rc::before, .roi-fill { animation: none !important; transition: none !important; }
+  .rc.pre-reveal { opacity: 1 !important; transform: none !important; }
+  #arcPath { stroke-dashoffset: 80 !important; }
+  .term-live { animation: none !important; }
 }
 </style>
+
+<!-- GSAP from CDN -->
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script is:inline>
+(function () {
+  /* Wait for GSAP */
+  function init() {
+    var gsap = window.gsap;
+    if (!gsap) { setTimeout(init, 50); return; }
+
+    /* ── helpers ─────────────────────────────────────────────── */
+    function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+    function rnd(a, b)    { return Math.random() * (b - a) + a; }
+    var ACCENT = '#c8f03e';
+
+    /* ── Mouse shimmer ───────────────────────────────────────── */
+    document.querySelectorAll('.rc').forEach(function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
+      });
+    });
+
+    /* ── Pre-reveal ──────────────────────────────────────────── */
+    var cards = Array.from(document.querySelectorAll('.rc'));
+    cards.forEach(function(c) { c.classList.add('pre-reveal'); });
+
+    /* ─────────────────────────────────────────────────────────
+       SPARKLINE
+    ───────────────────────────────────────────────────────── */
+    var W = 280, H = 72, N = 22;
+    var sdata = [];
+    for (var i = 0; i < N; i++) {
+      sdata.push(Math.max(4, 8 + (i / N) * 52 + rnd(-7, 7)));
+    }
+
+    function buildPaths(data) {
+      var min = Math.min.apply(null, data);
+      var max = Math.max.apply(null, data);
+      var range = max - min || 1;
+      var sx = W / (data.length - 1);
+      var pts = data.map(function(v, i) {
+        return [i * sx, H - ((v - min) / range) * (H - 8) - 2];
+      });
+      var d = 'M ' + pts[0][0] + ' ' + pts[0][1];
+      for (var j = 1; j < pts.length; j++) {
+        var p = pts[j - 1], c = pts[j];
+        var mx = (p[0] + c[0]) / 2;
+        d += ' C ' + mx + ' ' + p[1] + ',' + mx + ' ' + c[1] + ',' + c[0] + ' ' + c[1];
+      }
+      var fill = d + ' L ' + pts[pts.length-1][0] + ' ' + H + ' L ' + pts[0][0] + ' ' + H + ' Z';
+      return { line: d, fill: fill, dot: pts[pts.length - 1], min: min, max: max };
+    }
+
+    function renderSpark() {
+      var p = buildPaths(sdata);
+      var lineEl = qs('#sLine'), fillEl = qs('#sFill'), dotEl = qs('#sDot');
+      var maxEl  = qs('#sMax'),  minEl  = qs('#sMin');
+      if (!lineEl) return;
+      lineEl.setAttribute('d', p.line);
+      fillEl.setAttribute('d', p.fill);
+      dotEl.setAttribute('cx', p.dot[0]);
+      dotEl.setAttribute('cy', p.dot[1]);
+      if (maxEl) maxEl.textContent = Math.round(p.max) + 'k';
+      if (minEl) minEl.textContent = Math.round(p.min) + 'k';
+    }
+    renderSpark();
+
+    setInterval(function() {
+      var last = sdata[sdata.length - 1];
+      sdata.push(Math.max(4, last + rnd(-5, 9)));
+      if (sdata.length > N) sdata.shift();
+      var p = buildPaths(sdata);
+      var lineEl = qs('#sLine'), fillEl = qs('#sFill'), dotEl = qs('#sDot');
+      if (!lineEl) return;
+      lineEl.setAttribute('d', p.line);
+      fillEl.setAttribute('d', p.fill);
+      var maxEl = qs('#sMax'), minEl = qs('#sMin');
+      if (maxEl) maxEl.textContent = Math.round(p.max) + 'k';
+      if (minEl) minEl.textContent = Math.round(p.min) + 'k';
+      gsap.to(dotEl, { attr: { cx: p.dot[0], cy: p.dot[1] }, duration: 0.35, ease: 'power2.out' });
+      gsap.fromTo(dotEl, { attr: { r: 5 } }, { attr: { r: 3 }, duration: 0.35 });
+    }, 2000);
+
+    /* ─────────────────────────────────────────────────────────
+       COUNT-UP
+    ───────────────────────────────────────────────────────── */
+    function countUp(el) {
+      var target = parseInt(el.getAttribute('data-target'), 10);
+      var obj = { v: 0 };
+      gsap.to(obj, {
+        v: target, duration: 2, ease: 'power2.out',
+        onUpdate: function() { el.textContent = Math.round(obj.v); }
+      });
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       SEGMENT SCRAMBLE
+    ───────────────────────────────────────────────────────── */
+    function scramble(el, target) {
+      var CHARS = '0123456789', n = 0;
+      var iv = setInterval(function() {
+        el.textContent = n < 10 ? CHARS[Math.floor(Math.random() * 10)] : target;
+        if (++n > 13) clearInterval(iv);
+      }, 55);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       ARC GAUGE
+       Arc path "M12 60 A48 48 0 0 1 108 60" total length ≈ 151
+       21/45 = 46.7% => dashoffset = 151 * (1 - 0.467) = 80.5
+    ───────────────────────────────────────────────────────── */
+    function animateArc() {
+      var arc = qs('#arcPath');
+      if (!arc) return;
+      gsap.to(arc, { strokeDashoffset: 80, duration: 1.6, ease: 'power2.out', delay: 0.25 });
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       ROI BARS
+    ───────────────────────────────────────────────────────── */
+    function animateROI() {
+      var bars = document.querySelectorAll('.roi-fill');
+      bars.forEach(function(b) {
+        var w = b.getAttribute('data-w') + '%';
+        gsap.to(b, { width: w, duration: 1.4, ease: 'power2.out', delay: 0.2 });
+      });
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       TICKER
+    ───────────────────────────────────────────────────────── */
+    var tickEl = qs('#ticker');
+    if (tickEl) {
+      var ticks = ['+218%', '+304%', '+189%', '+412%', '+267%', '+340%', '+155%'];
+      var ti = 0;
+      setInterval(function() {
+        ti = (ti + 1) % ticks.length;
+        gsap.to(tickEl, {
+          opacity: 0, y: -5, duration: 0.18, ease: 'power2.in',
+          onComplete: function() {
+            tickEl.textContent = ticks[ti];
+            gsap.fromTo(tickEl, { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' });
+          }
+        });
+      }, 2400);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       ORBS
+    ───────────────────────────────────────────────────────── */
+    var orbField  = qs('#orbField');
+    var orbCount  = 0;
+    var MAX_ORBS  = 24;
+
+    function addOrb(animate) {
+      if (!orbField || orbCount >= MAX_ORBS) return;
+      orbCount++;
+      var orb = document.createElement('div');
+      orb.className = 'orb';
+      var sz  = rnd(5, 13);
+      var x   = rnd(0, 94);
+      var y   = rnd(5, 82);
+      var op  = rnd(0.2, 0.7);
+      orb.style.cssText = [
+        'width:' + sz + 'px',
+        'height:' + sz + 'px',
+        'left:' + x + '%',
+        'top:' + y + '%',
+        'background:' + (Math.random() > 0.3 ? ACCENT : 'rgba(255,255,255,0.35)')
+      ].join(';');
+      orbField.appendChild(orb);
+      if (animate) {
+        gsap.to(orb, { scale: 1, opacity: op, duration: rnd(0.25, 0.5), ease: 'back.out(1.7)', delay: rnd(0, 0.15) });
+      } else {
+        orb.style.opacity = op;
+        orb.style.transform = 'scale(1)';
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       INTERSECTION OBSERVER
+    ───────────────────────────────────────────────────────── */
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          var card = entry.target;
+          var idx  = cards.indexOf(card);
+
+          /* Reveal */
+          gsap.to(card, { opacity: 1, y: 0, duration: 0.75, delay: idx * 0.08, ease: 'power3.out' });
+
+          /* Per-card animations */
+          var id = card.id;
+
+          if (id === 'rc1') {
+            var cu = qs('#featCnt', card);
+            if (cu) setTimeout(function() { countUp(cu); }, 250);
+          }
+          if (id === 'rc2') {
+            animateArc();
+            setTimeout(function() {
+              scramble(qs('#seg0'), '2');
+              setTimeout(function() { scramble(qs('#seg1'), '1'); }, 100);
+            }, 350);
+          }
+          if (id === 'rc3') {
+            var cu3 = qs('#cliCnt', card);
+            if (cu3) setTimeout(function() { countUp(cu3); }, 250);
+            var step = 0;
+            var iv3 = setInterval(function() {
+              addOrb(true);
+              if (++step >= MAX_ORBS) clearInterval(iv3);
+            }, 70);
+          }
+          if (id === 'rc4') {
+            animateROI();
+          }
+
+          io.unobserve(card);
+        });
+      }, { threshold: 0.18 });
+
+      cards.forEach(function(c) { io.observe(c); });
+    } else {
+      /* Fallback: show all immediately */
+      cards.forEach(function(c) {
+        c.style.opacity = '1';
+        c.style.transform = 'none';
+      });
+      var cu1 = qs('#featCnt'); if (cu1) countUp(cu1);
+      var cu3 = qs('#cliCnt');  if (cu3) countUp(cu3);
+      animateArc();
+      animateROI();
+      for (var k = 0; k < MAX_ORBS; k++) addOrb(false);
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       BUTTON INTERACTIONS
+    ───────────────────────────────────────────────────────── */
+
+    /* btn2: countdown segments then redirect */
+    var btn2 = qs('#btn2');
+    if (btn2) {
+      btn2.addEventListener('click', function() {
+        var txt = btn2.querySelector('span') || btn2;
+        var days = 21;
+        var s0 = qs('#seg0'), s1 = qs('#seg1');
+        gsap.to(btn2, { scale: 0.94, duration: 0.1, yoyo: true, repeat: 1 });
+        if (txt.tagName !== 'BUTTON') txt.textContent = 'J-21...';
+
+        var iv = setInterval(function() {
+          days--;
+          if (s0) { s0.textContent = Math.floor(days / 10).toString(); gsap.fromTo(s0, { y: -6, opacity: 0.2 }, { y: 0, opacity: 1, duration: 0.18 }); }
+          if (s1) { s1.textContent = (days % 10).toString();           gsap.fromTo(s1, { y: -6, opacity: 0.2 }, { y: 0, opacity: 1, duration: 0.18 }); }
+          if (days <= 0) {
+            clearInterval(iv);
+            var sp = btn2.querySelector('span');
+            if (sp) sp.textContent = 'Projet lance !';
+            setTimeout(function() { window.location.href = '#contact'; }, 600);
+          }
+        }, 100);
+      });
+    }
+
+    /* btn3: orb burst + counter bump */
+    var btn3 = qs('#btn3');
+    if (btn3) {
+      btn3.addEventListener('click', function() {
+        var cuEl = qs('#cliCnt');
+        addOrb(true);
+        gsap.to('.orb', { scale: 1.3, opacity: 0.9, duration: 0.18, stagger: 0.012, yoyo: true, repeat: 1 });
+        if (cuEl) {
+          var cur = parseInt(cuEl.textContent, 10) || 120;
+          gsap.fromTo(cuEl, { y: -5, opacity: 0.3 }, { y: 0, opacity: 1, duration: 0.25 });
+          cuEl.textContent = cur + 1;
+        }
+        gsap.to(btn3, { scale: 0.94, duration: 0.1, yoyo: true, repeat: 1 });
+        var sp3 = btn3.querySelector('span');
+        if (sp3) {
+          sp3.textContent = 'Ajoute !';
+          setTimeout(function() { sp3.textContent = 'Rejoindre la liste'; }, 1800);
+        }
+      });
+    }
+
+    /* btn4: recalculate ROI bars */
+    var btn4 = qs('#btn4');
+    if (btn4) {
+      var busy4 = false;
+      btn4.addEventListener('click', function() {
+        if (busy4) return;
+        busy4 = true;
+        gsap.to(btn4, { scale: 0.94, duration: 0.1, yoyo: true, repeat: 1 });
+        var sp4 = btn4.querySelector('span');
+        if (sp4) sp4.textContent = 'Calcul...';
+
+        var newROI = (2 + Math.random() * 2);
+        var pct    = (newROI / 5) * 100;
+        var roiB   = qs('#roiB');
+        var roiVal = qs('#roiVal');
+        if (roiB) gsap.to(roiB, { width: pct + '%', duration: 0.8, ease: 'power2.out' });
+        if (roiVal) {
+          setTimeout(function() {
+            roiVal.textContent = newROI.toFixed(1) + 'x';
+            gsap.fromTo(roiVal, { opacity: 0, y: -3 }, { opacity: 1, y: 0, duration: 0.3 });
+          }, 500);
+        }
+
+        setTimeout(function() {
+          if (sp4) sp4.textContent = 'Calculer mon ROI';
+          if (roiB) gsap.to(roiB, { width: '100%', duration: 0.8, ease: 'power2.out' });
+          if (roiVal) roiVal.textContent = '3x';
+          busy4 = false;
+        }, 2800);
+      });
+    }
+  }
+
+  /* Kick off after DOM ready */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
