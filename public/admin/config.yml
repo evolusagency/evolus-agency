@@ -8,150 +8,88 @@ backend:
 media_folder: public/images
 public_folder: /images
 
-# ─────────────────────────────────────────────────────────────────
-# Champs partagés — réutilisés dans toutes les collections blog
-# via l'alias YAML *blog_fields
-# ─────────────────────────────────────────────────────────────────
-_blog_fields: &blog_fields
-  - { label: Titre,              name: title,   widget: string }
-  - { label: Extrait,            name: excerpt,  widget: text }
-  - { label: Date,               name: date,     widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
-  - { label: Tag,                name: tag,      widget: string }
-  - { label: "Temps de lecture", name: read,     widget: string }
-  - label: Langue
-    name: lang
-    widget: select
-    options: ["fr", "en"]
-    default: "fr"
-  - label: Cluster
-    name: cluster
-    widget: select
-    options:
-      - { label: "Automation",  value: "automation" }
-      - { label: "Marketing",   value: "marketing" }
-      - { label: "SEO",         value: "seo" }
-      - { label: "Web Design",  value: "web-design" }
-      - { label: "Branding",    value: "branding" }
-      - { label: "IA",          value: "ia" }
-      - { label: "Growth",      value: "growth" }
-      - { label: "Sales",       value: "sales" }
-      - { label: "Finance",     value: "finance" }
-      - { label: "Leadership",  value: "leadership" }
-      - { label: "Stratégie",   value: "strategy" }
-  - { label: "Image de couverture", name: image, widget: image, required: false }
-  - { label: Corps,              name: body,     widget: markdown }
-
-# ─────────────────────────────────────────────────────────────────
-# Collections — une par cluster
-# ─────────────────────────────────────────────────────────────────
 collections:
-
   - name: automation
-    label: "⚙️  Automation"
+    label: Automation
     folder: src/content/blog/automation
     create: true
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
 
   - name: marketing
-    label: "📣  Marketing"
+    label: Marketing
     folder: src/content/blog/marketing
     create: true
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
 
   - name: seo
-    label: "🔍  SEO"
+    label: SEO
     folder: src/content/blog/seo
     create: true
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
 
   - name: web_design
-    label: "🎨  Web Design"
+    label: Web Design
     folder: src/content/blog/web-design
     create: true
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
 
-  - name: branding
-    label: "✏️  Branding"
+    name: branding
+    label: Branding
     folder: src/content/blog/branding
     create: true
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
-
-  - name: ia
-    label: "🤖  IA"
-    folder: src/content/blog/ia
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
-
-  - name: growth
-    label: "📈  Growth"
-    folder: src/content/blog/growth
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
-
-  - name: sales
-    label: "💼  Sales"
-    folder: src/content/blog/sales
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
-
-  - name: finance
-    label: "💰  Finance"
-    folder: src/content/blog/finance
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
-
-  - name: leadership
-    label: "🧭  Leadership"
-    folder: src/content/blog/leadership
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
-
-  - name: strategy
-    label: "♟️  Stratégie"
-    folder: src/content/blog/strategy
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    summary: "{{title}} — {{date}}"
-    fields: *blog_fields
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Extrait, name: excerpt, widget: text }
+      - { label: Date, name: date, widget: string }
+      - { label: Tag, name: tag, widget: string }
+      - { label: "Temps de lecture", name: read, widget: string }
+      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
+      - { label: "Image de couverture", name: image, widget: image, required: false }
+      - { label: Corps, name: body, widget: markdown }
