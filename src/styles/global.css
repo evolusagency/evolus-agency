@@ -268,6 +268,7 @@ body::before {
 
 /* ── 11. MARQUEE ───────────────────────────────────────────── */
 @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
 /* ── 12. BLOG ARTICLE LINKS ────────────────────────────────── */
 .art-reader-body a {
   color: var(--accent) !important;
@@ -277,4 +278,96 @@ body::before {
 }
 .art-reader-body a:hover {
   border-bottom-color: var(--accent);
+}
+
+/* ── 13. BLOG ARTICLE BODY SPACING ─────────────────────────────
+   NOTE: these rules MUST live here, in the unscoped global.css,
+   and NOT inside the [slug].astro <style> block. Astro scopes
+   local <style> tags by attaching a data-astro-cid-xxxx attribute
+   to every element rendered by that file's own template AND to
+   the compiled CSS selectors — but the markdown HTML injected via
+   <Content /> is produced by a separate, dynamically rendered
+   component, so it never receives that scope attribute. Any
+   article-body selector written in a scoped local <style> tag
+   will therefore silently never match — even with !important —
+   because the actual rendered element lacks the attribute the
+   compiled selector requires. Keeping these rules unscoped here
+   is the real fix, not just stronger specificity.              */
+.art-reader-body p {
+  font-size: 1.05rem !important;
+  line-height: 1.9 !important;
+  color: rgba(245, 242, 236, 0.8) !important;
+  font-weight: 300 !important;
+  margin: 0 0 1.8rem 0 !important;
+}
+
+.art-reader-body h2 {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.3 !important;
+  color: var(--white) !important;
+  margin: 3.5rem 0 1.3rem 0 !important;
+}
+
+.art-reader-body h3 {
+  font-family: 'Syne', sans-serif !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  color: var(--white) !important;
+  margin: 2.6rem 0 1rem 0 !important;
+}
+
+.art-reader-body ul,
+.art-reader-body ol {
+  padding-left: 1.5rem !important;
+  margin: 0 0 1.8rem 0 !important;
+}
+
+.art-reader-body li {
+  font-size: 1.05rem !important;
+  line-height: 1.85 !important;
+  color: rgba(245, 242, 236, 0.75) !important;
+  font-weight: 300 !important;
+  margin: 0 0 0.7rem 0 !important;
+}
+.art-reader-body li > p {
+  margin: 0 !important;
+}
+
+.art-reader-body blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 1.2rem 1.6rem;
+  margin: 2.5rem 0 !important;
+  background: rgba(200, 240, 62, 0.04);
+  border-radius: 0 8px 8px 0;
+}
+.art-reader-body blockquote p {
+  color: var(--white) !important;
+  font-style: italic;
+  margin: 0 !important;
+  font-weight: 400 !important;
+}
+
+.art-reader-body strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.art-reader-body hr {
+  border: none;
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  margin: 3rem 0 !important;
+}
+
+.art-reader-body code {
+  background: var(--card);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.95em;
+  color: var(--accent);
 }
