@@ -1,16 +1,17 @@
 ---
-title: "Content Calendar B2B : Comment Planifier 6 Mois de Contenu sans Paniquer"
-excerpt: "Mettez en place un calendrier éditorial B2B réaliste qui aligne vos équipes marketing, sales et direction sur les mêmes priorités de contenu."
-date: 2026-06-22
-tag: "Content Marketing"
-read: "3 min"
-category: content-marketing
-lang: fr
-author: "Evolus Agency"
-featured: false
-pillar: false
+excerpt: Mettez en place un calendrier éditorial B2B réaliste qui aligne vos
+  équipes marketing, sales et direction sur les mêmes priorités de contenu.
 draft: false
-image: "https://pub-d94c0800defa4f7ca9ed4021170d7368.r2.dev/content-marketing/content-calendar-b2b-organisation-2026.png"
+pillar: false
+author: Evolus Agency
+featured: false
+title: "Content Calendar B2B : Comment Planifier 6 Mois de Contenu sans Paniquer"
+date: 2026-06-22
+tag: Content Marketing
+read: 3 min
+lang: fr
+image: ""
+category: content-marketing
 ---
 La création de contenu est devenue une composante essentielle du marketing d'entreprise, mais la tension entre la quantité de contenu produit et les résultats réels est de plus en plus palpable. Les entreprises consacrent des ressources considérables à la création de contenu, mais seule une petite partie de celui-ci parvient à générer des leads et à atteindre les objectifs marketing. Cette situation soulève une question fondamentale : comment planifier efficacement un contenu qui convertit, sans se noyer dans la production de masse ?
 
