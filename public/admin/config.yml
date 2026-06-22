@@ -10,30 +10,13 @@ public_folder: /images
 
 collections:
   - name: automation
-    label: Automation
+    label: Automatisation
     folder: src/content/blog/automation
     create: true
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    fields:
-      - { label: Titre, name: title, widget: string }
-      - { label: Extrait, name: excerpt, widget: text }
-      - { label: Date, name: date, widget: string }
-      - { label: Tag, name: tag, widget: string }
-      - { label: "Temps de lecture", name: read, widget: string }
-      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
-      - { label: "Image de couverture", name: image, widget: image, required: false }
-      - { label: Corps, name: body, widget: markdown }
-
-  - name: marketing
-    label: Marketing
-    folder: src/content/blog/marketing
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    fields:
+    fields: &default_fields
       - { label: Titre, name: title, widget: string }
       - { label: Extrait, name: excerpt, widget: text }
       - { label: Date, name: date, widget: string }
@@ -50,15 +33,196 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    fields:
-      - { label: Titre, name: title, widget: string }
-      - { label: Extrait, name: excerpt, widget: text }
-      - { label: Date, name: date, widget: string }
-      - { label: Tag, name: tag, widget: string }
-      - { label: "Temps de lecture", name: read, widget: string }
-      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
-      - { label: "Image de couverture", name: image, widget: image, required: false }
-      - { label: Corps, name: body, widget: markdown }
+    fields: *default_fields
+
+  - name: branding
+    label: Branding
+    folder: src/content/blog/branding
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: content-marketing
+    label: Content Marketing
+    folder: src/content/blog/content-marketing
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: ux-ui
+    label: UX / UI
+    folder: src/content/blog/ux-ui
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: social-media
+    label: Social Media
+    folder: src/content/blog/social-media
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: email-marketing
+    label: Email Marketing
+    folder: src/content/blog/email-marketing
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: paid-ads
+    label: Publicité Payante
+    folder: src/content/blog/paid-ads
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: cro
+    label: CRO
+    folder: src/content/blog/cro
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: data-analytics
+    label: Data & Analytics
+    folder: src/content/blog/data-analytics
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: ia-generative
+    label: IA Générative
+    folder: src/content/blog/ia-generative
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: ecommerce
+    label: E-commerce
+    folder: src/content/blog/ecommerce
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: strategie-digitale
+    label: Stratégie Digitale
+    folder: src/content/blog/strategie-digitale
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: sales-enablement
+    label: Sales Enablement
+    folder: src/content/blog/sales-enablement
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: lead-generation
+    label: Lead Generation
+    folder: src/content/blog/lead-generation
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: customer-experience
+    label: Expérience Client
+    folder: src/content/blog/customer-experience
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: video-marketing
+    label: Vidéo Marketing
+    folder: src/content/blog/video-marketing
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: influence-b2b
+    label: Influence B2B
+    folder: src/content/blog/influence-b2b
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: developpement-web
+    label: Développement Web
+    folder: src/content/blog/developpement-web
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: cybersecurite
+    label: Cybersécurité
+    folder: src/content/blog/cybersecurite
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: product-marketing
+    label: Product Marketing
+    folder: src/content/blog/product-marketing
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: fondamentaux-business
+    label: Fondamentaux Business
+    folder: src/content/blog/fondamentaux-business
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
+
+  - name: marketing
+    label: Marketing
+    folder: src/content/blog/marketing
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields: *default_fields
 
   - name: web_design
     label: Web Design
@@ -67,29 +231,4 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    fields:
-      - { label: Titre, name: title, widget: string }
-      - { label: Extrait, name: excerpt, widget: text }
-      - { label: Date, name: date, widget: string }
-      - { label: Tag, name: tag, widget: string }
-      - { label: "Temps de lecture", name: read, widget: string }
-      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
-      - { label: "Image de couverture", name: image, widget: image, required: false }
-      - { label: Corps, name: body, widget: markdown }
-
-    name: branding
-    label: Branding
-    folder: src/content/blog/branding
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    fields:
-      - { label: Titre, name: title, widget: string }
-      - { label: Extrait, name: excerpt, widget: text }
-      - { label: Date, name: date, widget: string }
-      - { label: Tag, name: tag, widget: string }
-      - { label: "Temps de lecture", name: read, widget: string }
-      - { label: Langue, name: lang, widget: select, options: ["fr", "en"], default: "fr" }
-      - { label: "Image de couverture", name: image, widget: image, required: false }
-      - { label: Corps, name: body, widget: markdown }
+    fields: *default_fields
