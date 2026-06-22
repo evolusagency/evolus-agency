@@ -111,6 +111,9 @@ async function runPipeline(env: Env): Promise<void> {
         row,
         env.SITE_LANG ?? 'fr',
         env.AUTHOR    ?? 'Evolus Agency',
+        env.BRAVE_SEARCH_API_KEY,
+        env.BLOG_IMAGES,
+        env.R2_PUBLIC_URL,
       );
       console.log(`[CMS] Generated ${article.body.split(/\s+/).length} words.`);
 

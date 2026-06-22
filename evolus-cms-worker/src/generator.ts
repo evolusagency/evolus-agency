@@ -3,6 +3,8 @@
  * Cloudflare AI Workers — 22 clusters B2B Evolus Agency
  */
 
+import { generateAndUploadImage } from './image';
+import { fetchSearchContext, formatSearchContext } from './search';
 import { ArticleCluster, ArticleFrontmatter, GeneratedArticle, SheetRow } from './types';
 
 // ── Cluster → display tag ────────────────────────────────────
@@ -31,9 +33,7 @@ const CLUSTER_TAG: Record<ArticleCluster, string> = {
   'fondamentaux-business':'Fondamentaux Business',
 };
 
-// ── Cluster → prompt angle ───────────────────────────────────
 const CLUSTER_ANGLE: Record<ArticleCluster, string> = {
-
   'seo': `
 Tu es un expert SEO B2B senior. Tu rédiges pour des directeurs marketing, responsables growth et fondateurs de PME.
 Structure obligatoire :
@@ -277,7 +277,6 @@ Structure obligatoire :
 Style : direct, pédagogique sans être condescendant, exemples concrets de PME et scale-ups.`,
 };
 
-// ── CTA Evolus Agency ─────────────────────────────────────────
 function buildEvolusCTA(cluster: ArticleCluster): string {
   const cta: Record<ArticleCluster, string> = {
     'seo':                  `Vous voulez savoir exactement où votre SEO perd des leads qualifiés ? [Evolus Agency](https://evolus.agency) réalise un audit SEO complet et vous livre un plan d'action priorisé sous 48h — sans engagement.`,
@@ -306,7 +305,6 @@ function buildEvolusCTA(cluster: ArticleCluster): string {
   return `\n\n---\n\n## Pour aller plus loin avec Evolus Agency\n\n${cta[cluster]}\n`;
 }
 
-// ── Helpers ───────────────────────────────────────────────────
 function estimateReadTime(text: string): string {
   const words   = text.trim().split(/\s+/).length;
   const minutes = Math.max(1, Math.round(words / 200));
@@ -317,10 +315,10 @@ function todayISO(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-function buildPrompt(row: SheetRow): string {
+function buildPrompt(row: SheetRow, searchContext: string): string {
   const angle = CLUSTER_ANGLE[row.cluster];
   return `${angle}
-
+${searchContext}
 ---
 
 CONSIGNES STRICTES :
@@ -332,6 +330,7 @@ CONSIGNES STRICTES :
 - Longueur cible : 1 000 à 1 400 mots (hors section Evolus Agency).
 - Langue : français professionnel, tutoiement interdit.
 - Mot-clé principal à intégrer naturellement (3 à 5 occurrences) : "${row.keyword}"
+- Si le contexte web ci-dessus contient des chiffres ou faits pertinents, intègre-les naturellement (sans citer les URLs).
 - NE PAS rédiger la section "Pour aller plus loin avec Evolus Agency" — elle est ajoutée automatiquement.
 
 SUJET : ${row.title}
@@ -361,21 +360,29 @@ function buildMarkdownFile(frontmatter: ArticleFrontmatter, body: string): strin
     `featured: ${frontmatter.featured}`,
     `pillar: ${frontmatter.pillar}`,
     `draft: ${frontmatter.draft}`,
+    ...(frontmatter.image ? [`image: "${frontmatter.image}"`] : []),
     '---',
     '',
   ].join('\n');
   return fm + body;
 }
 
-// ── Export principal ──────────────────────────────────────────
 export async function generateArticle(
-  ai:     Ai,
-  row:    SheetRow,
-  lang:   string,
-  author: string,
+  ai:            Ai,
+  row:           SheetRow,
+  lang:          string,
+  author:        string,
+  braveApiKey?:  string,
+  bucket?:       R2Bucket,
+  r2PublicUrl?:  string,
 ): Promise<GeneratedArticle> {
 
-  const prompt = buildPrompt(row);
+  const searchQuery = `${row.keyword} ${row.title} 2026`;
+  const searchResults = await fetchSearchContext(braveApiKey, searchQuery);
+  const searchContext = formatSearchContext(searchResults);
+  console.log(`[Search] ${searchResults.length} result(s) found for "${row.keyword}"`);
+
+  const prompt = buildPrompt(row, searchContext);
 
   const aiResponse = await ai.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
     messages: [
@@ -402,8 +409,16 @@ RÈGLES ABSOLUES :
     throw new Error(`AI returned empty content for slug "${row.slug}"`);
   }
 
-  const cleanBody   = sanitizeBody(rawBody);
-  const body        = cleanBody + buildEvolusCTA(row.cluster);
+  const cleanBody = sanitizeBody(rawBody);
+  const body      = cleanBody + buildEvolusCTA(row.cluster);
+
+  let imageUrl: string | undefined;
+  if (bucket && r2PublicUrl) {
+    const url = await generateAndUploadImage(
+      ai, bucket, r2PublicUrl, row.slug, row.cluster, row.title, CLUSTER_TAG[row.cluster],
+    );
+    if (url) imageUrl = url;
+  }
 
   const frontmatter: ArticleFrontmatter = {
     title:    row.title,
@@ -417,6 +432,7 @@ RÈGLES ABSOLUES :
     featured: false,
     pillar:   false,
     draft:    false,
+    image:    imageUrl,
   };
 
   const fullContent = buildMarkdownFile(frontmatter, body);

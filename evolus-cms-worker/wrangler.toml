@@ -10,7 +10,7 @@ crons = ["0 8 * * *", "0 18 * * *"]
 binding = "AI"
 
 [vars]
-BATCH_SIZE        = "3"
+BATCH_SIZE        = "1"
 GITHUB_OWNER      = "evolusagency"
 GITHUB_REPO       = "evolus-agency"
 GITHUB_BRANCH     = "main"
@@ -19,14 +19,26 @@ SITE_LANG         = "fr"
 AUTHOR            = "Evolus Agency"
 DRY_RUN           = "false"
 
+[[r2_buckets]]
+binding = "BLOG_IMAGES"
+bucket_name = "evolus-blog-images"
+
 [env.production]
-vars = { DRY_RUN = "false", BATCH_SIZE = "3", GITHUB_OWNER = "evolusagency", GITHUB_REPO = "evolus-agency", GITHUB_BRANCH = "main", CONTENT_BASE_PATH = "src/content/blog", SITE_LANG = "fr", AUTHOR = "Evolus Agency" }
+vars = { DRY_RUN = "false", BATCH_SIZE = "1", GITHUB_OWNER = "evolusagency", GITHUB_REPO = "evolus-agency", GITHUB_BRANCH = "main", CONTENT_BASE_PATH = "src/content/blog", SITE_LANG = "fr", AUTHOR = "Evolus Agency", R2_PUBLIC_URL = "https://pub-d94c0800defa4f7ca9ed4021170d7368.r2.dev" }
 
 [env.production.ai]
 binding = "AI"
+
+[[env.production.r2_buckets]]
+binding = "BLOG_IMAGES"
+bucket_name = "evolus-blog-images"
 
 [env.staging]
 vars = { DRY_RUN = "true", BATCH_SIZE = "1", GITHUB_OWNER = "evolusagency", GITHUB_REPO = "evolus-agency", GITHUB_BRANCH = "main", CONTENT_BASE_PATH = "src/content/blog", SITE_LANG = "fr", AUTHOR = "Evolus Agency" }
 
 [env.staging.ai]
 binding = "AI"
+
+[[env.staging.r2_buckets]]
+binding = "BLOG_IMAGES"
+bucket_name = "evolus-blog-images"

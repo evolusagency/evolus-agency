@@ -5,11 +5,16 @@ export interface Env {
   // AI binding (wrangler.toml [ai])
   AI: Ai;
 
+  // R2 binding for blog images
+  BLOG_IMAGES: R2Bucket;
+  R2_PUBLIC_URL: string;
+
   // Secrets (set via `wrangler secret put`)
   GITHUB_PAT:             string;
   SHEETS_SPREADSHEET_ID:  string;
   SHEETS_SERVICE_ACCOUNT: string;
   CF_PAGES_HOOK_URL:      string;
+  BRAVE_SEARCH_API_KEY?:  string;
 
   // Vars (wrangler.toml [vars])
   BATCH_SIZE:        string;
@@ -20,7 +25,6 @@ export interface Env {
   SITE_LANG:         string;
   AUTHOR:            string;
   DRY_RUN:           string;
-  BRAVE_SEARCH_API_KEY?: string;
 }
 
 // ─────────────────────────────────────────────
@@ -85,6 +89,7 @@ export interface ArticleFrontmatter {
   featured: boolean;
   pillar:   boolean;
   draft:    boolean;
+  image?:   string;
 }
 
 // ─────────────────────────────────────────────
