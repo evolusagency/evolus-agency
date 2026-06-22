@@ -8,7 +8,7 @@ export interface Env {
   // Secrets (set via `wrangler secret put`)
   GITHUB_PAT:             string;
   SHEETS_SPREADSHEET_ID:  string;
-  SHEETS_SERVICE_ACCOUNT: string; // stringified JSON of GCP service account key
+  SHEETS_SERVICE_ACCOUNT: string;
   CF_PAGES_HOOK_URL:      string;
 
   // Vars (wrangler.toml [vars])
@@ -20,6 +20,7 @@ export interface Env {
   SITE_LANG:         string;
   AUTHOR:            string;
   DRY_RUN:           string;
+  BRAVE_SEARCH_API_KEY?: string;
 }
 
 // ─────────────────────────────────────────────
@@ -27,10 +28,32 @@ export interface Env {
 // ─────────────────────────────────────────────
 export type ArticleStatus = 'pending' | 'processing' | 'published' | 'error';
 
-export type ArticleCluster = 'seo' | 'marketing' | 'automation' | 'web-design';
+export type ArticleCluster =
+  | 'seo'
+  | 'automation'
+  | 'branding'
+  | 'content-marketing'
+  | 'ux-ui'
+  | 'social-media'
+  | 'email-marketing'
+  | 'paid-ads'
+  | 'cro'
+  | 'data-analytics'
+  | 'ia-generative'
+  | 'ecommerce'
+  | 'strategie-digitale'
+  | 'sales-enablement'
+  | 'lead-generation'
+  | 'customer-experience'
+  | 'video-marketing'
+  | 'influence-b2b'
+  | 'developpement-web'
+  | 'cybersecurite'
+  | 'product-marketing'
+  | 'fondamentaux-business';
 
 export interface SheetRow {
-  rowIndex: number; // 1-based row in the sheet (used for PATCH)
+  rowIndex: number;
   status:   ArticleStatus;
   cluster:  ArticleCluster;
   keyword:  string;
@@ -44,18 +67,18 @@ export interface SheetRow {
 // ─────────────────────────────────────────────
 export interface GeneratedArticle {
   slug:        string;
-  filename:    string; // e.g. strategie-seo-b2b.md
+  filename:    string;
   frontmatter: ArticleFrontmatter;
-  body:        string; // raw Markdown body (no frontmatter)
-  fullContent: string; // frontmatter + body (what gets pushed to GitHub)
+  body:        string;
+  fullContent: string;
 }
 
 export interface ArticleFrontmatter {
   title:    string;
   excerpt:  string;
-  date:     string; // ISO date YYYY-MM-DD
-  tag:      string; // derived from cluster
-  read:     string; // estimated reading time, e.g. "7 min"
+  date:     string;
+  tag:      string;
+  read:     string;
   category: ArticleCluster;
   lang:     string;
   author:   string;
@@ -77,7 +100,7 @@ export interface ArticleResult {
 // GitHub API — contents endpoint response
 // ─────────────────────────────────────────────
 export interface GitHubFileResponse {
-  sha?: string; // present if file already exists (needed for update)
-  content?: string;
+  sha?:      string;
+  content?:  string;
   encoding?: string;
 }
