@@ -24,6 +24,9 @@
       id="contact-form"
       novalidate
       aria-label="Formulaire de contact"
+      data-fr="Formulaire de contact"
+      data-en="Contact form"
+      data-fr-attr="aria-label"
     >
       <div class="cf-row">
         <div class="cf-field">
@@ -104,7 +107,14 @@
 <!-- ── FOOTER ────────────────────────────────────────────────── -->
 <footer>
   <div class="f-brand">
-    <a class="f-logo" href="/" aria-label="Evolus — Accueil">
+    <a
+      class="f-logo"
+      href="/"
+      aria-label="Evolus — Accueil"
+      data-fr="Evolus — Accueil"
+      data-en="Evolus — Home"
+      data-fr-attr="aria-label"
+    >
       evolus<span class="logo-dot">.</span>
     </a>
     <span class="f-copy" data-i18n="footer.copy">© 2025 Evolus Agency</span>
@@ -362,6 +372,55 @@ footer {
   const bannerOk = document.getElementById('cf-ok');
   const bannerKo = document.getElementById('cf-ko');
 
+  // ── i18n (new) ──────────────────────────────────────────────
+  // Validation messages were hardcoded in French inside this script,
+  // so they never changed with the FR/EN toggle. Mirrors the pattern
+  // used in Hero.astro / Results.astro: an attribute-driven translator
+  // for static markup (aria-labels) + a small language-aware string
+  // dictionary for messages generated dynamically by this script.
+  const ERR_STR = {
+    fr: {
+      nameRequired: 'Votre nom est requis.',
+      emailInvalid: 'Email invalide.',
+      msgShort:     'Message trop court (min. 10 caractères).',
+    },
+    en: {
+      nameRequired: 'Your name is required.',
+      emailInvalid: 'Invalid email address.',
+      msgShort:     'Message too short (min. 10 characters).',
+    },
+  };
+  let LANG = 'fr';
+  let errStr = ERR_STR.fr;
+
+  function applyAttrI18n() {
+    LANG = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr';
+    errStr = ERR_STR[LANG];
+    document.querySelectorAll('[data-fr]').forEach((el) => {
+      const attr = el.getAttribute('data-fr-attr');
+      const value = LANG === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-fr');
+      if (value == null) return;
+      if (attr) {
+        el.setAttribute(attr, value);
+      } else {
+        el.textContent = value;
+      }
+    });
+  }
+  applyAttrI18n();
+
+  // React to the FR/EN toggle (which swaps language client-side without a
+  // full reload): re-apply whenever <html lang> changes, and as a
+  // catch-all, shortly after any click anywhere on the page.
+  new MutationObserver(applyAttrI18n).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['lang'],
+  });
+  document.addEventListener('click', () => {
+    setTimeout(applyAttrI18n, 50);
+    setTimeout(applyAttrI18n, 300);
+  });
+
   // ── Inline validation helpers ──────────────────────────────
   function showErr(id, msg) {
     const el = document.getElementById(id);
@@ -373,16 +432,16 @@ footer {
   function validate(data) {
     let ok = true;
     if (!data.name.trim()) {
-      showErr('err-name', 'Votre nom est requis.'); ok = false;
+      showErr('err-name', errStr.nameRequired); ok = false;
     } else { showErr('err-name', ''); }
 
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRe.test(data.email)) {
-      showErr('err-email', 'Email invalide.'); ok = false;
+      showErr('err-email', errStr.emailInvalid); ok = false;
     } else { showErr('err-email', ''); }
 
     if (data.message.trim().length < 10) {
-      showErr('err-msg', 'Message trop court (min. 10 caractères).'); ok = false;
+      showErr('err-msg', errStr.msgShort); ok = false;
     } else { showErr('err-msg', ''); }
 
     return ok;

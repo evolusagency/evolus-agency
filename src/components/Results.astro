@@ -1,5 +1,10 @@
 ---
 // src/components/Results.astro — Rebuilt clean
+// i18n NOTE: static text/attrs previously hardcoded in French now carry
+// data-fr / data-en (+ data-fr-attr for attributes) hooks, applied by the
+// applyI18n() helper at the top of the inline script below. Dynamic strings
+// set inside click handlers (countdown, "Added!", "Calculating...") pull
+// from the same LANG-aware STR dictionary instead of being hardcoded.
 ---
 
 <section class="res-sec" id="results">
@@ -12,7 +17,14 @@
   <div class="rv d1 res-grid">
 
     <!-- ══ CARD 1 · FEATURED · +340% trafic ══════════════════════ -->
-    <article class="rc rc-feat" id="rc1" aria-label="+340% trafic organique">
+    <article
+      class="rc rc-feat"
+      id="rc1"
+      aria-label="+340% trafic organique"
+      data-fr="+340% trafic organique"
+      data-en="+340% organic traffic"
+      data-fr-attr="aria-label"
+    >
 
       <!-- Terminal bar -->
       <div class="term-bar">
@@ -55,13 +67,20 @@
       </div>
 
       <a class="rc-btn rc-btn--inv" href="/works">
-        Voir les cas clients
+        <span class="rc-btn-txt" data-fr="Voir les cas clients" data-en="See client cases">Voir les cas clients</span>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
       </a>
     </article>
 
     <!-- ══ CARD 2 · 21j · Délai ═══════════════════════════════════ -->
-    <article class="rc" id="rc2" aria-label="Délai moyen 21 jours">
+    <article
+      class="rc"
+      id="rc2"
+      aria-label="Délai moyen 21 jours"
+      data-fr="Délai moyen 21 jours"
+      data-en="Average delivery time 21 days"
+      data-fr-attr="aria-label"
+    >
       <div class="rc-ico">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
@@ -86,17 +105,24 @@
           <path id="arcPath" d="M12 60 A 48 48 0 0 1 108 60" stroke="#c8f03e" stroke-width="5" stroke-linecap="round"
                 stroke-dasharray="151" stroke-dashoffset="151"/>
         </svg>
-        <span class="arc-note">vs 45j marché</span>
+        <span class="arc-note" data-fr="vs 45j marché" data-en="vs 45d market avg.">vs 45j marché</span>
       </div>
 
       <button class="rc-btn" id="btn2">
-        Démarrer mon projet
+        <span class="btn2-txt" data-fr="Démarrer mon projet" data-en="Start my project">Démarrer mon projet</span>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       </button>
     </article>
 
     <!-- ══ CARD 3 · 120+ clients ═══════════════════════════════════ -->
-    <article class="rc" id="rc3" aria-label="120 clients accompagnés">
+    <article
+      class="rc"
+      id="rc3"
+      aria-label="120 clients accompagnés"
+      data-fr="120 clients accompagnés"
+      data-en="120 clients supported"
+      data-fr-attr="aria-label"
+    >
       <div class="rc-ico">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -112,13 +138,20 @@
       <p class="rc-desc" data-i18n="results.items.2.desc">De la startup à la PME, tous secteurs.</p>
 
       <button class="rc-btn" id="btn3">
-        Rejoindre la liste
+        <span class="btn3-txt" data-fr="Rejoindre la liste" data-en="Join the waitlist">Rejoindre la liste</span>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
       </button>
     </article>
 
     <!-- ══ CARD 4 · ROI 3x ═════════════════════════════════════════ -->
-    <article class="rc" id="rc4" aria-label="ROI moyen 3x">
+    <article
+      class="rc"
+      id="rc4"
+      aria-label="ROI moyen 3x"
+      data-fr="ROI moyen 3x"
+      data-en="Average ROI 3x"
+      data-fr-attr="aria-label"
+    >
       <div class="rc-ico">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
@@ -129,12 +162,12 @@
       <!-- ROI bars -->
       <div class="roi-bars">
         <div class="roi-row">
-          <span class="roi-tag">Invest.</span>
+          <span class="roi-tag" data-fr="Invest." data-en="Invest.">Invest.</span>
           <div class="roi-track"><div class="roi-fill" id="roiA" data-w="33"></div></div>
           <span class="roi-val">1x</span>
         </div>
         <div class="roi-row">
-          <span class="roi-tag">Retour</span>
+          <span class="roi-tag" data-fr="Retour" data-en="Return">Retour</span>
           <div class="roi-track"><div class="roi-fill roi-fill--accent" id="roiB" data-w="100"></div></div>
           <span class="roi-val" id="roiVal">3x</span>
         </div>
@@ -146,12 +179,12 @@
 
       <!-- Ticker -->
       <div class="ticker">
-        <span class="ticker-lbl">client actuel</span>
+        <span class="ticker-lbl" data-fr="client actuel" data-en="current client">client actuel</span>
         <span class="ticker-val" id="ticker">+218%</span>
       </div>
 
       <button class="rc-btn" id="btn4">
-        Calculer mon ROI
+        <span class="btn4-txt" data-fr="Calculer mon ROI" data-en="Calculate my ROI">Calculer mon ROI</span>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
           <rect x="4" y="4" width="16" height="16" rx="2"/>
           <path d="M9 9h.01M12 9h.01M15 9h.01M9 12h.01M12 12h.01M15 12h.01M9 15h.01M12 15h.01"/>
@@ -576,6 +609,53 @@
 
 <script is:inline>
 (function () {
+  /* ── LANG DETECTION + STATIC-ATTRIBUTE/TEXT I18N ────────────
+     Covers spots that were previously hardcoded in French only:
+     card aria-labels, button labels, ROI tags, ticker label,
+     arc note. Runs immediately, independent of GSAP. */
+
+  /* Dynamic strings used inside click handlers below (countdown,
+     "Added!", "Calculating..."). Language-aware instead of hardcoded.
+     Declared BEFORE applyI18n() so the first call can read it. */
+  var STR_DICT = {
+    fr: { btn2Prefix: 'J-', btn2Done: 'Projet lancé !', btn3Added: 'Ajouté !', btn4Calculating: 'Calcul...' },
+    en: { btn2Prefix: 'D-', btn2Done: 'Project launched!', btn3Added: 'Added!', btn4Calculating: 'Calculating...' }
+  };
+  var LANG;
+  var STR;
+
+  function currentLang() {
+    return (document.documentElement.lang || 'fr').toLowerCase().indexOf('en') === 0 ? 'en' : 'fr';
+  }
+
+  function applyI18n() {
+    LANG = currentLang();
+    STR = STR_DICT[LANG];
+    document.querySelectorAll('[data-fr]').forEach(function (el) {
+      var val = LANG === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-fr');
+      if (val == null) return;
+      var attr = el.getAttribute('data-fr-attr');
+      if (attr) {
+        el.setAttribute(attr, val);
+      } else {
+        el.textContent = val;
+      }
+    });
+  }
+  applyI18n();
+
+  // The page's FR/EN toggle swaps language client-side without a full
+  // reload, and (per testing) doesn't reliably re-run for every string —
+  // so keep these in sync reactively instead of only applying once.
+  new MutationObserver(applyI18n).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['lang'],
+  });
+  document.addEventListener('click', function () {
+    setTimeout(applyI18n, 50);
+    setTimeout(applyI18n, 300);
+  });
+
   /* Wait for GSAP */
   function init() {
     var gsap = window.gsap;
@@ -822,7 +902,7 @@
         var days = 21;
         var s0 = qs('#seg0'), s1 = qs('#seg1');
         gsap.to(btn2, { scale: 0.94, duration: 0.1, yoyo: true, repeat: 1 });
-        if (txt.tagName !== 'BUTTON') txt.textContent = 'J-21...';
+        if (txt.tagName !== 'BUTTON') txt.textContent = STR.btn2Prefix + '21...';
 
         var iv = setInterval(function() {
           days--;
@@ -831,7 +911,7 @@
           if (days <= 0) {
             clearInterval(iv);
             var sp = btn2.querySelector('span');
-            if (sp) sp.textContent = 'Projet lance !';
+            if (sp) sp.textContent = STR.btn2Done;
             setTimeout(function() { window.location.href = '#contact'; }, 600);
           }
         }, 100);
@@ -853,8 +933,9 @@
         gsap.to(btn3, { scale: 0.94, duration: 0.1, yoyo: true, repeat: 1 });
         var sp3 = btn3.querySelector('span');
         if (sp3) {
-          sp3.textContent = 'Ajoute !';
-          setTimeout(function() { sp3.textContent = 'Rejoindre la liste'; }, 1800);
+          var original = LANG === 'en' ? sp3.getAttribute('data-en') : sp3.getAttribute('data-fr');
+          sp3.textContent = STR.btn3Added;
+          setTimeout(function() { sp3.textContent = original || sp3.textContent; }, 1800);
         }
       });
     }
@@ -868,7 +949,8 @@
         busy4 = true;
         gsap.to(btn4, { scale: 0.94, duration: 0.1, yoyo: true, repeat: 1 });
         var sp4 = btn4.querySelector('span');
-        if (sp4) sp4.textContent = 'Calcul...';
+        var sp4Original = sp4 ? (LANG === 'en' ? sp4.getAttribute('data-en') : sp4.getAttribute('data-fr')) : null;
+        if (sp4) sp4.textContent = STR.btn4Calculating;
 
         var newROI = (2 + Math.random() * 2);
         var pct    = (newROI / 5) * 100;
@@ -883,7 +965,7 @@
         }
 
         setTimeout(function() {
-          if (sp4) sp4.textContent = 'Calculer mon ROI';
+          if (sp4) sp4.textContent = sp4Original || STR.btn4Calculating;
           if (roiB) gsap.to(roiB, { width: '100%', duration: 0.8, ease: 'power2.out' });
           if (roiVal) roiVal.textContent = '3x';
           busy4 = false;

@@ -14,6 +14,13 @@
 // 3. WORKS BUTTON
 //    Magnetic blob hover: cursor proximity warps the button shape with CSS clip-path +
 //    a glowing radial that tracks mouse position inside the button.
+//
+// i18n NOTE:
+//    Elements below use `data-i18n` for text nodes (swapped by the global i18n layer).
+//    Elements whose ONLY translatable part is an attribute (e.g. aria-label) use the
+//    `data-fr` / `data-en` / `data-fr-attr` convention and are translated by the small
+//    inline script at the bottom of this file — this covers spots that previously stayed
+//    hardcoded in French regardless of the selected language.
 ---
 
 <section class="hero" id="home" aria-label="Hero — Evolus Agency">
@@ -95,11 +102,23 @@
           </a>
 
           <!-- ── WORKS BUTTON (new) ──────────────────────────── -->
-          <a class="btn-works" href="/works" id="btnWorks" aria-label="Voir nos projets">
+          <a
+            class="btn-works"
+            href="/works"
+            id="btnWorks"
+            aria-label="Voir nos projets"
+            data-fr="Voir nos projets"
+            data-en="See our work"
+            data-fr-attr="aria-label"
+          >
             <!-- Magnetic blob glow (JS injects inline style) -->
             <span class="btn-works__blob" id="worksBlob" aria-hidden="true"></span>
             <span class="btn-works__label">
-              <span data-i18n="hero.works">Voir nos projets</span>
+              <span
+                data-i18n="hero.cta2"
+                data-fr="Voir nos projets"
+                data-en="See our work"
+              >Voir nos projets</span>
               <svg class="btn-works__arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
@@ -121,19 +140,40 @@
     <aside class="hero-stats" aria-label="Key statistics">
       <div class="cnt-i">
         <div class="cnt-n">
-          <span class="count-up" data-target="120" aria-label="120 sites livrés">0</span>+
+          <span
+            class="count-up"
+            data-target="120"
+            aria-label="120 sites livrés"
+            data-fr="120 sites livrés"
+            data-en="120 sites delivered"
+            data-fr-attr="aria-label"
+          >0</span>+
         </div>
         <div class="cnt-l" data-i18n="hero.stat1l">Sites livrés</div>
       </div>
       <div class="cnt-i">
         <div class="cnt-n">
-          <span class="count-up" data-target="3" aria-label="ROI moyen 3x">0</span>x
+          <span
+            class="count-up"
+            data-target="3"
+            aria-label="ROI moyen 3x"
+            data-fr="ROI moyen 3x"
+            data-en="Average ROI 3x"
+            data-fr-attr="aria-label"
+          >0</span>x
         </div>
         <div class="cnt-l" data-i18n="hero.stat2l">ROI moyen</div>
       </div>
       <div class="cnt-i">
         <div class="cnt-n">
-          <span class="count-up" data-target="98" aria-label="98% satisfaction">0</span>%
+          <span
+            class="count-up"
+            data-target="98"
+            aria-label="98% satisfaction"
+            data-fr="98% satisfaction"
+            data-en="98% satisfaction"
+            data-fr-attr="aria-label"
+          >0</span>%
         </div>
         <div class="cnt-l" data-i18n="hero.stat3l">Satisfaction</div>
       </div>
@@ -576,6 +616,41 @@
 <script>
   // Wait for GSAP to be ready
   document.addEventListener('DOMContentLoaded', () => {
+
+    // ── 0. ATTRIBUTE-LEVEL TRANSLATION (new) ─────────────────────
+    // Some elements (aria-labels on the works button + stat counters, and
+    // the works-button label itself, which the site's own data-i18n toggle
+    // doesn't seem to catch) needed a self-contained fallback. Applied on
+    // load AND kept in sync afterward, since the page's FR/EN toggle swaps
+    // language client-side without a full reload.
+    function applyAttrI18n() {
+      const lang = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr';
+      document.querySelectorAll('[data-fr]').forEach((el) => {
+        const attr = el.getAttribute('data-fr-attr');
+        const value = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-fr');
+        if (value == null) return;
+        if (attr) {
+          el.setAttribute(attr, value);
+        } else {
+          el.textContent = value;
+        }
+      });
+    }
+    applyAttrI18n();
+
+    // React to the toggle: watch for the <html lang> attribute changing...
+    new MutationObserver(applyAttrI18n).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['lang'],
+    });
+    // ...and as a belt-and-braces catch-all, re-check shortly after any
+    // click anywhere on the page (covers the FR/EN toggle regardless of
+    // exactly how it flips the language internally).
+    document.addEventListener('click', () => {
+      setTimeout(applyAttrI18n, 50);
+      setTimeout(applyAttrI18n, 300);
+    });
+
     const gsap = window.gsap;
     if (!gsap) return;
 

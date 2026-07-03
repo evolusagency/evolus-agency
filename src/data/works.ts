@@ -169,8 +169,8 @@ export const works: WorkItem[] = [
   slug: 'prestige-montreal',   // ← même nom que le dossier
   title: 'Prestige Montréal',
   titleEn: 'Prestige Montreal',
-  description: 'Une scène interactive mettant en valeur les éléments du prestigieux quartier de Montréal.',
-  descriptionEn: 'An interactive scene highlighting the elements of Montreal\'s prestigious district.',
+  description: 'Un site interactif de concession automobile mettant en valeur des véhicules de luxe à Montréal.',
+  descriptionEn: 'An interactive car dealership experience showcasing luxury vehicles in Montreal.',
   tags: ['UI', 'JS', 'Animation', 'CSS', 'GSAP'],
   height: 600,
 },

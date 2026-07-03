@@ -15,6 +15,7 @@ export interface Translations {
   nav: {
     services: string;
     process:  string;
+    works:    string;
     blog:     string;
     contact:  string;
     cta:      string;
@@ -27,6 +28,7 @@ export interface Translations {
     line3:     string;
     desc:      string;
     cta:       string;
+    cta2:      string;
     blog:      string;
     stat1n:    string;
     stat1l:    string;
@@ -34,6 +36,11 @@ export interface Translations {
     stat2l:    string;
     stat3n:    string;
     stat3l:    string;
+    // aria-label strings for elements that previously had hardcoded French
+    ariaWorks: string;
+    ariaStat1: string;
+    ariaStat2: string;
+    ariaStat3: string;
   };
   services: {
     label:  string;
@@ -64,6 +71,45 @@ export interface Translations {
       desc:  string;
       featured?: boolean;
     }>;
+    // additional UI strings used by Results.astro that were previously hardcoded French
+    ui: {
+      ariaFeatured:     string;
+      ariaDelay:        string;
+      ariaClients:      string;
+      ariaRoi:          string;
+      btnCases:         string;
+      btnStart:         string;
+      btnJoin:          string;
+      btnCalc:          string;
+      roiInvest:        string;
+      roiReturn:        string;
+      tickerLabel:      string;
+      arcNote:          string;
+      btn2Prefix:       string; // countdown prefix, e.g. "J-" / "D-"
+      btn2Done:         string;
+      btn3Added:        string;
+      btn4Calculating:  string;
+    };
+  };
+  // Contact form (Footer.astro) — was referenced via data-i18n but had no
+  // matching keys at all, plus a few aria-labels and validation messages
+  // that were hardcoded in French directly in the markup/JS.
+  form: {
+    nameLabel:         string;
+    namePlaceholder:   string;
+    emailLabel:        string;
+    emailPlaceholder:  string;
+    msgLabel:          string;
+    messagePlaceholder:string;
+    submit:            string;
+    mention:           string;
+    success:           string;
+    error:             string;
+    ariaForm:          string;
+    ariaHome:          string;
+    errNameRequired:   string;
+    errEmailInvalid:   string;
+    errMsgShort:       string;
   };
   testimonials: {
     label: string;
@@ -112,6 +158,7 @@ export const translations: Record<Lang, Translations> = {
       line3:    'digitale.',
       desc:     'Sites web sur-mesure, contenu qui convertit, et stratégies de croissance.',
       cta:      'Lancer mon projet',
+      cta2:     'Voir nos projets',
       blog:     'Voir le blog',
       stat1n:   '120+',
       stat1l:   'Sites livrés',
@@ -119,6 +166,10 @@ export const translations: Record<Lang, Translations> = {
       stat2l:   'ROI moyen',
       stat3n:   '98%',
       stat3l:   'Satisfaction',
+      ariaWorks: 'Voir nos projets',
+      ariaStat1: '120 sites livrés',
+      ariaStat2: 'ROI moyen 3x',
+      ariaStat3: '98% satisfaction',
     },
     services: {
       label: "Ce qu'on fait",
@@ -150,6 +201,41 @@ export const translations: Record<Lang, Translations> = {
         { value: '120+',  label: 'Clients',                   desc: 'De la startup à la PME.' },
         { value: '3x',    label: 'ROI moyen',                 desc: 'Chaque euro en génère 3.' },
       ],
+      ui: {
+        ariaFeatured:    '+340% trafic organique',
+        ariaDelay:       'Délai moyen 21 jours',
+        ariaClients:     '120 clients accompagnés',
+        ariaRoi:         'ROI moyen 3x',
+        btnCases:        'Voir les cas clients',
+        btnStart:        'Démarrer mon projet',
+        btnJoin:         'Rejoindre la liste',
+        btnCalc:         'Calculer mon ROI',
+        roiInvest:       'Invest.',
+        roiReturn:       'Retour',
+        tickerLabel:     'client actuel',
+        arcNote:         'vs 45j marché',
+        btn2Prefix:      'J-',
+        btn2Done:        'Projet lancé !',
+        btn3Added:       'Ajouté !',
+        btn4Calculating: 'Calcul...',
+      },
+    },
+    form: {
+      nameLabel:          'Nom',
+      namePlaceholder:    'Votre nom',
+      emailLabel:         'Email',
+      emailPlaceholder:   'vous@exemple.com',
+      msgLabel:           'Message',
+      messagePlaceholder: 'Parlez-nous de votre projet...',
+      submit:             'Envoyer le message',
+      mention:            'Réponse sous 24h · Zéro spam',
+      success:            'Message envoyé ! On revient vers vous sous 24h.',
+      error:              'Une erreur est survenue. Réessayez ou écrivez-nous directement.',
+      ariaForm:           'Formulaire de contact',
+      ariaHome:           'Evolus — Accueil',
+      errNameRequired:    'Votre nom est requis.',
+      errEmailInvalid:    'Email invalide.',
+      errMsgShort:        'Message trop court (min. 10 caractères).',
     },
     testimonials: {
       label: 'Ils nous font confiance',
@@ -200,6 +286,7 @@ export const translations: Record<Lang, Translations> = {
       line3:    'presence.',
       desc:     'Custom websites, converting content, and growth strategies.',
       cta:      'Start my project',
+      cta2:     'See our work',
       blog:     'See the blog',
       stat1n:   '120+',
       stat1l:   'Sites delivered',
@@ -207,6 +294,10 @@ export const translations: Record<Lang, Translations> = {
       stat2l:   'Avg. ROI',
       stat3n:   '98%',
       stat3l:   'Satisfaction',
+      ariaWorks: 'See our work',
+      ariaStat1: '120 sites delivered',
+      ariaStat2: 'Average ROI 3x',
+      ariaStat3: '98% satisfaction',
     },
     services: {
       label: 'What we do',
@@ -238,6 +329,41 @@ export const translations: Record<Lang, Translations> = {
         { value: '120+',  label: 'Clients',              desc: 'From startup to SME.' },
         { value: '3x',    label: 'Avg. ROI',             desc: 'Every dollar returns three.' },
       ],
+      ui: {
+        ariaFeatured:    '+340% organic traffic',
+        ariaDelay:       'Average delivery time 21 days',
+        ariaClients:     '120 clients supported',
+        ariaRoi:         'Average ROI 3x',
+        btnCases:        'See client cases',
+        btnStart:        'Start my project',
+        btnJoin:         'Join the waitlist',
+        btnCalc:         'Calculate my ROI',
+        roiInvest:       'Invest.',
+        roiReturn:       'Return',
+        tickerLabel:     'current client',
+        arcNote:         'vs 45d market avg.',
+        btn2Prefix:      'D-',
+        btn2Done:        'Project launched!',
+        btn3Added:       'Added!',
+        btn4Calculating: 'Calculating...',
+      },
+    },
+    form: {
+      nameLabel:          'Name',
+      namePlaceholder:    'Your name',
+      emailLabel:         'Email',
+      emailPlaceholder:   'you@example.com',
+      msgLabel:           'Message',
+      messagePlaceholder: 'Tell us about your project...',
+      submit:             'Send message',
+      mention:            'Reply within 24h · Zero spam',
+      success:            "Message sent! We'll get back to you within 24h.",
+      error:              'Something went wrong. Please try again or email us directly.',
+      ariaForm:           'Contact form',
+      ariaHome:           'Evolus — Home',
+      errNameRequired:    'Your name is required.',
+      errEmailInvalid:    'Invalid email address.',
+      errMsgShort:        'Message too short (min. 10 characters).',
     },
     testimonials: {
       label: 'Trusted by',
