@@ -16,6 +16,42 @@ export interface WorkItem {
 
 export const works: WorkItem[] = [
   {
+  slug: '3d',   // ← même nom que le dossier
+  title: 'Atelier — Commercial Space Planner',
+  titleEn: 'Atelier — Commercial Space Planner',
+  description: '3d commercial space planner — pour cafés, petits bureaux et boutiques.',
+  descriptionEn: '3D commercial space planner — for cafés, small offices, and boutique retail.',
+  tags: ['UI', '3D', 'Animation', 'CSS', 'GSAP'],
+  height: 800,
+},
+  {
+  slug: 'horloge',   // ← même nom que le dossier
+  title: '3D watch customizer',
+  titleEn: '3D watch customizer',
+  description: '3D watch customizer — luxury 3D watch atelier',
+  descriptionEn: 'Luxury 3D watch atelier',
+  tags: ['UI', '3D', 'Animation', 'Real-time', 'full keyboard/scroll accessibility'],
+  height: 800,
+},
+  {
+  slug: 'game',   // ← même nom que le dossier
+  title: 'Un mini jeu pour les joueurs occasionnels',
+  titleEn: 'A Mini Game for casual players',
+  description: 'Avec des animations fluides et un gameplay engageant.',
+  descriptionEn: 'Featuring smooth animations and engaging gameplay.',
+  tags: ['UI', '3D', 'Animation', 'Dedicated toggles', 'mini-game'],
+  height: 700,
+},
+  {
+  slug: 'tech-blog',   // ← même nom que le dossier
+  title: 'Site web de blog tech',
+  titleEn: 'Tech YouTuber home website',
+  description: 'Un site web de blog tech, complétant le contenu vidéo avec des critiques écrites approfondies.',
+  descriptionEn: ' A tech YouTuber home website, complementing video content with deep-dive written reviews.',
+  tags: ['Tech', '3D', 'Animation', 'Color shifts on scroll', 'UI'],
+  height: 600,
+},
+  {
   slug: 'explore-further-parallax',   // ← même nom que le dossier
   title: 'parallax scene',
   titleEn: 'parallax scene',
@@ -183,4 +219,5 @@ export const works: WorkItem[] = [
   tags: ['UI', 'JS', 'Animation', 'CSS', 'GSAP'],
   height: 600,
 },
+
 ];
